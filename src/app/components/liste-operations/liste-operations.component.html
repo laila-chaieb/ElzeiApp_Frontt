@@ -1,0 +1,123 @@
+<br><br><br>
+<link rel="shortcut icon" href="https://meetmighty.com/dashboards/simpled/html/assets/images/favicon.ico" />
+
+
+Filtres:
+<!-- Statut Dropdown -->
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="statutDropdown"
+    role="button" data-mdb-toggle="dropdown" aria-expanded="false"
+    (click)="toggleDropdown(0); $event.preventDefault()">
+    Statut
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="statutDropdown" [ngClass]="{'show': isDropdownOpen[0]}">
+    <li>
+      <a class="dropdown-item" (click)="appliquerFiltre('A Valider', null)">A Valider</a>
+    </li>
+    <li>
+      <a class="dropdown-item" (click)="appliquerFiltre('En Attente', null)">En Attente</a>
+    </li>
+    <li>
+      <a class="dropdown-item" (click)="appliquerFiltre('Validee', null)">Validee</a>
+    </li>
+  </ul>
+</li>
+
+<!-- Type Dropdown -->
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="typeDropdown"
+    role="button" data-mdb-toggle="dropdown" aria-expanded="false"
+    (click)="toggleDropdown(1); $event.preventDefault()">
+    Type
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="typeDropdown" [ngClass]="{'show': isDropdownOpen[1]}">
+    <li>
+      <a class="dropdown-item" (click)="appliquerFiltre(null, 'C')">CREDIT</a>
+    </li>
+    <li>
+      <a class="dropdown-item" (click)="appliquerFiltre(null, 'D')">DEBIT</a>
+    </li>
+  </ul>
+</li>
+
+<table id="datatable" class="table data-table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Libelle</th>
+      <th>Montant</th>                        
+      <th>Taux de TVA</th>
+      <th>Montant TVA</th>
+      <th>TVA deductible</th>
+      <th>Type</th>
+      <th>Date Operation</th>
+      <th>Date Valeur</th>
+      <th>Description</th>
+      <th>Compte</th>
+      <th>Justificatif</th>
+      <th>Statut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let operation of operations">
+      <td (click)="viewOperationDetails(operation)">{{ operation.id }}</td>
+      <td (click)="viewOperationDetails(operation)">{{ operation.libelle }}</td>  
+      <td (click)="viewOperationDetails(operation)">{{ operation.montant | currency:'EUR':'symbol':'1.2-2' }}</td>
+      <td>
+          <select [(ngModel)]="operation.tauxTVA">
+              <option value="0.2">20%</option>
+              <option value="0.1">10%</option>
+              <option value="0.055">5.5%</option>
+              <option value="0.021">2.1%</option>
+              <option value="1">0%</option>
+          </select>
+      </td>
+      <td (click)="viewOperationDetails(operation)">
+        {{ operation.montant * (operation.tauxTVA ? operation.tauxTVA : 1) | currency:'EUR':'symbol':'1.2-2' }}
+      </td>      
+      <td>
+        <select [(ngModel)]="operation.TVAdeductible">
+          <option value="OUI" selected="true">OUI</option>
+          <option value="NON">NON</option>
+        </select>
+      </td>
+      <td (click)="viewOperationDetails(operation)" [ngSwitch]="operation.type">
+        <span *ngSwitchCase="'D'">DEBIT</span>
+        <span *ngSwitchCase="'C'">CREDIT</span> 
+      </td>
+      <td (click)="viewOperationDetails(operation)">{{ operation.dateOP | date:'dd/MM/yyyy' }}</td>
+      <td (click)="viewOperationDetails(operation)">{{ operation.dateVal | date:'dd/MM/yyyy' }}</td>
+      <td (click)="viewOperationDetails(operation)">{{ operation.description }}</td>
+      <td (click)="viewOperationDetails(operation)">{{ operation.id }}</td>
+
+      <td>
+        <!-- Download PDF Icon -->
+        <div style="display: flex; align-items: center;">
+          <a class="mr-0" data-toggle="tooltip" data-placement="top" title="Télécharger Justificatif">
+            <img src="../assets/pdf.png" class="img-fluid">
+          </a>
+      
+          <!-- Upload File Icon and Input -->
+          <label class="btn btn-link" title="Upload Justificatif">
+            <i class="fa fa-upload"></i>
+            <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput />
+          </label>
+        </div>
+      </td>
+      
+      <ng-container *ngIf="operation.status === 'En Attente'; else validee">
+        <td (click)="viewOperationDetails(operation)" class="mt-2 no-border"><span class="badge badge-danger">{{ operation.status }}</span></td>
+      </ng-container>
+      <ng-template #validee>
+        <ng-container *ngIf="operation.status === 'Validee'; else autre">
+          <td (click)="viewOperationDetails(operation)" class="mt-2 no-border"><span class="badge badge-success">{{ operation.status }}</span></td>
+        </ng-container>
+        <ng-template #autre>
+          <ng-container *ngIf="operation.status === 'A Valider'">
+            <td (click)="viewOperationDetails(operation)" class="mt-2 no-border"><span class="badge badge-warning">{{ operation.status }}</span></td>
+          </ng-container>
+        </ng-template>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

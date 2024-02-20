@@ -1,0 +1,24 @@
+<!-- compte-details.component.html -->
+<br><br><br>
+<div class="col-md-6 mx-auto">
+    <div class="card text-white mb-3" [style.background-color]="selectedClasseColor" style="max-width: 75%;">
+        <div class="card-header">{{ selectedClasse?.numcl }}</div>
+    <div class="card-body">
+      <h6 class="card-title">{{ selectedClasse?.nom }}</h6>
+      <p class="card-text">{{ selectedClasse?.description }}</p>
+      <table>
+        <tr *ngFor="let compte of comptes">
+          <td>
+            {{ compte.code }} . {{ compte.libele }}
+          </td>
+          <td> </td>
+          <td>
+            <button class="btn btn-outline-secondary btn-sm mr-2 card-button" (click)="editCompte(compte.id)">Edit</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+

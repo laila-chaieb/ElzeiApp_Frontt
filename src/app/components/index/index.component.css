@@ -1,0 +1,9 @@
+/* Styles pour les boutons du composant */
+.btn-small {
+    font-size: 9px;
+    padding: 4px 8px;
+    margin-right: 8px;
+    width: 80px; /* Ajustez cette valeur pour définir la largeur souhaitée du bouton */
+    height: 30px; /* Ajustez cette valeur pour définir la hauteur souhaitée du bouton */
+  }
+  

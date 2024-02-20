@@ -1,0 +1,30 @@
+<br><br><br>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<div>
+  
+  <form (ngSubmit)="saveClasse()">
+    <div class="submit-form">
+      
+        
+        <div class="form-group">
+          <label class="form-label" for="nom">Nom De Classe:</label>
+          <input matNativeControl class="form-input" id="nom" required [(ngModel)]="Classe.nom" name="nom" [formControl]="text"/>
+      
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="numcl">Numéro de classe :</label>
+          <input matNativeControl class="form-input" id="numcl" required [(ngModel)]="Classe.numcl" name="numcl" [formControl]="text"/>
+          
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="description">Description :</label>
+          
+          <textarea matNativeControl class="form-input" id="description" required [(ngModel)]="Classe.description" name="description" [formControl]="text"></textarea>
+          
+        </div>
+        <button type="submit"  class="form-button">Enregistrer</button>
+      </div>
+  </form>
+  </div>
+  

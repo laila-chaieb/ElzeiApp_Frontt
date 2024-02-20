@@ -1,0 +1,35 @@
+<br><br><br>
+<h2>Liste des Comptes</h2>
+<div *ngIf="successMessage" class="alert alert-success">
+  {{ successMessage }}
+</div>
+
+<table class="table align-middle mb-0 bg-white">
+  <thead class="bg-light">
+    <tr>
+      <th>ID</th>
+      <th>Code</th>
+      <th>libele</th>
+      <th>Description</th>
+      <th>Actions</th>
+
+      
+    </tr>
+  </thead>
+ 
+  <tbody>
+    <tr *ngFor="let Compte of comptes">
+      <td>{{Compte.id}}</td>
+      <td>{{Compte.code}}</td>
+      <td>{{Compte.libele}}</td>
+      <td>{{Compte.description}}</td>
+      <td>
+        <div class="button-container">
+          <button class="btn btn-danger" (click)="deleteCompte(Compte.id)">Delete</button>
+          <button class="btn btn-primary" (click)="editCompte(Compte.id)">Edit</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+

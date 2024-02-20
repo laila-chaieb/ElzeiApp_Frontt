@@ -1,0 +1,44 @@
+<br><br><br>
+<div class="row">
+  <div class="col-md-4" *ngFor="let classe of classes; let i = index">
+    <div class="card text-white mb-4" [style.background-color]="getCardColor(i)" style="max-width: 18rem;">
+      <div class="card-header">{{ classe.numcl }}</div>
+      <div class="card-body">
+        <h6 class="card-title">{{ classe.nom }}</h6>
+        <p class="card-text">{{ classe.description }}</p>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-small" 
+            mdbRipple
+            rippleColor="secondary"
+            (click)="viewCompteDetails(classe)"
+          >
+            Consulter
+          </button>
+          <button
+            type="button"
+            [routerLink]="['/add']"
+            [queryParams]="{ classe_id: classe.id }"
+            class="btn btn-outline-secondary btn-small" 
+            mdbRipple
+            rippleColor="secondary"
+          >
+            Ajouter
+          </button>
+          <button
+            type="button"
+            (click)="editClasse(classe.id)"
+            class="btn btn-outline-secondary btn-small" 
+            mdbRipple
+            rippleColor="secondary"
+          >
+            Modifier
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

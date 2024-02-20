@@ -1,0 +1,46 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .classes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .classes li {
+    margin-bottom: 10px;
+  }
+  
+  .classes li a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .contenu {
+    margin-left: 20px;
+  }
+  
+  h2 {
+    margin-top: 0;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  ul li {
+    margin-bottom: 10px;
+  }
