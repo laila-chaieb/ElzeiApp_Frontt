@@ -11,7 +11,7 @@ export class Operation {
     status: string;
     justificatif: any;  // Ajoutez cette ligne pour l'attribut justificatif
     tauxTVA:  number | null;
-    TVAdeductible: string| null;
+    tvadeductible: string| null;
     classe_id:number;
     [key: string]: any;
     
@@ -27,7 +27,7 @@ export class Operation {
       description: string,
       status: string,
       tauxTVA: number,
-      TVAdeductible: string,
+      tvadeductible: string,
       classe_id:any,
       
       // Ajoutez d'autres attributs au besoin
@@ -42,7 +42,7 @@ export class Operation {
       this.description= description;
       this.status = status;
       this.tauxTVA = tauxTVA !== null ? tauxTVA : 1.0;
-      this.TVAdeductible= TVAdeductible;
+      this.tvadeductible= tvadeductible;
       this.classe_id= classe_id;
       
       // Initialisez d'autres attributs au besoin

@@ -77,7 +77,7 @@ Filtres:
         {{ operation.montant * (operation.tauxTVA ? operation.tauxTVA : 1) | currency:'EUR':'symbol':'1.2-2' }}
       </td>      
       <td>
-        <select [(ngModel)]="operation.TVAdeductible" (change)="updateOperationProperty(operation, 'TVAdeductible', operation.TVAdeductible)">
+        <select [(ngModel)]="operation.tvadeductible" (change)="updateOperationProperty(operation, 'tvadeductible', operation.tvadeductible)">
           <option value="OUI" selected="true">OUI</option>
           <option value="NON">NON</option>
         </select>

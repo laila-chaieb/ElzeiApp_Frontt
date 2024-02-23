@@ -11,6 +11,7 @@ import { JustificatifService } from 'src/app/services/justificatif.service';
 })
 export class ListeOperationsComponent implements OnInit {
   operations: Operation[] = [];
+  
   filtreStatus: string | null = null;
   filtreType: string | null = null;
   selectedOperation: Operation | null = null;
@@ -145,7 +146,10 @@ updateOperationProperty(operation: Operation, propertyName: string, propertyValu
   // Mettez à jour l'objet de manière incrémentielle
   operation[propertyName] = propertyValue;
 
-  this.operationService.update(operation.id, operation).subscribe(
+  // Envoyez uniquement la propriété modifiée
+  const updateData = { [propertyName]: propertyValue };
+
+  this.operationService.update(operation.id, updateData).subscribe(
     (response) => {
       if (response && typeof response === 'object' && response.hasOwnProperty('error')) {
         console.error(`Erreur lors de la mise à jour de ${propertyName}:`, (response as any).error);
@@ -161,6 +165,7 @@ updateOperationProperty(operation: Operation, propertyName: string, propertyValu
     }
   );
 }
+
 
 
 

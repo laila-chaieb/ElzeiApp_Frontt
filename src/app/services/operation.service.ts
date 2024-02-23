@@ -1,8 +1,8 @@
 // operation.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { Operation } from '../models/operation.model';
 
 @Injectable({
@@ -10,6 +10,8 @@ import { Operation } from '../models/operation.model';
 })
 export class OperationService {
     private baseUrl: string = "http://localhost:8080/api/v1/test/operation";
+    operations: Operation[] = [];  // Ajoutez cette ligne pour stocker les opérations côté client
+
     filtreStatus: string | null = null;
     filtreType: string | null = null;
 
@@ -48,12 +50,22 @@ export class OperationService {
   }
 
 
+  update(id: any, updated: any): Observable<Operation> {
+    return this.http.put<Operation>(`${this.baseUrl}/${id}`, updated).pipe(
+      catchError((error) => {
+        console.error('Erreur lors de la mise à jour de l\'opération:', error);
   
-  update(id: any, data: any): Observable<Operation> {
-    return this.http.put<Operation>(`${this.baseUrl}/${id}`, data).pipe(
-      map(response => response)
+        // Ajoutez une vérification du corps de la réponse
+        if (error instanceof HttpErrorResponse && error.status === 200) {
+          console.error('Corps de la réponse en erreur:', error.error);
+          // Gérer le corps de l'erreur JSON ici
+        }
+  
+        return throwError('Erreur lors de la mise à jour de l\'opération');
+      })
     );
   }
   
+  }
+  
 
-}
