@@ -74,7 +74,21 @@
        {{ compte.code }} - {{ compte.libele }}
     </option>
   </select>
+  <div class="form-group">
+    <label class="form-label" for="Compte">Compte:</label>
+  
+    <!-- Champ de saisie pour filtrer -->
+    <input type="text" id="CompteFilter" class="form-input" placeholder="les comptes" (input)="onCompteFilter($event)" />
+  
+    <!-- Liste déroulante des comptes filtrés -->
+    <select id="Compte" class="form-input" [(ngModel)]="selectedCompteId" (change)="onCompteChange($event)" name="selectedCompte">
+      <option *ngFor="let compte of comptes" [value]="compte.id">
+         {{ compte.code }} - {{ compte.libele }}
+      </option>
+    </select>
+  </div>
 </div>
+
 
 
      <!-- Ajout du champ pour le justificatif -->

@@ -58,7 +58,7 @@ export class ListeClassesComponent implements OnInit {
       (comptes) => {
         this.comptes = comptes;
       },
-      (error) => {
+      (error) => { 
         console.error('Erreur lors du chargement des comptes', error);
       }
     );

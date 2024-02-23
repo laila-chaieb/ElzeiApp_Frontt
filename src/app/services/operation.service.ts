@@ -47,10 +47,13 @@ export class OperationService {
     return this.http.get(url, { responseType: 'arraybuffer', headers });
   }
 
-  updateOperation(id: number, updatedOperation: Operation): Observable<Operation> {
-    const url = `${this.baseUrl}/${id}`;
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });  // Ajoutez cette ligne
 
-    return this.http.put<Operation>(url, updatedOperation);
+  
+  update(id: any, data: any): Observable<Operation> {
+    return this.http.put<Operation>(`${this.baseUrl}/${id}`, data).pipe(
+      map(response => response)
+    );
   }
+  
+
 }

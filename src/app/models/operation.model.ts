@@ -13,6 +13,7 @@ export class Operation {
     tauxTVA:  number | null;
     TVAdeductible: string| null;
     classe_id:number;
+    [key: string]: any;
     
        // Ajoutez d'autres attributs au besoin
   

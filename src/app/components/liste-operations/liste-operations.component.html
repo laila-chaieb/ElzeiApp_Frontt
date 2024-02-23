@@ -64,19 +64,20 @@ Filtres:
       <td (click)="viewOperationDetails(operation)">{{ operation.libelle }}</td>  
       <td (click)="viewOperationDetails(operation)">{{ operation.montant | currency:'EUR':'symbol':'1.2-2' }}</td>
       <td>
-          <select [(ngModel)]="operation.tauxTVA">
-              <option value="0.2">20%</option>
-              <option value="0.1">10%</option>
-              <option value="0.055">5.5%</option>
-              <option value="0.021">2.1%</option>
-              <option value="1">0%</option>
-          </select>
+        <select [(ngModel)]="operation.tauxTVA" (change)="updateOperationProperty(operation, 'tauxTVA', operation.tauxTVA)">
+          <option value="0.2">20%</option>
+          <option value="0.1">10%</option>
+          <option value="0.055">5.5%</option>
+          <option value="0.021">2.1%</option>
+          <option value="1">0%</option>
+        </select>
       </td>
+      
       <td (click)="viewOperationDetails(operation)">
         {{ operation.montant * (operation.tauxTVA ? operation.tauxTVA : 1) | currency:'EUR':'symbol':'1.2-2' }}
       </td>      
       <td>
-        <select [(ngModel)]="operation.TVAdeductible">
+        <select [(ngModel)]="operation.TVAdeductible" (change)="updateOperationProperty(operation, 'TVAdeductible', operation.TVAdeductible)">
           <option value="OUI" selected="true">OUI</option>
           <option value="NON">NON</option>
         </select>
@@ -100,7 +101,7 @@ Filtres:
           <!-- Upload File Icon and Input -->
           <label class="btn btn-link" title="Upload Justificatif">
             <i class="fa fa-upload"></i>
-            <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput />
+            <input type="file" (change)="onJustificatifChange($event, operation.id)" style="display: none;" #fileInput />
           </label>
         </div>
       </td>

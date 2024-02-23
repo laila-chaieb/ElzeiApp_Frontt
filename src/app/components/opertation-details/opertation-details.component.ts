@@ -10,6 +10,7 @@ import { OperationService } from 'src/app/services/operation.service';
 import { MatSelect } from '@angular/material/select';
 import { NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
+import { JustificatifService } from 'src/app/services/justificatif.service';
 
 @Component({
   selector: 'app-opertation-details',
@@ -19,7 +20,7 @@ import { Observable } from 'rxjs';
 export class OpertationDetailsComponent {
 
   constructor(private  compteService:CompteService,private  OperationService:OperationService, private activatedRoute: ActivatedRoute ,
-    private router: Router,   private http: HttpClient,private classeService: ClasseService,) {
+    private router: Router,   private http: HttpClient,private classeService: ClasseService,private justificatifService:JustificatifService) {
       const state = this.router.getCurrentNavigation()?.extras?.state;
       
 
@@ -30,7 +31,7 @@ export class OpertationDetailsComponent {
      selectedClasse: Classe | undefined;
     
    selectedCompteId: any | null = null;
-   private baseUrl: string = "http://localhost:8080/api/v1/test/operation";
+   private baseUrl: string = "http://localhost:8080/api/v1/test/justificatif";
 
    selectedCompte: Compte = new Compte();
    classeId: string = 'all';
@@ -171,6 +172,9 @@ onFileSelected(event: any): void {
   if (file && this.selectedOperation) {
     // Mettez à jour le justificatif de l'opération sélectionnée
     this.selectedOperation.justificatif = file;
+
+    // Vous pouvez également afficher le nom du fichier ou autre chose si nécessaire
+    console.log('Selected file:', file.name);
   }
 }
 
@@ -189,21 +193,44 @@ updateOperation(id: number, updatedOperation: Operation, justificatifFile: File 
 
 
 onSubmit(): void {
-  if (this.selectedOperation) {
-    // Appeler votre service pour mettre à jour l'opération
-    this.OperationService.updateOperation(this.selectedOperation.id, this.selectedOperation).subscribe(
-      (updatedOperation) => {
-        console.log('Operation updated:', updatedOperation);
-        // Effectuez les actions nécessaires après la mise à jour de l'opération
-        this.router.navigate(['/Operations']);
-      },
-      (error) => {
-        console.error('Error updating Operation', error);
-        // Affichez un message d'erreur
-      }
-    );
+  if (this.selectedOperation && this.selectedOperation.justificatif) {
+      const file = this.selectedOperation.justificatif;
+      const description = this.selectedOperation.description || ''; // Ajoutez la logique appropriée
+      const operationId = this.selectedOperation.id || 0; // Assurez-vous que vous avez l'ID de l'opération
+      console.log('Operation ID:', operationId); // Ajoutez cette ligne
+
+      // Appeler le service pour effectuer l'upload
+      this.justificatifService.uploadJustificatifFile(file, description, this.selectedOperation.id).subscribe(
+          (response) => {
+              // Vérifier le type de contenu
+              const contentType = response.headers.get('Content-Type');
+
+              if (contentType && contentType.indexOf('application/json') !== -1) {
+                  // La réponse est de type JSON
+                  const jsonResponse = response.body;
+                  console.log('File uploaded successfully:', jsonResponse);
+                  // Effectuez les actions nécessaires après l'upload du fichier
+              } else {
+                  // La réponse n'est pas du JSON, traiter en conséquence
+                  console.log('File uploaded successfully. Server response:', response.body);
+                  // Effectuez les actions nécessaires après l'upload du fichier
+              }
+          },
+          (error) => {
+              if (error.status === 200) {
+                  // Traitement d'erreur spécifique si le serveur retourne un statut 200 (OK) malgré une erreur
+                  console.error('Error uploading file. Server response:', error.error);
+              } else {
+                  console.error('Error uploading file. Status:', error.status, 'Error:', error.error);
+              }
+              // Affichez un message d'erreur ou effectuez d'autres actions nécessaires
+          }
+      );
   }
 }
+
+
+
 
   }
 
