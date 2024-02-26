@@ -1,4 +1,6 @@
 <br><br><br>
+
+<br>
 <link rel="shortcut icon" href="https://meetmighty.com/dashboards/simpled/html/assets/images/favicon.ico" />
 
 
@@ -92,12 +94,11 @@ Filtres:
       <td (click)="viewOperationDetails(operation)">{{ operation.id }}</td>
 
       <td>
-        <!-- Download PDF Icon -->
-        <div style="display: flex; align-items: center;">
-          <a class="mr-0" data-toggle="tooltip" data-placement="top" title="Télécharger Justificatif">
-            <img src="../assets/pdf.png" class="img-fluid">
-          </a>
-      
+           <!-- Download PDF Icon -->
+          <div style="display: flex; align-items: center;">
+            <a class="mr-0" data-toggle="tooltip" data-placement="top" title="Télécharger Justificatif" (click)="downloadJustificatif(operation)">
+              <img src="../assets/pdf.png" class="img-fluid">
+            </a>
           <!-- Upload File Icon and Input -->
           <label class="btn btn-link" title="Upload Justificatif">
             <i class="fa fa-upload"></i>

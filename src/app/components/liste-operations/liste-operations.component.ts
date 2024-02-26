@@ -4,6 +4,8 @@ import { Operation } from 'src/app/models/operation.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as fileSaver from 'file-saver';
 import { JustificatifService } from 'src/app/services/justificatif.service';
+import * as FileSaver from 'file-saver';
+import { HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-liste-operations',
   templateUrl: './liste-operations.component.html',
@@ -89,13 +91,41 @@ export class ListeOperationsComponent implements OnInit {
   this.router.navigate(['detailsOperation', Operation.id]);
 
 }
-
 downloadJustificatif(operation: Operation): void {
-  this.operationService.getJustificatif(operation.id).subscribe((data: ArrayBuffer) => {
-    const blob = new Blob([data], { type: 'application/pdf' });
-  //  saveAs(blob, `Justificatif_${operation.id}.pdf`);
-  });
+  this.justificatifService.downloadJustificatif(operation.id).subscribe(
+    (response: HttpResponse<any>) => {
+      const filename = `Justificatif_${operation.id}.pdf`;
+      const blob = new Blob([response.body], { type: 'application/pdf' });
+
+      if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) {
+        // Vérifier si la méthode msSaveOrOpenBlob est définie sur le navigateur
+        (window.navigator as any).msSaveOrOpenBlob(blob, filename);
+      } else if (window.URL && window.URL.createObjectURL) {
+        // Utiliser la méthode createObjectURL pour les navigateurs modernes
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+
+        document.body.appendChild(link);
+        link.click();
+
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+      } else {
+        console.error('La méthode de téléchargement n\'est pas prise en charge sur ce navigateur.');
+      }
+    },
+    (error) => {
+      console.error('Error downloading justificatif:', error);
+    }
+  );
 }
+
+
+
+
+
 onFileSelected(event: any): void {
   const fileInput = event.target as HTMLInputElement;
   const file = fileInput.files?.[0];
@@ -140,6 +170,7 @@ onJustificatifChange(event: any, operationId: number): void {
     );
   }
 }
+
 
 
 updateOperationProperty(operation: Operation, propertyName: string, propertyValue: any): void {

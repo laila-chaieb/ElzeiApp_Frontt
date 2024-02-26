@@ -154,11 +154,9 @@ editOperation(id: number) {
   this.OperationService.getOperation(id).subscribe(
     (operation) => {
       
-
-      
     },
     (error) => {
-      console.error('Error retrieving classe details', error);
+      console.error('Error retrieving operation details', error);
     }
   );
 }
