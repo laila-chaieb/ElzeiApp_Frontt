@@ -31,4 +31,13 @@ export class JustificatifService {
       })
     );
   }
+  downloadFile(operationId: string): Observable<Blob> {
+    const url = `URL_de_votre_endpoint_de_téléchargement/${operationId}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/pdf', // Modifier le type MIME en fonction du type de fichier
+      'Authorization': 'Bearer VOTRE_JETON_JWT_SI_NÉCESSAIRE' // Ajouter l'en-tête d'autorisation si nécessaire
+    });
+
+    return this.http.get(url, { responseType: 'blob', headers: headers });
+  }
 }

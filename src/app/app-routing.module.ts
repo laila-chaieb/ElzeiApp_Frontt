@@ -7,7 +7,6 @@ import { ListeClassesComponent } from './components/liste-classes/liste-classes.
 import { IndexComponent } from './components/index/index.component';
 import { AddClasseComponent } from './components/add-classe/add-classe.component';
 
-import { DialogOverviewExampleComponent } from 'C:/Users/Lenovo/Desktop/crudCompte/src/app/components/dialog-overview-example/dialog-overview-example.component';
 import { TableauComptesComponent } from './components/tableau-comptes/tableau-comptes.component';
 import { ListeOperationsComponent } from './components/liste-operations/liste-operations.component';
 import { OpertationDetailsComponent } from './components/opertation-details/opertation-details.component';

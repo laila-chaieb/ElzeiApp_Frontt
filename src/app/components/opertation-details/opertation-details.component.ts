@@ -197,6 +197,7 @@ onSubmit(): void {
       const operationId = this.selectedOperation.id || 0; // Assurez-vous que vous avez l'ID de l'opération
       console.log('Operation ID:', operationId); // Ajoutez cette ligne
 
+      this.router.navigate(['/operation']);
       // Appeler le service pour effectuer l'upload
       this.justificatifService.uploadJustificatifFile(file, description, this.selectedOperation.id).subscribe(
           (response) => {

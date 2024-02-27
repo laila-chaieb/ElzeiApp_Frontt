@@ -33,7 +33,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { DialogOverviewExampleComponent } from './components/dialog-overview-example/dialog-overview-example.component';
 import { EditDialogComponentComponent } from './components/edit-dialog/edit-dialog-component.component';
 import { EditDialogCompteComponent } from './components/edit-dialog-compte/edit-dialog-compte.component';
 import { TableauComptesComponent } from './components/tableau-comptes/tableau-comptes.component';
@@ -49,7 +48,6 @@ import { OpertationDetailsComponent } from './components/opertation-details/oper
     CompteDetailsComponent,
     ComptesListComponent,
     ListeClassesComponent,
-    DialogOverviewExampleComponent,
     EditDialogComponentComponent,
     EditDialogCompteComponent,
     TableauComptesComponent,

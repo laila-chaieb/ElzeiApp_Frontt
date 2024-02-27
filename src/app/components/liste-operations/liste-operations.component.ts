@@ -12,6 +12,8 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ['./liste-operations.component.css']
 })
 export class ListeOperationsComponent implements OnInit {
+
+  //Declaration
   operations: Operation[] = [];
   
   filtreStatus: string | null = null;
@@ -24,9 +26,20 @@ export class ListeOperationsComponent implements OnInit {
     private router: Router,
     private justificatifService:JustificatifService
   ) {}
-  selectOperation(operation: Operation): void {
-    this.selectedOperation = operation;
+
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(params => {
+      const successMessage = params['success'];
+ 
+  
+      if (successMessage) {
+        console.log(successMessage);
+        // Affichez le message de succès dans votre template ou effectuez les actions nécessaires
+      }
+      this.listOperations();
+    });
   }
+   //Filtrage
   appliquerFiltre(status: string | null, type: string | null): void {
     this.filtreStatus = status;
     this.filtreType = type;
@@ -59,20 +72,6 @@ export class ListeOperationsComponent implements OnInit {
       })
   }
 
-
-  
-  ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
-      const successMessage = params['success'];
- 
-  
-      if (successMessage) {
-        console.log(successMessage);
-        // Affichez le message de succès dans votre template ou effectuez les actions nécessaires
-      }
-      this.listOperations();
-    });
-  }
 
   isDropdownOpen: boolean[] = [false, false];
 
@@ -112,6 +111,9 @@ downloadJustificatif(operation: Operation): void {
 
         window.URL.revokeObjectURL(url);
         document.body.removeChild(link);
+
+        // Recharger la page depuis le serveur
+        location.reload();
       } else {
         console.error('La méthode de téléchargement n\'est pas prise en charge sur ce navigateur.');
       }
@@ -121,9 +123,6 @@ downloadJustificatif(operation: Operation): void {
     }
   );
 }
-
-
-
 
 
 onFileSelected(event: any): void {
@@ -196,13 +195,6 @@ updateOperationProperty(operation: Operation, propertyName: string, propertyValu
     }
   );
 }
-
-
-
-
-
-
-
 
 
 }
