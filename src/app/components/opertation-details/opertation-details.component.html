@@ -39,10 +39,25 @@
     </div>
     <div class="form-group">
       <label class="form-label" for="tauxTVA">Taux TVA:</label>
-      <input class="form-input" id="tauxTVA" [value]="selectedOperation?.tauxTVA" disabled />
-    </div>
-    
-   
+      <td>
+        <select class="form-input"  [(ngModel)]="selectedOperation.tauxTVA" [ngModelOptions]="{ standalone: true }" (change)="updateOperationProperty(selectedOperation, 'tauxTVA', selectedOperation.tauxTVA)">
+          <option value="0.2">20%</option>
+          <option value="0.1">10%</option>
+          <option value="0.055">5.5%</option>
+          <option value="0.021">2.1%</option>
+          <option value="1">0%</option>
+        </select>
+      </td>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="tauxTVA">TVA deductible :</label>
+    <td>
+      <select class="form-input"  [(ngModel)]="selectedOperation.tvadeductible" [ngModelOptions]="{ standalone: true }" (change)="updateOperationProperty(selectedOperation, 'tvadeductible', selectedOperation.tvadeductible)">
+       <option value="OUI" selected="true">OUI</option>
+          <option value="NON">NON</option>
+      </select>
+    </td>
+</div>
     <div class="form-group">
       <label class="form-label" for="statut">Statut :</label>
       <input  class="form-input" id="statut" [value]="selectedOperation?.status" disabled />
@@ -61,33 +76,21 @@
     </div>
     
 
-<!-- Affichez la liste des comptes associés à la classe sélectionnée -->
+
+
 <div class="form-group">
   <label class="form-label" for="Compte">Compte:</label>
-
-  <!-- Champ de saisie pour filtrer -->
-  <input type="text" id="CompteFilter" class="form-input" placeholder="les comptes" (input)="onCompteFilter($event)" />
-
-  <!-- Liste déroulante des comptes filtrés -->
-  <select id="Compte" class="form-input" [(ngModel)]="selectedCompteId" (change)="onCompteChange($event)" name="selectedCompte">
-    <option *ngFor="let compte of filteredComptes" [value]="compte.id">
-       {{ compte.code }} - {{ compte.libele }}
+  <select class="form-input"  [(ngModel)]="selectedOperation['Compte']" [ngModelOptions]="{ standalone: true }" (change)="updateOperationProperty(selectedOperation,'Compte',selectedOperation['Compte'])">
+    <option *ngFor="let compte of comptes" [value]="compte.id">
+      {{ compte.code }} - {{ compte.libele }}
     </option>
   </select>
-  <div class="form-group">
-    <label class="form-label" for="Compte">Compte:</label>
-  
-    <!-- Champ de saisie pour filtrer -->
-    <input type="text" id="CompteFilter" class="form-input" placeholder="les comptes" (input)="onCompteFilter($event)" />
-  
-    <!-- Liste déroulante des comptes filtrés -->
-    <select id="Compte" class="form-input" [(ngModel)]="selectedCompteId" (change)="onCompteChange($event)" name="selectedCompte">
-      <option *ngFor="let compte of comptes" [value]="compte.id">
-         {{ compte.code }} - {{ compte.libele }}
-      </option>
-    </select>
-  </div>
 </div>
+
+    
+    
+
+
 
 
 
@@ -95,7 +98,7 @@
     
      <div class="form-group">
       <label class="form-label" for="justificatif">Justificatif :</label>
-      <input type="file" name="file"class="form-input" id="justificatif" (change)="onFileSelected($event)" />
+      <input type="file" name="file"class="form-input" id="justificatif"  (change)="onFileSelected($event)" />
     </div>
 
    

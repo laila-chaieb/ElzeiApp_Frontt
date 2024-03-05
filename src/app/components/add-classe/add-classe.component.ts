@@ -3,11 +3,13 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Classe } from 'src/app/models//classe.model';
 import { ClasseService } from 'src/app/services/classe.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-classe',
   templateUrl: './add-classe.component.html',
-  styleUrls: ['./add-classe.component.css']
+  styleUrls: ['./add-classe.component.css'],
+  providers: [MatSnackBar]
 })
 export class AddClasseComponent implements OnInit {
   Classe: Classe = {
@@ -17,22 +19,22 @@ export class AddClasseComponent implements OnInit {
   };
   classes:any;
   text = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]')]);
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
-  getErrorMessage() {
-    if (this.text.hasError('required')) {
-      return '';
-    }
-    return this.text.hasError('text') ? 'Veuillez entrer une valeur valide' : '';
-  }
+  
 
-  submitted = false;
-  successMessage: string = '';
   constructor(
     private classeService: ClasseService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) { }
-
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
   ngOnInit(): void {
     const isIdPresent = this._activatedRoute.snapshot.paramMap.has('id');
     if (isIdPresent) {
@@ -67,17 +69,24 @@ export class AddClasseComponent implements OnInit {
       nom: this.Classe.nom,
       numcl: this.Classe.numcl,
     };
-  
-    this.classeService.create(data).subscribe((res) => {
-      console.log('Compte créé:', res);
-      this.listClasses();
-      // Rediriger vers la page d'index après l'enregistrement
-      this._router.navigate(['/classes']);
-    },(error) => {
-      console.error('Erreur lors de la création du classe', error);
-    }
-  );
+
+    this.classeService.create(data).subscribe(
+      (res) => {
+        console.log('Classe créée:', res);
+        this.successMessage = 'Classe créée avec succès.';
+        this.errorMessage = null;
+        this.resetForm();
+      },
+      (error) => {
+        console.error('Erreur lors de la création de la classe', error);
+        this.errorMessage = 'Erreur lors de la création de la classe.';
+        this.successMessage = null;
+      }
+    );
+  }
+
+  resetForm(): void {
+    this.Classe = { description: '', nom: '', numcl: '' };
+  }
 }
-  
-  
-}
+

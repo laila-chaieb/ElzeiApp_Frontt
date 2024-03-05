@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'; 
 import { IndexComponent } from './components/index/index.component';
 import { AddClasseComponent } from './components/add-classe/add-classe.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,7 +11,6 @@ import { CompteDetailsComponent } from './components/compte-details/compte-detai
 import { ComptesListComponent } from './components/comptes-list/comptes-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListeClassesComponent } from './components/liste-classes/liste-classes.component';
-import { FormsModule } from '@angular/forms';
 import { FormBuilder,  Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
@@ -29,6 +29,7 @@ import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { MatIconModule } from '@angular/material/icon'; // Importez MatIconModule
+
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -38,6 +39,8 @@ import { EditDialogCompteComponent } from './components/edit-dialog-compte/edit-
 import { TableauComptesComponent } from './components/tableau-comptes/tableau-comptes.component';
 import { ListeOperationsComponent } from './components/liste-operations/liste-operations.component';
 import { OpertationDetailsComponent } from './components/opertation-details/opertation-details.component';
+
+
 
 @NgModule({
   declarations: [
@@ -57,9 +60,9 @@ import { OpertationDetailsComponent } from './components/opertation-details/oper
   ],
 
   imports: [
+   
     BrowserModule,    
     AppRoutingModule,
-    FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatCardModule,
@@ -80,7 +83,10 @@ import { OpertationDetailsComponent } from './components/opertation-details/oper
     MdbValidationModule,
 ReactiveFormsModule , 
 MatFormFieldModule,
-MatInputModule,MatIconModule,MatDialogModule
+MatInputModule,
+MatIconModule,
+MatDialogModule,
+FormsModule
 
     
   ],

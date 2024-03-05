@@ -54,18 +54,13 @@ export class OperationService {
     return this.http.put<Operation>(`${this.baseUrl}/${id}`, updated).pipe(
       catchError((error) => {
         console.error('Erreur lors de la mise à jour de l\'opération:', error);
-  
-        // Ajoutez une vérification du corps de la réponse
-        if (error instanceof HttpErrorResponse && error.status === 200) {
-          console.error('Corps de la réponse en erreur:', error.error);
-          // Gérer le corps de l'erreur JSON ici
+        if (error.status === 400) {
+          return throwError('Une erreur s\'est produite lors de la mise à jour de l\'opération.');
         }
-  
-        return throwError('Erreur lors de la mise à jour de l\'opération');
+        return throwError('Une erreur inattendue s\'est produite.');
       })
     );
   }
-  
-  }
+}  
   
 

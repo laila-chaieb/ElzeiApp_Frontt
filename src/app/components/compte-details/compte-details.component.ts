@@ -15,10 +15,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CompteDetailsComponent {
   constructor(private  compteService:CompteService, private activatedRoute: ActivatedRoute ,
-    private router: Router,public dialog: MatDialog ,   private classeService: ClasseService,private http: HttpClient) {
-      const state = this.router.getCurrentNavigation()?.extras?.state;
-      this.selectedClasseColor = state?.['couleur'];
-
+    private router: Router,public dialog: MatDialog ,   private classeService: ClasseService,private http: HttpClient)
+     {
+    
      }
      selectedClasse: Classe | undefined;
          private static readonly couleurs = [
@@ -99,7 +98,7 @@ updateCompte(updatedCompte: Compte) {
    (updatedCompte) => {
      console.log('Classe updated:', updatedCompte);
      // Effectuez les actions nécessaires après la mise à jour de la classe
-     this.router.navigate(['/']);
+     this.router.navigate(['/comptes']);
    },
    (error) => {
      console.error('Error updating compte', error);

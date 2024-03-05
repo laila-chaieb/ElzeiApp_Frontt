@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable,forkJoin } from 'rxjs';
+import { Observable,forkJoin, throwError } from 'rxjs';
 import { catchError, map ,mergeMap} from 'rxjs/operators';
 import { Compte } from '../models/compte.model';
 
@@ -49,7 +49,14 @@ export class CompteService {
 
   update(id: any, data: any): Observable<Compte> {
     return this.http.put<Compte>(`${this.baseUrl}/${id}`, data).pipe(
-      map(response => response)
+      map(response => {
+        console.log('Update successful:', response);
+        return response;
+      }),
+      catchError(error => {
+        console.error('Update failed:', error);
+        return throwError(error);
+      })
     );
   }
 
@@ -70,19 +77,14 @@ export class CompteService {
       map(response => response)
     )
   }
- /* getComptesByClasseId(classeId: number): Observable<Compte[]> {
-    const url = `${this.baseUrl}/byClasse/${classeId}`;
-    return this.http.get<Compte[]>(url).pipe(
-      map(response => response)
-    );
-  }*/
+ 
 
   getComptesByClasseId(classeId: number): Observable<Compte[]> {
     const url = `${this.baseUrl}/byClasse/${classeId}`;
     return this.http.get<Compte[]>(url).pipe(
       catchError((error) => {
         console.error('Erreur lors de la récupération des comptes par classe', error);
-        throw error; // N'oubliez pas de relancer l'erreur pour qu'elle soit traitée par les composants qui utilisent ce service
+        throw error; 
       })
     );
   }

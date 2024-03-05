@@ -49,7 +49,7 @@ export class ComptesListComponent {
       if (successMessage) {
         console.log(successMessage);
         this.listComptes();
-        // Affichez le message de succès dans votre template ou effectuez les actions nécessaires
+       
       }
     });
   
@@ -61,7 +61,7 @@ export class ComptesListComponent {
       () => {
         console.log("Compte deleted successfully.");
         this.listComptes();
-        // Add any additional actions you want to perform after successful deletion.
+      
         this.router.navigate(['/Comptes']);
       },
       (error: HttpErrorResponse) => {
@@ -76,7 +76,7 @@ export class ComptesListComponent {
         this.selectedCompte = compte;
             const dialogRef = this.dialog.open(EditDialogCompteComponent, {
               width: '300px',
-              data: { ...this.selectedCompte } // Passez une copie des données pour éviter les problèmes de référence
+              data: { ...this.selectedCompte } 
             });
     
             dialogRef.afterClosed().subscribe(result => {

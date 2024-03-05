@@ -69,7 +69,7 @@ export class AddCompteComponent implements OnInit {
     this.CompteService.create(this.Compte).subscribe(
       (res) => {
         console.log('Compte créé:', res);
-        // Rediriger vers la page d'index après l'enregistrement
+        // Rediriger vers la page liste comptes après l'enregistrement
         this._router.navigate(['/Comptes']);
       },
       (error) => {

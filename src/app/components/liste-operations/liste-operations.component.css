@@ -11210,10 +11210,7 @@ body.sidebar-main .mm-top-navbar {
     color: #6c757d
 }
 
-.dropdown-menu a.media:hover .heading,
-.dropdown-menu a.media:hover p {
-    color: !important
-}
+
 
 .dropdown-menu-dark .h1,
 .dropdown-menu-dark .h2,
