@@ -1,87 +1,183 @@
-.example-spacer {
-    flex: 1 1 auto;
-  }
-  .form-container {
-    background-color: #e6c0c0;
-    padding: 20px;
-    border: 1px solid #e0bebe;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-label {
-    font-weight: bold;
-  }
-  
-  .form-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #7ed957;
-  }
-  
-  .form-button {
-    background-color: #7ed957;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .form-button:hover {
-    background-color: #7ed957;
-  }
-  nav {
-    background-color: #f2f2f2;
-  }
-  
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+  font-family: 'segoe ui';
+}
+
+.nav {
+  height: 50px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  top: 0px;
+  left: 0px;
+  right: 200px;
+}
+
+.nav>.nav-header {
+  display: inline;
+}
+
+.nav>.nav-header>.nav-title {
+  display: inline-block;
+  font-size: 22px;
+  color: #000000;
+  padding: 10px 10px 10px 10px;
+}
+
+.nav>.nav-btn {
+  display: none;
+}
+
+
+
+.nav>.nav-links>a {
+  display: inline-block;
+  padding: 13px 10px 13px 10px;
+  text-decoration: none;
+  color: #3f3d3d;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-style: oblique;
+  font-weight: bold;
+}
+
+ul {
+  margin: 150px auto 0;
+  padding: 0;
+  list-style: none;
+  display: table;
+  width: 600px;
+  text-align: center;
+}
+
+li {
+  display: table-cell;
+  position: relative;
+  padding: 15px 0;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  display: inline-block;
+  padding: 15px 20px;
+  position: relative;
+  color: #3f3d3d;
+  font-family: Arial, sans-serif;
+}
+
+a:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background-image: linear-gradient(to right, #5da92f, #9bd46a);
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+a:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+@media screen and (max-height: 300px) {
   ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin-top: 40px;
   }
-  
-  li {
+}
+
+.nav>#nav-check {
+  display: none;
+}
+
+@media (max-width:600px) {
+  .nav>.nav-btn {
     display: inline-block;
-  }
-  
-  a {
-    display: block;
-    padding: 10px 15px;
-    text-decoration: none;
-    color: #7ed957;
-  }
-  
-  a:hover {
-    background-color: #ddd;
-  }
-  
-  .active {
-    background-color: #7ed957;
-    color: #7ed957;
-  }
-  :root {
-    --classe-1: rgb(253, 249, 13);
-    --classe-2: blue;
-    --classe-3: green;
-    color: #fad710;
-  }
-  
-  ul li {
-    cursor: pointer;
-    padding: 10px;
-    margin-bottom: 5px;
-    color: rgb(236, 12, 12);
+    position: absolute;
+    right: 0px;
+    top: 0px;
   }
 
+  .nav>.nav-btn>label {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    padding: 13px;
+  }
 
-  .dropdown-menu {
-    display: none;
+  .nav>.nav-btn>label:hover,
+  .nav #nav-check:checked~.nav-btn>label {
+    background-color: rgba(0, 0, 0, 0.3);
   }
-  
-  .dropdown-menu.show {
+
+  .nav>.nav-btn>label>span {
     display: block;
+    width: 25px;
+    height: 10px;
+    border-top: 2px solid #eee;
   }
-  
-  
+
+  .nav>.nav-links {
+    position: absolute;
+    display: block;
+    width: 100%;
+    background-color: #333;
+    height: 0px;
+    transition: all 0.3s ease-in;
+    overflow-y: hidden;
+    top: 50px;
+    left: 0px;
+  }
+
+  .nav>.nav-links>a {
+    display: block;
+    width: 100%;
+  }
+
+  .nav>#nav-check:not(:checked)~.nav-links {
+    height: 0px;
+  }
+
+  .nav>#nav-check:checked~.nav-links {
+    height: calc(100vh - 50px);
+    overflow-y: auto;
+  }
+}
+.nav>.nav-links {
+  display: inline;
+  float: right;
+  font-size: 18px;
+  z-index: 1; /* Add this line */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  z-index: 100; /* Change this line */
+}
+
+.nav>.nav-links>a:hover+.dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}

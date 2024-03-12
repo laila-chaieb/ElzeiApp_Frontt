@@ -6,6 +6,8 @@ import * as fileSaver from 'file-saver';
 import { JustificatifService } from 'src/app/services/justificatif.service';
 import * as FileSaver from 'file-saver';
 import { HttpResponse } from '@angular/common/http';
+import { CompteService } from 'src/app/services/compte.service';
+import { Compte } from 'src/app/models/compte.model';
 @Component({
   selector: 'app-liste-operations',
   templateUrl: './liste-operations.component.html',
@@ -15,7 +17,8 @@ export class ListeOperationsComponent implements OnInit {
 
   //Declaration
   operations: Operation[] = [];
-  
+  comptes: Compte[] = [];
+
   filtreStatus: string | null = null;
   filtreType: string | null = null;
   selectedOperation: Operation | null = null;
@@ -24,7 +27,8 @@ export class ListeOperationsComponent implements OnInit {
     private operationService: OperationService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private justificatifService:JustificatifService
+    private justificatifService:JustificatifService,
+    private compteService:CompteService,
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +41,7 @@ export class ListeOperationsComponent implements OnInit {
         // Affichez le message de succès dans votre template ou effectuez les actions nécessaires
       }
       this.listOperations();
+      this.listComptes();
     });
   }
    //Filtrage
@@ -51,26 +56,36 @@ export class ListeOperationsComponent implements OnInit {
   listOperations(): void {
     console.log('Filtrage en cours avec status:', this.filtreStatus);
     console.log('Filtrage en cours avec type:', this.filtreType);
+    
     this.operationService.getOperations(this.filtreStatus, this.filtreType).subscribe(
         (res: any) => {
             console.log('Résultats après filtrage:', res);
             this.operations = res;
+            
+            this.operations.forEach(operation => {
+                console.log('Opération:', operation);
+                if (operation['compte']) {
+                    console.log('Compte associé:', operation['compte']);
+                } else {
+                    console.log('Aucun compte associé à cette opération.');
+                }
+            });
         },
         (error) => {
-          console.error('Erreur lors de la mise à jour de tauxTVA:', error);
-          
-          try {
-              const errorBody = JSON.parse(error.error);
-              console.log('Corps de la réponse en erreur:', errorBody);
-              // Gérer le corps de l'erreur JSON
-          } catch (e) {
-              console.log('La réponse derreur n\'est pas un JSON valide:', error.error);
-              // Gérer le cas où la réponse n'est pas un JSON valide
-          }
-      
-          // Ajoutez des actions supplémentaires si nécessaire
-      })
-  }
+            console.error('Erreur lors de la mise à jour de tauxTVA:', error);
+            try {
+                const errorBody = JSON.parse(error.error);
+                console.log('Corps de la réponse en erreur:', errorBody);
+            } catch (e) {
+                console.log('La réponse d\'erreur n\'est pas un JSON valide:', error.error);
+            }
+        }
+    );
+}
+
+
+
+
 
 
   isDropdownOpen: boolean[] = [false, false];
@@ -170,8 +185,6 @@ onJustificatifChange(event: any, operationId: number): void {
   }
 }
 
-
-
 updateOperationProperty(operation: Operation, propertyName: string, propertyValue: any): void {
   // Mettez à jour l'objet de manière incrémentielle
   operation[propertyName] = propertyValue;
@@ -179,6 +192,7 @@ updateOperationProperty(operation: Operation, propertyName: string, propertyValu
   // Envoyez uniquement la propriété modifiée
   const updateData = { [propertyName]: propertyValue };
 
+  // Envoyez la mise à jour de la propriété à votre service
   this.operationService.update(operation.id, updateData).subscribe(
     (response) => {
       if (response && typeof response === 'object' && response.hasOwnProperty('error')) {
@@ -196,6 +210,16 @@ updateOperationProperty(operation: Operation, propertyName: string, propertyValu
   );
 }
 
+
+listComptes(){
+
+  this.compteService.getComptes().subscribe((res:any) =>{
+   this.comptes=res
+   console.log("reponse",this.comptes)
+  
+  }
+  )
+  }
 
 }
 

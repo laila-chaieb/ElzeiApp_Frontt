@@ -1,5 +1,7 @@
 // operation.model.ts
 
+import { Compte } from "./compte.model";
+
 export class Operation {
     id: number;
     libelle: string;
@@ -13,6 +15,7 @@ export class Operation {
     tauxTVA:  number | null;
     tvadeductible: string| null;
     classe_id:number;
+    compte: Compte;
     [key: string]: any;
     
        // Ajoutez d'autres attributs au besoin
@@ -28,6 +31,7 @@ export class Operation {
       status: string,
       tauxTVA: number,
       tvadeductible: string,
+      compte: Compte,
       classe_id:any,
       
       // Ajoutez d'autres attributs au besoin
@@ -44,7 +48,7 @@ export class Operation {
       this.tauxTVA = tauxTVA !== null ? tauxTVA : 1.0;
       this.tvadeductible= tvadeductible;
       this.classe_id= classe_id;
-      
+      this.compte= compte;
       // Initialisez d'autres attributs au besoin
     }
   }

@@ -91,8 +91,8 @@ Filtres:
       <td (click)="viewOperationDetails(operation)">{{ operation.dateOP | date:'dd/MM/yyyy' }}</td>
       <td (click)="viewOperationDetails(operation)">{{ operation.dateVal | date:'dd/MM/yyyy' }}</td>
       <td (click)="viewOperationDetails(operation)">{{ operation.description }}</td>
-      <td (click)="viewOperationDetails(operation)">{{ operation.id }}</td>
-
+      
+        <td (click)="viewOperationDetails(operation)">{{ operation['compte'] ? operation['compte'] .libele : 'Aucun compte associé' }}</td>
       <td>
            <!-- Download PDF Icon -->
           <div style="display: flex; align-items: center;">
@@ -111,7 +111,7 @@ Filtres:
         <td (click)="viewOperationDetails(operation)" class="mt-2 no-border"><span class="badge badge-danger">{{ operation.status }}</span></td>
       </ng-container>
       <ng-template #validee>
-        <ng-container *ngIf="operation.status === 'Validee'; else autre">
+        <ng-container *ngIf="operation.status === 'Validée'; else autre">
           <td (click)="viewOperationDetails(operation)" class="mt-2 no-border"><span class="badge badge-success">{{ operation.status }}</span></td>
         </ng-container>
         <ng-template #autre>

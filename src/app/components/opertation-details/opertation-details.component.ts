@@ -46,37 +46,54 @@ export class OpertationDetailsComponent {
         this.operationId = +params['id'];
         const classeId = +params['id'];
         
-          
         // Récupérer les détails de l'operation depuis le service
-       
-            this.OperationService.getOperationById(this.operationId).subscribe(
-              (operation) => {
-                this.selectedOperation = operation;
-              
-            // Récupérer les détails de la classe depuis le service
-            this.classeService.getClasse(classeId).subscribe(
-              (classe) => {
-                this.selectedClasse = classe;
-    
-                // Chargez tous les comptes initialement
-                this.fetchComptes('all'); // Assurez-vous que la classeId passée ici est valide
-              },
-              (error) => {
-                console.error('Erreur lors du chargement des détails de la classe', error);
-              }
-            );
+        this.OperationService.getOperationById(this.operationId).subscribe(
+          (operation) => {
+            this.selectedOperation = operation;
+      
           },
           (error) => {
             console.error('Erreur lors du chargement des détails de l\'opération', error);
           }
         );
-      });
+        
+        // Récupérer les détails de la classe depuis le service
+        this.classeService.getClasse(classeId).subscribe(
+          (classe) => {
+            this.selectedClasse = classe;
     
-      // Chargez la liste des classes
-      this.listClasses();
-  
+            // Chargez tous les comptes initialement
+            this.fetchComptes('all'); // Assurez-vous que la classeId passée ici est valide
+          },
+          (error) => {
+            console.error('Erreur lors du chargement des détails de la classe', error);
+          }
+        );
+      });
+      this.listClasses()
     }
-  
+    onCompteChange(event: any): void {
+      // Obtenez la valeur sélectionnée du MatSelect
+      const selectedCompteId = this.compteSelect.value;
+    
+      // Mettez à jour la valeur sélectionnée
+      this.selectedCompteId = selectedCompteId;
+    
+      // Si selectedCompteId est null, cela signifie que l'utilisateur saisit manuellement
+      if (selectedCompteId === null) {
+        // Effectuez le traitement nécessaire pour une saisie manuelle
+        // Par exemple, vous pouvez réinitialiser la liste des comptes ici
+        this.fetchComptes('all');
+      } else {
+        // Recherchez le compte correspondant à l'ID sélectionné
+        this.selectedCompte = this.comptes.find(c => c.id === selectedCompteId);
+    
+        // Si aucun compte n'a été trouvé, affectez selectedCompte à undefined
+        if (!this.selectedCompte) {
+          this.selectedCompte = undefined;
+        }
+      }
+    }
 
   listClasses(){
  
@@ -99,27 +116,7 @@ this.compteService.getComptes().subscribe((res:any) =>{
 )
 }
 
-onCompteChange(event: any): void {
-  const selectedCompteId = event?.target?.value;
 
-  // Mettez à jour la valeur sélectionnée
-  this.selectedCompteId = selectedCompteId;
-
-  // Si selectedCompteId est null, cela signifie que l'utilisateur saisit manuellement
-  if (selectedCompteId === null) {
-    // Effectuez le traitement nécessaire pour une saisie manuelle
-    // Par exemple, vous pouvez réinitialiser la liste des comptes ici
-    this.fetchComptes('all');
-  } else {
-    // Recherchez le compte correspondant à l'ID sélectionné
-    this.selectedCompte = this.comptes.find(c => c.id === selectedCompteId);
-
-    // Si aucun compte n'a été trouvé, affectez selectedCompte à undefined
-    if (!this.selectedCompte) {
-      this.selectedCompte = undefined;
-    }
-  }
-}
 
 fetchComptes(classeId: string): void {
   const url = classeId === 'all'
@@ -134,10 +131,7 @@ fetchComptes(classeId: string): void {
       if (this.selectedCompteId !== null) {
         this.selectedCompte = this.comptes.find(c => c.id === this.selectedCompteId);
 
-        // Si aucun compte n'a été trouvé, affectez selectedCompte à undefined
-        if (!this.selectedCompte) {
-          this.selectedCompte = undefined;
-        }
+       
       }
     },
     (error) => {
@@ -145,6 +139,7 @@ fetchComptes(classeId: string): void {
     }
   );
 }
+
 
 onClasseChange(event: any): void {
   const selectedClasseId = event.target.value.toString();
@@ -183,24 +178,38 @@ onFileSelected(event: any): void {
   }
 }
 
-
-
-/*
-updateOperationProperty(propertyName: string, propertyValue: any): void {
+updateOperationProperty(operation: Operation, propertyName: string, propertyValue: any): void {
   console.log('updateOperationProperty called');
   console.log('propertyName:', propertyName);
   console.log('propertyValue:', propertyValue);
-  if (this.selectedOperation) { // Check if selectedOperation is not null
-    // Mettez à jour l'objet de manière incrémentielle
-    this.selectedOperation[propertyName] = propertyValue;
 
-    // Envoyez uniquement la propriété modifiée
-    const updateData = { [propertyName]: { id: propertyValue } };
+  // Mettez à jour l'objet de manière incrémentielle
+  operation[propertyName] = propertyValue;
 
+  // Envoyez uniquement la propriété modifiée
+  const updateData = { [propertyName]: propertyValue };
 
-    console.log('Données de mise à jour envoyées :', updateData); // Ajoutez cette ligne
-
-    this.OperationService.update(this.selectedOperation.id, updateData).subscribe(
+  // Vérifiez si la propriété est 'compte' et ajustez le service en conséquence
+  if (propertyName === 'compte') {
+    const updateData = { [propertyName]: propertyValue ,status: 'Validee'};
+    this.OperationService.update(operation.id, updateData).subscribe(
+      (response: any) => {
+        if (response && typeof response === 'object' && response.hasOwnProperty('error')) {
+          console.error(`Erreur lors de la mise à jour de ${propertyName}:`, response.error);
+          // Gérez l'erreur et affichez un message approprié si nécessaire
+        } else {
+          console.log(`${propertyName} mis à jour avec succès:`, response);
+          // Ajoutez des actions supplémentaires si nécessaire
+        }
+      },
+      (error) => {
+        console.error(`Erreur lors de la mise à jour de ${propertyName}:`, error);
+        // Gérez l'erreur et affichez un message approprié si nécessaire
+      }
+    );
+  } else {
+    // Utilisez le service 'operationService' pour les autres propriétés
+    this.OperationService.update(operation.id, updateData).subscribe(
       (response) => {
         if (response && typeof response === 'object' && response.hasOwnProperty('error')) {
           console.error(`Erreur lors de la mise à jour de ${propertyName}:`, (response as any).error);
@@ -217,32 +226,9 @@ updateOperationProperty(propertyName: string, propertyValue: any): void {
     );
   }
 }
-*/
-updateOperationProperty(propertyName: string, propertyValue: any, event: any) {
-  // Votre logique de mise à jour ici
 
-  // Mettez à jour l'objet de manière incrémentielle
-  this.selectedOperation[propertyName] = propertyValue;
 
-  // Envoyez uniquement la propriété modifiée
-  const updateData = { [propertyName]: propertyValue };
 
-  this.OperationService.update(this.selectedOperation.id, updateData).subscribe(
-    (response) => {
-      if (response && typeof response === 'object' && response.hasOwnProperty('error')) {
-        console.error(`Erreur lors de la mise à jour de ${propertyName}:`, (response as any).error);
-        // Gérez l'erreur et affichez un message approprié si nécessaire
-      } else {
-        console.log(`${propertyName} mis à jour avec succès:`, response);
-        // Ajoutez des actions supplémentaires si nécessaire
-      }
-    },
-    (error) => {
-      console.error(`Erreur lors de la mise à jour de ${propertyName}:`, error);
-      // Gérez l'erreur et affichez un message approprié si nécessaire
-    }
-  );
-}
 
 onSubmit(): void {
   if (this.selectedOperation && this.selectedOperation.justificatif) {
