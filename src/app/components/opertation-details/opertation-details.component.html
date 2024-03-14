@@ -1,130 +1,136 @@
 <br><br><br>
 <br><br><br>
 <br><br><br>
-<body>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<h1>Détail opération</h1>
 
- <div class="login-wrap2">
-  <div class="login-html">
-    <div class="login-form">
+<body>
+  <h1>Détail opération</h1>
 
-    <form class="form-wrapper">
-   
+  <div class="login-wrap2">
+    <div class="login-html">
+      <div class="login-form">
+
+        <form class="form-wrapper">
+          <div class="form-group full-width">
+            <label class="form-label" for="Libelle">Libellé :</label>
+            <textarea class="form-input" id="Libelle" [value]="selectedOperation?.libelle" disabled></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="Montant">Montant:</label>
+            <input class="form-input" id="Montant" [value]="selectedOperation?.montant" disabled />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="Type">Type:</label>
+            <input class="form-input" id="Type" [value]="selectedOperation?.type" disabled />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="dateOperation">Date Operation :</label>
+            <input type="date" class="form-input" id="dateOperation"
+              [value]="selectedOperation?.dateOP | date:'yyyy-MM-dd'" disabled />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="dateValeur">Date Valeur :</label>
+            <input type="date" class="form-input" id="dateValeur"
+              [value]="selectedOperation?.dateVal | date:'yyyy-MM-dd'" disabled />
+          </div>
+
+          <div class="form-group full-width">
+
+            <label class="form-label" for="description">Description :</label>
+            <textarea class="form-input" id="description" [value]="selectedOperation?.description" disabled></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="tauxTVA">Taux TVA:</label>
+            <td>
+              <select class="form-input" [(ngModel)]="selectedOperation.tauxTVA" [ngModelOptions]="{ standalone: true }"
+                (change)="updateOperationProperty(selectedOperation, 'tauxTVA', selectedOperation.tauxTVA)">
+                <option value="0.2">20%</option>
+                <option value="0.1">10%</option>
+                <option value="0.055">5.5%</option>
+                <option value="0.021">2.1%</option>
+                <option value="1">0%</option>
+              </select>
+            </td>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="tauxTVA">TVA deductible :</label>
+            <td>
+              <select class="form-input" [(ngModel)]="selectedOperation.tvadeductible"
+                [ngModelOptions]="{ standalone: true }"
+                (change)="updateOperationProperty(selectedOperation, 'tvadeductible', selectedOperation.tvadeductible)">
+                <option value="OUI" selected="true">OUI</option>
+                <option value="NON">NON</option>
+              </select>
+            </td>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="statut">Statut :</label>
+            <input class="form-input" id="statut" [value]="selectedOperation?.status" disabled />
+          </div>
 
 
-    <div class="form-group full-width">
-
-      <label class="form-label" for="Libelle">Libellé :</label>
-      <textarea  class="form-input" id="Libelle" [value]="selectedOperation?.libelle" disabled></textarea>
-    </div>
-    
-    <div class="form-group">
-      <label class="form-label" for="Montant">Montant:</label>
-      <input  class="form-input" id="Montant" [value]="selectedOperation?.montant" disabled />
-    </div>
-    
-    <div class="form-group">
-      <label class="form-label" for="Type">Type:</label>
-      <input  class="form-input" id="Type" [value]="selectedOperation?.type" disabled />
-    </div>
-    
-    <div class="form-group">
-      <label class="form-label" for="dateOperation">Date Operation :</label>
-      <input type="date"  class="form-input" id="dateOperation" [value]="selectedOperation?.dateOP | date:'yyyy-MM-dd'" disabled />
-    </div>
-    
-    <div class="form-group">
-      <label class="form-label" for="dateValeur">Date Valeur :</label>
-      <input type="date"  class="form-input" id="dateValeur" [value]="selectedOperation?.dateVal | date:'yyyy-MM-dd'" disabled />
-    </div>
-    
-    <div class="form-group full-width">
-
-      <label class="form-label" for="description">Description :</label>
-      <textarea  class="form-input" id="description" [value]="selectedOperation?.description" disabled></textarea>
-    </div>
-    <div class="form-group">
-      <label class="form-label" for="tauxTVA">Taux TVA:</label>
-      <td>
-        <select class="form-input"  [(ngModel)]="selectedOperation.tauxTVA" [ngModelOptions]="{ standalone: true }" (change)="updateOperationProperty(selectedOperation, 'tauxTVA', selectedOperation.tauxTVA)">
-          <option value="0.2">20%</option>
-          <option value="0.1">10%</option>
-          <option value="0.055">5.5%</option>
-          <option value="0.021">2.1%</option>
-          <option value="1">0%</option>
-        </select>
-      </td>
-  </div>
-  <div class="form-group">
-    <label class="form-label" for="tauxTVA">TVA deductible :</label>
-    <td>
-      <select class="form-input"  [(ngModel)]="selectedOperation.tvadeductible" [ngModelOptions]="{ standalone: true }" (change)="updateOperationProperty(selectedOperation, 'tvadeductible', selectedOperation.tvadeductible)">
-       <option value="OUI" selected="true">OUI</option>
-          <option value="NON">NON</option>
-      </select>
-    </td>
-  </div>
-    <div class="form-group">
-      <label class="form-label" for="statut">Statut :</label>
-      <input  class="form-input" id="statut" [value]="selectedOperation?.status" disabled />
-    </div>
-    
-   
 
 
-     <!-- Ajout du champ pour le justificatif -->
-    
-     <div class="form-group">
-      <label class="form-label" for="justificatif">Justificatif :</label>
-      <input type="file" name="file"class="form-input" id="justificatif"  (change)="onFileSelected($event)" />
-    </div>
- 
- 
-    <div class="container">
+          <!-- Ajout du champ pour le justificatif -->
 
-      <div class="form-group">
-        <label class="form-label" for="Classe">Classe:</label>
-        <select id="Classe" class="form-input" (change)="onClasseChange($event)">
-          <option value="all">Toutes les classes</option>
-          <option *ngFor="let classe of classes" [value]="classe.id">{{ classe.numcl }} :{{ classe.nom }}</option>
-        </select>
+          <div class="form-group">
+            <label class="form-label" for="justificatif">Justificatif :</label>
+            <input type="file" name="file" class="form-input" id="justificatif" (change)="onFileSelected($event)" />
+          </div>
+
+
+          <div class="container">
+
+            <div class="form-group">
+              <label class="form-label" for="Classe">Classe:</label>
+              <select id="Classe" class="form-input" (change)="onClasseChange($event)">
+                <option value="all">Toutes les classes</option>
+                <option *ngFor="let classe of classes" [value]="classe.id">{{ classe.numcl }} :{{ classe.nom }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="Compte">Compte:</label>
+              <input class="form-input" id="Compte"
+                [value]="selectedOperation['compte']?.libele || 'Aucun Compte associé'" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="Compte">Compte:</label>
+              <select class="form-input" [(ngModel)]="selectedOperation['Compte']"
+                [ngModelOptions]="{ standalone: true }"
+                (change)="updateOperationProperty(selectedOperation, 'compte', { id:$any($event.target).value });">
+                <option *ngFor="let compte of comptes" [value]="compte.id"
+                  [selected]="selectedOperation['compte']?.libele || 'Aucun Compte associé'">
+                  {{ compte.code }} - {{ compte.libele }}
+                </option>
+              </select>
+            </div>
+
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        </form>
+
+        <br>
+        <div class="center2">
+          <!-- Ajoutez l'événement (click) pour appeler la méthode onSubmit() lors du clic sur le bouton -->
+          <button type="submit" class="form-button" (click)="onSubmit()">Valider</button>
+        </div>
       </div>
-      <div class="form-group">
-        <label class="form-label" for="Compte">Compte:</label>
-        <input class="form-input" id="Compte" [value]="selectedOperation['compte']?.libele || 'Aucun Compte associé'" />
-      </div>
-      <div class="form-group">
-      <label class="form-label" for="Compte">Compte:</label>
-        <select class="form-input" [(ngModel)]="selectedOperation['Compte']" [ngModelOptions]="{ standalone: true }" (change)="updateOperationProperty(selectedOperation, 'compte', { id:$any($event.target).value });">
-            <option *ngFor="let compte of comptes" [value]="compte.id" [selected]="selectedOperation['compte']?.libele || 'Aucun Compte associé'">
-                {{ compte.code }} - {{ compte.libele }}
-            </option>
-        </select>
-      </div>
-    
-    </div>   
-        
-        
-        
-      
-    
+    </div>
 
-
-
-
-
-
-   
-  </form>
-
-  <br>
-  <div class="center2">
-<!-- Ajoutez l'événement (click) pour appeler la méthode onSubmit() lors du clic sur le bouton -->
-<button type="submit" class="form-button" (click)="onSubmit()">Valider</button>
   </div>
-</div>
-</div>
-
-</div>
 </body>

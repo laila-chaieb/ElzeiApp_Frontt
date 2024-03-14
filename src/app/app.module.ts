@@ -39,6 +39,7 @@ import { EditDialogCompteComponent } from './components/edit-dialog-compte/edit-
 import { TableauComptesComponent } from './components/tableau-comptes/tableau-comptes.component';
 import { ListeOperationsComponent } from './components/liste-operations/liste-operations.component';
 import { OpertationDetailsComponent } from './components/opertation-details/opertation-details.component';
+import { MappingComponentComponent } from './mapping-component/mapping-component.component';
 
 
 
@@ -56,6 +57,7 @@ import { OpertationDetailsComponent } from './components/opertation-details/oper
     TableauComptesComponent,
     ListeOperationsComponent,
     OpertationDetailsComponent,
+    MappingComponentComponent,
    
   ],
 
