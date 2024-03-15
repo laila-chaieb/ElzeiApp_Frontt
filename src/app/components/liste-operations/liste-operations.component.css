@@ -26,6 +26,11 @@
     --mm-orange: rgba(253, 126, 20, 0.1);
     --mm-purple: rgba(71, 49, 182, 0.1)
 }
+body {
+    margin: 0px;
+    font-family: 'segoe ui';
+    background:#f5f5f5 no-repeat center center fixed;
+  }
 
 :root {
     --blue: #7ed957;

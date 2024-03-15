@@ -1,0 +1,84 @@
+export class Compl {
+     id?: number;
+      codeEn?: string;
+      codebanque?: string;
+      codeOperationInterne?: string;
+      codeGui?: string;
+      codedevise?: string;
+      nbrdec?: string;
+      zoneR1?: string;
+      numCompte?: string;
+      codeOperationInterbancaire?: string;
+      dateComptabilisation?: string;
+      // Change to the appropriate type for LocalDate zoneR2?: string;
+      qualifiantZone?: string;
+      infomationComp?: string;
+      zoneR3?: string;
+     } export class Anciensolde { id?: number;
+      codeEn?: string;
+      codebanque?: string;
+      zoneR1?: string;
+      codeGui?: string;
+      codedevise?: string;
+      nbrdec?: string;
+      zoneR2?: string;
+      numCompte?: string;
+      zoneR3?: string;
+      dateAncienSolde?: string;
+      // Change to the appropriate type for LocalDate zoneR4?: string;
+      montantAncienSolde?: string;
+      zoneR5?: string;
+     } export interface MVT { id: number;
+      codeEn: string;
+      codebanque: string;
+      codeOperationInterne: string;
+      codeGui: string;
+      codedevise: string;
+      nbrdec: string;
+      zoneR1: string;
+      numCompte: string;
+      codeOperationInterbancaire: string;
+      dateComptabilisation: string;
+      // Change to the appropriate type for LocalDate codeMotifRejet: string;
+      datevaleur: string;
+      // Change to the appropriate type for LocalDate libelle: string;
+      zoneR2: string;
+      numeroEcriture: string;
+      indiceECDMDC: string;
+      montantMouvment: string;
+      zoneReference: string;
+      cfonbMessage: MessageCfonb;
+     } export class Nvsolde { id?: number;
+      codeEn?: string;
+      codebanque?: string;
+      zoneR1?: string;
+      codeGui?: string;
+      codedevise?: string;
+      nbrdec?: string;
+      zoneR2?: string;
+      numCompte?: string;
+      zoneR3?: string;
+      dateNouveauSolde?: Date;
+      // Utilisation du type Date pour représenter une date zoneR4?: string;
+      montantNouveauSolde?: string;
+      zoneR5?: string;
+     } export class MessageCfonb { id?: number;
+      filename?: string;
+      description?: string;
+      anciensolde?: Anciensolde[];
+      mvt?: MVT[];
+      compl?: Compl[];
+      nvsolde?: Nvsolde[];
+     }
+
+     export class RawOperation { 
+        id?: number;
+        libelle?: string;
+        montant?: number;
+        type?: string;
+        dateOP?: Date;
+        dateVal?: Date;
+        description?: string;
+      
+        
+       }

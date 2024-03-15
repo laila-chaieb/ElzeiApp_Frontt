@@ -10,6 +10,7 @@ import { AddClasseComponent } from './components/add-classe/add-classe.component
 import { TableauComptesComponent } from './components/tableau-comptes/tableau-comptes.component';
 import { ListeOperationsComponent } from './components/liste-operations/liste-operations.component';
 import { OpertationDetailsComponent } from './components/opertation-details/opertation-details.component';
+import { MappingComponentComponent } from './components/mapping-component/mapping-component.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'PCG', component: TableauComptesComponent },
   { path: 'operation', component: ListeOperationsComponent },
   { path: 'detailsOperation/:id', component: OpertationDetailsComponent },
+  { path: 'Mapping', component: MappingComponentComponent },
 
 
   { path: '**', redirectTo: 'home' } // Redirection vers 'home' pour les chemins inconnus
