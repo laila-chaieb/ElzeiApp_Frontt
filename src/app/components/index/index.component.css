@@ -12,8 +12,19 @@
     animation: gradient 5s ease infinite;
     height: 100vh;
     width: auto;
+    overflow-x: hidden;
   }
+  .position{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    margin-right: 0px;
+    grid-gap: 20px;
+    margin-left: 100px;
   
+ 
+  }
   @keyframes gradient {
     0% {
       background-position: 0% 50%;

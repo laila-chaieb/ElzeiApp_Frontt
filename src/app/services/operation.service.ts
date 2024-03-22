@@ -36,7 +36,7 @@ export class OperationService {
   getOperationById(id: number): Observable<Operation> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.get<Operation>(url);
-  }
+  } 
   getOperation(id: number): Observable<Operation> {
     return this.http.get<Operation>(`${this.baseUrl}/${id}`).pipe(
       map(response => response)
