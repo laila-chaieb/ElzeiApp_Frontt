@@ -15,6 +15,20 @@
           <td>
             <button class="btn btn-outline-secondary btn-sm mr-2 card-button" (click)="editCompte(compte.id)">Edit</button>
           </td>
+          <td>
+            <button class="btn btn-outline-secondary btn-sm mr-2 card-button" (click)="editCompte(compte.id)">Consulter</button>
+          </td>
+          <td>
+            <button
+            type="button"
+            class="btn btn-outline-secondary btn-small" 
+            (click)="addCompte(compte.id)"
+            mdbRipple
+            rippleColor="secondary"
+          >
+            Ajouter
+          </button>
+          </td>
         </tr>
       </table>
     </div>

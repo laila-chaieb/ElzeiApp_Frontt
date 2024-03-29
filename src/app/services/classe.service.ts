@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Classe } from '../models/classe.model';
 const baseurl = "http://localhost:8080/api/v1/test/classes";
 
+
 @Injectable({
   providedIn: 'root'
 })

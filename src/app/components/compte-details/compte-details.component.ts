@@ -37,18 +37,25 @@ export class CompteDetailsComponent {
       }
       )
     }
+   
+
+
     ngOnInit(): void {
       this.activatedRoute.params.subscribe(params => {
         const classeId = +params['id'];
-  
+        const selectedCompteId = +params['parent_compte_id']; // Récupérer l'ID du compte parent
+    
         // Récupérer les détails de la classe depuis le service
         this.classeService.getClasse(classeId).subscribe(
           (classe) => {
             this.selectedClasse = classe;
             this.selectedClasseColor = this.selectedClasse ? CompteDetailsComponent.couleurs[(this.selectedClasse.id || 1) - 1] : CompteDetailsComponent.couleurs[0];
-  
+    
             // Charger les comptes de la classe avec l'ID correspondant
             this.fetchComptes(classeId); 
+            
+            // Utiliser l'ID du compte parent comme nécessaire
+            console.log('ID du compte parent:', selectedCompteId);
           },
           (error) => {
             console.error('Erreur lors du chargement des détails de la classe', error);
@@ -56,7 +63,22 @@ export class CompteDetailsComponent {
         );
       });
     }
-
+    
+      addCompte(selectedCompteId: number): void {
+        // Vérifier si un compte est sélectionné
+        if (selectedCompteId) {
+          this.router.navigate(['/add'], { 
+            queryParams: { 
+              classe_id: this.selectedClasse?.id, 
+              parent_compte_id: selectedCompteId  // Utiliser l'ID du compte sélectionné
+            } 
+          });
+        } else {
+          console.error('Aucun compte sélectionné.');
+          // Gérer le cas où aucun compte n'est sélectionné
+        }
+      }
+    
 
     fetchComptes(classeId: number): void {
       const url = `http://localhost:8080/api/v1/test/byClasse/${classeId}`;

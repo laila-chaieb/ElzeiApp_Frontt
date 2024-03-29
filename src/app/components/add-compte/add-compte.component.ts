@@ -29,9 +29,21 @@ export class AddCompteComponent implements OnInit {
   ngOnInit(): void {
     this._activatedRoute.queryParams.subscribe(params => {
       const classe_id = +params['classe_id'];
+      const parent_compte_id = +params['parent_compte_id'];
+      
+      // Assurez-vous que les valeurs récupérées sont valides
+      console.log('Classe ID:', classe_id);
+      console.log('Parent Compte ID:', parent_compte_id);
+      
+      // Assurez-vous que l'objet Compte est correctement initialisé
+      this.Compte = new Compte();
+      
+      // Assignez les valeurs récupérées à l'objet Compte
       this.Compte.classe_id = classe_id;
+      this.Compte.parent_compte_id = parent_compte_id;
     });
-
+  
+  
     const isIdPresent = this._activatedRoute.snapshot.paramMap.has('id');
     if (isIdPresent) {
       const idParam = this._activatedRoute.snapshot.paramMap.get('id');
@@ -58,14 +70,20 @@ export class AddCompteComponent implements OnInit {
 
   saveCompte() {
     console.log('Contenu du compte avant soumission :', this.Compte);
-
+  
     // Récupérer l'ID de la classe associée au compte depuis l'objet Compte
     const classeId = this.Compte.classe_id;
-
+  
+    // Récupérer l'ID du compte parent associé au compte depuis l'objet Compte
+    const parentId = this.Compte.parent_compte_id;
+  
     // Remplir automatiquement le champ "classe_id" dans l'objet "Compte"
     this.Compte.classe_id = classeId;
-
-    // Enregistrer le compte avec le champ "classe_id" correctement rempli
+  
+    // Remplir automatiquement le champ "parent_compte_id" dans l'objet "Compte"
+    this.Compte.parent_compte_id = parentId;
+  
+    // Enregistrer le compte avec les champs correctement remplis
     this.CompteService.create(this.Compte).subscribe(
       (res) => {
         console.log('Compte créé:', res);
@@ -77,4 +95,5 @@ export class AddCompteComponent implements OnInit {
       }
     );
   }
+  
 }

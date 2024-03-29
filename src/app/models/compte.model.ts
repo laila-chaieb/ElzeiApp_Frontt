@@ -4,4 +4,5 @@ export class Compte {
   libele?: string;
   classe_id?: number;
   description?: string;
+  parent_compte_id?:number
 }
