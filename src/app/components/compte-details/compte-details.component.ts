@@ -28,6 +28,9 @@ export class CompteDetailsComponent {
     comptes: Compte[] = [];
     selectedClasseColor: string | undefined;
     classes: Classe[] = [];
+    subComptes: Compte[] = []; // Tableau des sous-comptes
+    parentCompte: Compte | undefined; // Définir le type de parentCompte
+
     listComptes(){
  
       this.compteService.getComptes().subscribe((res:any) =>{
@@ -37,18 +40,25 @@ export class CompteDetailsComponent {
       }
       )
     }
+   
+
+
     ngOnInit(): void {
       this.activatedRoute.params.subscribe(params => {
         const classeId = +params['id'];
-  
+        const selectedCompteId = +params['parent_compte_id']; // Récupérer l'ID du compte parent
+    
         // Récupérer les détails de la classe depuis le service
         this.classeService.getClasse(classeId).subscribe(
           (classe) => {
             this.selectedClasse = classe;
             this.selectedClasseColor = this.selectedClasse ? CompteDetailsComponent.couleurs[(this.selectedClasse.id || 1) - 1] : CompteDetailsComponent.couleurs[0];
-  
+    
             // Charger les comptes de la classe avec l'ID correspondant
             this.fetchComptes(classeId); 
+            
+            // Utiliser l'ID du compte parent comme nécessaire
+            console.log('ID du compte parent:', selectedCompteId);
           },
           (error) => {
             console.error('Erreur lors du chargement des détails de la classe', error);
@@ -56,22 +66,56 @@ export class CompteDetailsComponent {
         );
       });
     }
-
-
-    fetchComptes(classeId: number): void {
-      const url = `http://localhost:8080/api/v1/test/byClasse/${classeId}`;
-      this.http.get<any[]>(url).subscribe(
-        (comptes) => {
-          this.comptes = comptes;
-        },
-        (error) => {
-          console.error('Erreur lors du chargement des comptes', error);
+    
+      addCompte(selectedCompteId: number): void {
+        // Vérifier si un compte est sélectionné
+        if (selectedCompteId) {
+          this.router.navigate(['/add'], { 
+            queryParams: { 
+              classe_id: this.selectedClasse?.id, 
+              parent_compte_id: selectedCompteId  // Utiliser l'ID du compte sélectionné
+            } 
+          });
+        } else {
+          console.error('Aucun compte sélectionné.');
+          // Gérer le cas où aucun compte n'est sélectionné
         }
-      );
-    }
-  
+      }
+    
 
-
+      fetchComptes(classeId: number): void {
+        const url = `http://localhost:8080/api/v1/test/byClasse/${classeId}`;
+        this.http.get<any[]>(url).subscribe(
+          (comptes) => {
+            this.comptes = comptes;
+            console.log('Comptes récupérés:', this.comptes);
+            
+            // Parcourir les comptes pour ajouter les sous-comptes à chaque compte parent
+            this.comptes.forEach((compte: Compte) => {
+              // Vérifier si le compte a un parent (s'il s'agit d'un sous-compte)
+              if (compte.parent_compte_id) {
+                // Trouver le compte parent correspondant dans la liste des comptes
+                const parentCompte = this.comptes.find(c => c.id === compte.parent_compte_id);
+                console.log('Parent Compte:', parentCompte);
+                // Ajouter le compte actuel comme sous-compte au compte parent
+                if (parentCompte && !parentCompte.subComptes) {
+                  parentCompte.subComptes = []; // Initialiser le tableau des sous-comptes s'il n'existe pas encore
+                }
+                if (parentCompte) {
+                  parentCompte.subComptes.push(compte);
+                  console.log('Sous-compte ajouté au parent:', compte);
+                }
+              }
+            });
+            console.log('Comptes après ajout des sous-comptes:', this.comptes);
+          },
+          (error) => {
+            console.error('Erreur lors du chargement des comptes', error);
+          }
+        );
+      }
+      
+      
 editCompte(id: number) {
  this.compteService.getCompte(id).subscribe(
    (compte) => {

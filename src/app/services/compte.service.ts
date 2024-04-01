@@ -26,26 +26,31 @@ export class CompteService {
   }
 
   create(data: any): Observable<Compte> {
-    // Obtenez l'objet complet de la classe à partir de l'ID
     const classeId = data.classe_id;
-    delete data.classe_id; // Supprimez la propriété classe_id du compte avant l'envoi
+    const parentCompteId = data.parent_compte_id; // Récupérer l'ID du parentCompte
+
+    // Supprimer les propriétés classe_id et parent_compte_id du compte avant l'envoi
+    delete data.classe_id;
+    delete data.parent_compte_id;
+
     if (classeId) {
-      // Utilisez forkJoin pour combiner les deux observables
-      return forkJoin([this.getClassById(classeId)]).pipe(
-        // Utilisez mergeMap pour accéder aux résultats du forkJoin
-        mergeMap(([classe]: any) => {
-          data.classe = classe; // Ajoutez l'objet complet de la classe au compte
-          // Envoie la requête POST pour créer le compte avec la classe associée
-          return this.http.post<Compte>(this.baseUrl, data);
-        })
-      );
+        // Utiliser forkJoin pour combiner les deux appels
+        return forkJoin([
+            this.getClassById(classeId),
+            this.getCompte(parentCompteId) // Ajouter cet appel pour récupérer le parentCompte
+        ]).pipe(
+            mergeMap(([classe, parentCompte]: any) => {
+                data.classe = classe;
+                data.parentCompte = parentCompte; // Ajouter l'objet parentCompte à data
+                return this.http.post<Compte>(this.baseUrl, data);
+            })
+        );
     } else {
-      // Si classe_id n'est pas spécifié, envoyez simplement la requête POST sans la classe associée
-      return this.http.post<Compte>(this.baseUrl, data).pipe(
-        map(response => response)
-      );
+        // Si classe_id n'est pas spécifié, envoyer simplement la requête POST sans la classe associée
+        return this.http.post<Compte>(this.baseUrl, data);
     }
   }
+
 
   update(id: any, data: any): Observable<Compte> {
     return this.http.put<Compte>(`${this.baseUrl}/${id}`, data).pipe(

@@ -1,47 +1,75 @@
-<br><br><br>
 
-<br>
+<div class="body2">
+  <div class="wrapper">
+  <div class="box">
+    
+
+
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      
+      
+      
+      
+      
+      
+      
+      </div>
+      </div>
+      </div>
+ 
 <link rel="shortcut icon" href="https://meetmighty.com/dashboards/simpled/html/assets/images/favicon.ico" />
 
+<div class="back">
+  
 
-Filtres:
-<!-- Statut Dropdown -->
-<li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="statutDropdown"
-    role="button" data-mdb-toggle="dropdown" aria-expanded="false"
-    (click)="toggleDropdown(0); $event.preventDefault()">
-    Statut
-  </a>
-  <ul class="dropdown-menu" aria-labelledby="statutDropdown" [ngClass]="{'show': isDropdownOpen[0]}">
-    <li>
-      <a class="dropdown-item" (click)="appliquerFiltre('A Valider', null)">A Valider</a>
-    </li>
-    <li>
-      <a class="dropdown-item" (click)="appliquerFiltre('En Attente', null)">En Attente</a>
-    </li>
-    <li>
-      <a class="dropdown-item" (click)="appliquerFiltre('Validée', null)">Validee</a>
-    </li>
-  </ul>
-</li>
 
-<!-- Type Dropdown -->
-<li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="typeDropdown"
-    role="button" data-mdb-toggle="dropdown" aria-expanded="false"
-    (click)="toggleDropdown(1); $event.preventDefault()">
-    Type
-  </a>
-  <ul class="dropdown-menu" aria-labelledby="typeDropdown" [ngClass]="{'show': isDropdownOpen[1]}">
-    <li>
-      <a class="dropdown-item" (click)="appliquerFiltre(null, 'C')">CREDIT</a>
-    </li>
-    <li>
-      <a class="dropdown-item" (click)="appliquerFiltre(null, 'D')">DEBIT</a>
-    </li>
-  </ul>
-</li>
-
+  Filtres:
+  <!-- Statut Dropdown -->
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="statutDropdown"
+      role="button" data-mdb-toggle="dropdown" aria-expanded="false"
+      (click)="toggleDropdown(0); $event.preventDefault()">
+      Statut
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="statutDropdown" [ngClass]="{'show': isDropdownOpen[0]}">
+      <li>
+        <a class="dropdown-item" (click)="appliquerFiltre('A Valider', null)">A Valider</a>
+      </li>
+      <li>
+        <a class="dropdown-item" (click)="appliquerFiltre('En Attente', null)">En Attente</a>
+      </li>
+      <li>
+        <a class="dropdown-item" (click)="appliquerFiltre('Validée', null)">Validee</a>
+      </li>
+    </ul>
+  </li>
+  
+  <!-- Type Dropdown -->
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="typeDropdown"
+      role="button" data-mdb-toggle="dropdown" aria-expanded="false"
+      (click)="toggleDropdown(1); $event.preventDefault()">
+      Type
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="typeDropdown" [ngClass]="{'show': isDropdownOpen[1]}">
+      <li>
+        <a class="dropdown-item" (click)="appliquerFiltre(null, 'C')">CREDIT</a>
+      </li>
+      <li>
+        <a class="dropdown-item" (click)="appliquerFiltre(null, 'D')">DEBIT</a>
+      </li>
+    </ul>
+  </li>
+<div class="container32">
 <table id="datatable" class="table data-table table-striped table-bordered">
   <thead>
     <tr>
@@ -123,3 +151,12 @@ Filtres:
     </tr>
   </tbody>
 </table>
+</div>
+
+
+
+
+
+
+
+</div>

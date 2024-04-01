@@ -1,49 +1,66 @@
-
-  <div class="nav"> 
-    <input type="checkbox" id="nav-check">
-    <div class="nav-header">
-      <img src="/assets/elzeilogo.png" alt="Logo" width="100">
-    </div>
-    <div class="nav-btn">
-      <label for="nav-check"> 
-        <span></span>
-         <span></span> 
-         <span></span> 
-        </label>
-    </div>
-    <div class="nav-links"> <a href="home" class="navbar-brand">Gestion Comptes Comptables</a> </div>
-    <div class="nav-links"> <a href="PCG" class="navbar-brand">PCG</a> </div>
-    <div class="nav-links">    <a href="operation" class="navbar-brand">Operations</a>
-    </div>
-
-    <div class="nav-links">
-      <a>Comptes</a>
-      <div class="dropdown-content"> 
-        <li>
-          <a class="dropdown-item" routerLink="Comptes"  >Liste Comptes</a>
-        </li> <a href="add">Ajouter Compte</a>
-      </div>
-    </div>
-
-    <div class="nav-links">
-      <a>Classes</a>
-      <div class="dropdown-content">
-        <li>
-          <a class="dropdown-item" routerLink="Classe" >Liste Classe</a>
-        </li> <a href="">Ajouter Compte</a>
-      </div>
-    </div>
-    <div class="nav-links">
-      <a>Configuration</a>
-      <div class="dropdown-content">
-        <li>
-          <a class="dropdown-item" routerLink="operation" (click)="mapFromCfonb()">CFONB Mapper</a>
-        </li> <a href="operation" (click)="mapFromRawOperation()">Bank Statment Mapper</a>
-      </div>
-    </div>
+<div class="nav">
   
-  <p></p>
-  <div class="container mt-3">
-    <router-outlet></router-outlet>
+  <input type="checkbox" id="nav-check">
+  <div class="nav-header">
+    <img src="/assets/elzeilogo.png" alt="Logo" width="100">
   </div>
+  <div class="nav-btn">
+    <label for="nav-check">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+  </div>
+
+ 
+  <div class="nav-links">
+    <a  href="#" routerLink="/home" routerLinkActive="active">Gestion Comptes Comptables</a>
+  </div>
+
+
+  <div class="nav-links">
+    <a  href="#" routerLink="/PCG" routerLinkActive="active">PCG</a>
+  </div>
+
+   
+  <div class="nav-links">
+    <a href="#" routerLink="operation" routerLinkActive="active">Operations</a>
+  </div>
+
+
+
+
+  <div class="nav-links">
+    <a>Classes</a>
+    <div class="dropdown-content">
+        <a routerLink="Classes" >Liste Classe</a>
+       <a href="addClass">Ajouter Classe</a>
+    </div>
+  </div>
+
+
+  <div class="nav-links">
+    <a>Comptes</a>
+    <div class="dropdown-content"> 
+        <a  routerLink="Comptes"  >Liste Comptes</a>
+       <a href="add">Ajouter Compte</a>
+    </div>
+  </div>
+
+ 
+  <div class="nav-links">
+    <a>Configuration</a>
+    <div class="dropdown-content">
+        <a  routerLink="operation" (click)="mapFromCfonb()">CFONB Mapper</a>
+       <a href="operation" (click)="mapFromRawOperation()">Bank Statment Mapper</a>
+    </div>
+  </div>
+
+
+
+ 
+
+
+
 </div>
+<router-outlet></router-outlet>

@@ -26,12 +26,32 @@
     --mm-orange: rgba(253, 126, 20, 0.1);
     --mm-purple: rgba(71, 49, 182, 0.1)
 }
-body {
-    margin: 0px;
-    font-family: 'segoe ui';
-    background:#f5f5f5 no-repeat center center fixed;
+.back {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 100;
+  min-width: 50%;
+  min-height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+  background-size: cover; 
+  height: 100vh; /* Set height to 100% of viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  background-image: radial-gradient(at 300px 300px, rgba(60, 201, 95, 0.5) 0, #E9FFDB 70%), url("../assets/image.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Keep the background fixed while scrolling */
+    background-size: cover; 
+    height: 100vh; /* Set height to 100% of viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    animation: myAnimation 30s linear infinite alternate;
   }
-
+.container32{
+    margin-left: 5%;
+    margin-top:2% ;
+    margin-right: 2%;
+}
 :root {
     --blue: #7ed957;
     --indigo: #6610f2;
@@ -102,7 +122,9 @@ body {
     color: #535f6b;
     text-align: left;
     background-color: #f7f9ff
+    
 }
+
 
 [tabindex="-1"]:focus:not(:focus-visible) {
     outline: 0 !important
@@ -111,7 +133,7 @@ body {
 hr {
     box-sizing: content-box;
     height: 0;
-    overflow: visible
+    
 }
 .datatable {
     border-collapse: collapse;
@@ -251,7 +273,11 @@ svg {
 }
 
 table {
-    border-collapse: collapse
+    border-collapse: collapse;
+    border-bottom : 200px solid transparent;
+    background-color: rgba(255, 255, 255, 0.7);
+
+
 }
 
 caption {
@@ -29354,3 +29380,150 @@ body.mm-hotel.header-style-1 .main-circle i {
     border-radius: 50%;
     opacity: 0.05
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.ag-format-container {
+    width: 1142px;
+    margin: 0 auto;
+  }
+  @keyframes myAnimation {
+    100% { background-position: 0% 50%; } /* Start from the left side */
+    100% { background-position: 100% 50%; } /* Move to the right side */
+  }
+
+  
+  @keyframes gradient {
+    0% {
+      background-position: 100% 50%;
+    }
+    50% {
+      background-position: 50% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+
+
+
+.body2 {
+    margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+  background-size: cover; 
+  height: 100vh; /* Set height to 100% of viewport height */
+  }
+  
+  .wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #24C6DC;
+    background: -webkit-linear-gradient(to bottom, #514A9D, #24C6DC);  
+    background: linear-gradient(to bottom, #ACE1AF , #F0FFF0) ;
+    background-repeat: no-repeat;
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+  background-size: cover; 
+  height: 100vh; /* Set height to 100% of viewport height */
+  }
+  
+  .box div {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    border: 6px solid #03C03C;
+  }
+  
+  .box div:nth-child(1) {
+    top: 12%;
+    left: 42%;
+    animation: animate 5s linear infinite;
+    color: #000;
+  }
+  
+  .box div:nth-child(2) {
+    top: 70%;
+    left: 50%;
+    animation: animate 5s linear infinite;
+  }
+  .box div:nth-child(3) {
+    top: 17%;
+    left: 6%;
+    animation: animate 5s linear infinite;
+  }
+  
+  .box div:nth-child(4) {
+    top: 20%;
+    left: 60%;
+    animation: animate 5s linear infinite;
+  }
+  
+  .box div:nth-child(5) {
+    top: 67%;
+    left: 10%;
+    animation: animate 5s linear infinite;
+  }
+  
+  .box div:nth-child(6) {
+    top: 80%;
+    left: 70%;
+    animation: animate 5s linear infinite;
+  }
+  
+  .box div:nth-child(7) {
+    top: 60%;
+    left: 80%;
+    animation: animate 5s linear infinite;
+  }
+  
+  .box div:nth-child(8) {
+    top: 32%;
+    left: 25%;
+    animation: animate 5s linear infinite;
+  }
+  
+  .box div:nth-child(9) {
+    top: 90%;
+    left: 25%;
+    animation: animate 5s linear infinite;
+  }
+  
+  .box div:nth-child(10) {
+    top: 20%;
+    left: 80%;
+    animation: animate 5s linear infinite;
+  }
+  
+  @keyframes animate {
+    0% {
+      transform: scale(0) translateY(-90px) rotate(360deg);
+      opacity: 1;
+    }
+   
+    100% {
+      transform: scale(1.3) translateY(-90px) rotate(-180deg);
+      border-radius: 50%;
+      opacity: 0;
+    }
+  }

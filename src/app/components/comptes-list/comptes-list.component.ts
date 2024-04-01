@@ -31,7 +31,8 @@ export class ComptesListComponent {
     libele: this.selectedCompte.libele,
     code: this.selectedCompte.code,
     description: this.selectedCompte.description,
-    classe_id: this.selectedCompte.classe_id // Assurez-vous d'inclure classe_id
+    classe_id: this.selectedCompte.classe_id, // Assurez-vous d'inclure classe_id
+    subComptes: this.selectedCompte.subComptes,
   };
   
   listComptes(){

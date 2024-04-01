@@ -1,24 +1,36 @@
-<!-- compte-details.component.html -->
-<br><br><br>
 <div class="col-md-6 mx-auto">
-    <div class="card text-white mb-3" [style.background-color]="selectedClasseColor" style="max-width: 75%;">
-        <div class="card-header">{{ selectedClasse?.numcl }}</div>
+  <div class="card text-white mb-3" [style.background-color]="selectedClasseColor" style="max-width: 75%;">
+    <div class="card-header">{{ selectedClasse?.numcl }}</div>
     <div class="card-body">
       <h6 class="card-title">{{ selectedClasse?.nom }}</h6>
       <p class="card-text">{{ selectedClasse?.description }}</p>
       <table>
-        <tr *ngFor="let compte of comptes">
-          <td>
-            {{ compte.code }} . {{ compte.libele }}
-          </td>
-          <td> </td>
-          <td>
-            <button class="btn btn-outline-secondary btn-sm mr-2 card-button" (click)="editCompte(compte.id)">Edit</button>
-          </td>
-        </tr>
+        <ng-container *ngFor="let compte of comptes">
+          <tr>
+            <td>
+              {{ compte.code }} . {{ compte.libele }}
+            </td>
+            <td></td>
+            <td>
+              <button class="btn btn-outline-secondary btn-sm mr-2 card-button" (click)="editCompte(compte.id)">Edit</button>
+            </td>
+            <td>
+              <button class="btn btn-outline-secondary btn-sm mr-2 card-button" (click)="editCompte(compte.id)">Consulter</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-secondary btn-small" (click)="addCompte(compte.id)" mdbRipple rippleColor="secondary">Ajouter</button>
+            </td>
+          </tr>
+          <!-- Boucle pour les sous-comptes -->
+          <ng-container *ngFor="let subCompte of compte.subComptes">
+            <tr>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ subCompte.code }} . {{ subCompte.libele }}</td>
+              <!-- Les autres colonnes pour les boutons d'édition, de consultation, etc. peuvent être ajoutées ici si nécessaire -->
+            </tr>
+          </ng-container>
+        </ng-container>
       </table>
     </div>
   </div>
 </div>
-
-
+ 
