@@ -16,7 +16,6 @@ export class AddCompteComponent implements OnInit {
     code: '',
     description: '',
     classe_id: 0,
-    subComptes: [], // Ajoutez la propriété subComptes
 
   };
   submitted = false;

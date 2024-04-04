@@ -87,30 +87,11 @@ export class CompteDetailsComponent {
         const url = `http://localhost:8080/api/v1/test/byClasse/${classeId}`;
         this.http.get<any[]>(url).subscribe(
           (comptes) => {
+            console.log('Comptes for the classe:', comptes);
             this.comptes = comptes;
-            console.log('Comptes récupérés:', this.comptes);
-            
-            // Parcourir les comptes pour ajouter les sous-comptes à chaque compte parent
-            this.comptes.forEach((compte: Compte) => {
-              // Vérifier si le compte a un parent (s'il s'agit d'un sous-compte)
-              if (compte.parent_compte_id) {
-                // Trouver le compte parent correspondant dans la liste des comptes
-                const parentCompte = this.comptes.find(c => c.id === compte.parent_compte_id);
-                console.log('Parent Compte:', parentCompte);
-                // Ajouter le compte actuel comme sous-compte au compte parent
-                if (parentCompte && !parentCompte.subComptes) {
-                  parentCompte.subComptes = []; // Initialiser le tableau des sous-comptes s'il n'existe pas encore
-                }
-                if (parentCompte) {
-                  parentCompte.subComptes.push(compte);
-                  console.log('Sous-compte ajouté au parent:', compte);
-                }
-              }
-            });
-            console.log('Comptes après ajout des sous-comptes:', this.comptes);
           },
           (error) => {
-            console.error('Erreur lors du chargement des comptes', error);
+            console.error('Error loading comptes:', error);
           }
         );
       }
