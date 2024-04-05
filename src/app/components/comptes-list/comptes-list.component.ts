@@ -38,7 +38,7 @@ export class ComptesListComponent {
  
     this.compteService.getComptes().subscribe((res:any) =>{
       this.comptes=res
-      console.log("reponse",this.comptes)
+      console.log("reponse comptes",this.comptes)
      
     }
     )

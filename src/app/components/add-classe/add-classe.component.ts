@@ -57,7 +57,7 @@ export class AddClasseComponent implements OnInit {
  
     this.classeService.getClasses().subscribe((res:any) =>{
       this.classes=res
-      console.log("reponse",this.classes)
+      console.log("reponse classes",this.classes)
      
     }
     )

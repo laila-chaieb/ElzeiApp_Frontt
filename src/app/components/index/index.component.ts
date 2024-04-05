@@ -35,7 +35,7 @@ export class IndexComponent implements OnInit {
  
     this.classeService.getClasses().subscribe((res:any) =>{
       this.classes=res
-      console.log("reponse",this.classes)
+     
      
     }
     )
