@@ -32,19 +32,28 @@ export class AddCompteComponent implements OnInit {
       const classe_id = +params['classe_id'];
       const parent_compte_id = +params['parent_compte_id'];
       
-      // Assurez-vous que les valeurs récupérées sont valides
       console.log('Classe ID:', classe_id);
       console.log('Parent Compte ID:', parent_compte_id);
       
-      // Assurez-vous que l'objet Compte est correctement initialisé
       this.Compte = new Compte();
       
-      // Assignez les valeurs récupérées à l'objet Compte
       this.Compte.classe_id = classe_id;
       this.Compte.parent_compte_id = parent_compte_id;
+  
+      // Récupérer le code du compte parent s'il existe
+      if (parent_compte_id) {
+        this.CompteService.getCompte(parent_compte_id).subscribe(
+          parentCompte => {
+            this.Compte.code = parentCompte.code;
+          },
+          error => {
+            console.error('Erreur lors de la récupération du code du compte parent :', error);
+          }
+        );
+      }
     });
   
-  
+    // Votre code existant pour récupérer un compte existant si l'ID est présent
     const isIdPresent = this._activatedRoute.snapshot.paramMap.has('id');
     if (isIdPresent) {
       const idParam = this._activatedRoute.snapshot.paramMap.get('id');
@@ -61,15 +70,11 @@ export class AddCompteComponent implements OnInit {
       }
     }
   }
+  
 
-  listComptes() {
-    this.CompteService.getComptes().subscribe((res: any) => {
-      this.comptes = res;
-      console.log('reponse', this.comptes);
-    });
-  }
+ 
 
-  saveCompte() {
+ /* saveCompte() {
     console.log('Contenu du compte avant soumission :', this.Compte);
   
     // Récupérer l'ID de la classe associée au compte depuis l'objet Compte
@@ -95,6 +100,46 @@ export class AddCompteComponent implements OnInit {
         console.error('Erreur lors de la création du compte', error);
       }
     );
+  }*/
+  saveCompte() {
+    const classeId = this.Compte.classe_id;
+    const parentId = this.Compte.parent_compte_id;
+
+    this.Compte.classe_id = classeId;
+    this.Compte.parent_compte_id = parentId;
+
+    // Récupérer le code du compte parent s'il existe et l'ajouter aux données à envoyer
+    if (parentId) {
+        this.CompteService.getCompte(parentId).subscribe(
+            parentCompte => {
+                this.Compte.code = parentCompte.code;
+                this.createCompte();
+            },
+            error => {
+                console.error('Erreur lors de la récupération du code du compte parent :', error);
+            }
+        );
+    } else {
+        this.createCompte();
+    }
+}
+
+createCompte() {
+    this.CompteService.create(this.Compte).subscribe(
+        (res) => {
+            console.log('Compte créé:', res);
+            this._router.navigate(['/Comptes']);
+        },
+        (error) => {
+            console.error('Erreur lors de la création du compte', error);
+        }
+    );
+}
+
+  listComptes() {
+    this.CompteService.getComptes().subscribe((res: any) => {
+      this.comptes = res;
+      console.log('reponse', this.comptes);
+    });
   }
-  
 }
