@@ -12,10 +12,14 @@
             class="form-input"
             id="code"
             required
-            [(ngModel)]="Compte.code"
+            [ngModel]="Compte.code"
             name="code"
+            maxlength="1"
+            (keypress)="allowOnlyOneDigit($event)"
           />
         </div>
+        
+        <div *ngIf="invalidInput" class="error-message">Vous ne pouvez ajouter qu'un seul chiffre au code.</div>
         <div class="form-group">
           <label class="form-label" for="libele">Libellé:</label>
           <input
@@ -44,7 +48,13 @@
             name="description"
           ></textarea>
         </div>
-          
+        <a>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <input type="button" class="button-container" value="Sauvegarder" >
+        </a> 
         <button type="submit" class="form-button">Enregistrer</button>
       </div>
     </div>

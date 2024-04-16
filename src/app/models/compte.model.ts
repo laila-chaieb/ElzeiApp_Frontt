@@ -1,3 +1,5 @@
+import { Classe } from 'src/app/models/classe.model';
+
 export class Compte {
   id?: any;
   code?: any;
@@ -5,5 +7,7 @@ export class Compte {
   classe_id?: number;
   description?: string;
   parent_compte_id?:number
-
+  classeNumcl?: string;
+  classeNom?: string;
+  Classe?: Classe;
 }

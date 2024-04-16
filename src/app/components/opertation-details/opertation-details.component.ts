@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component,  ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Classe } from 'src/app/models/classe.model';
 import { Compte } from 'src/app/models/compte.model';
@@ -11,6 +11,7 @@ import { MatSelect } from '@angular/material/select';
 import { AsyncPipe } from '@angular/common';
 import { JustificatifService } from 'src/app/services/justificatif.service';
 import { switchMap, tap } from 'rxjs';
+import { ElementRef } from '@angular/core';
 @Component({
   selector: 'app-opertation-details',
   templateUrl: './opertation-details.component.html',
@@ -19,7 +20,7 @@ import { switchMap, tap } from 'rxjs';
 export class OpertationDetailsComponent {
 
   constructor(private  compteService:CompteService,private  OperationService:OperationService, private activatedRoute: ActivatedRoute ,
-    private router: Router,   private http: HttpClient,private classeService: ClasseService,private justificatifService:JustificatifService) {
+    private router: Router,   private http: HttpClient,private classeService: ClasseService,private justificatifService:JustificatifService,private elementRef: ElementRef) {
       const state = this.router.getCurrentNavigation()?.extras?.state;
       
 
@@ -50,7 +51,7 @@ export class OpertationDetailsComponent {
         this.OperationService.getOperationById(this.operationId).subscribe(
           (operation) => {
             this.selectedOperation = operation;
-      
+            console.log('Opération:', operation); // Afficher l'objet operation dans la console
           },
           (error) => {
             console.error('Erreur lors du chargement des détails de l\'opération', error);
@@ -71,7 +72,8 @@ export class OpertationDetailsComponent {
         );
       });
       this.listClasses()
-    }
+    } 
+    
     onCompteChange(event: any): void {
       // Obtenez la valeur sélectionnée du MatSelect
       const selectedCompteId = this.compteSelect.value;
@@ -148,11 +150,11 @@ onClasseChange(event: any): void {
 
 onCompteFilter(event: Event): void {
   const target = event.target as HTMLInputElement;
-  const filterText = target.value;
+  const filterText = target.value.toLowerCase(); // Convertir en minuscules
 
   // Filtrer les comptes en fonction du texte de filtrage et de la classe sélectionnée
   this.filteredComptes = this.comptes.filter(compte =>
-    compte && compte.libele && compte.libele.toLowerCase().includes(filterText.toLowerCase())
+    compte && compte.code.toString().toLowerCase().includes(filterText) || (compte.libele && compte.libele.toLowerCase().includes(filterText))
   );
 
   // Ouvrir automatiquement la liste déroulante
@@ -160,6 +162,11 @@ onCompteFilter(event: Event): void {
     this.compteSelect.open();
   }
 }
+
+
+
+
+
 
 
 
@@ -269,6 +276,17 @@ onSubmit(): void {
 }
 
 
+
+selectCompte(compte: Compte): void {
+  this.selectedCompteId = compte.id;
+  this.selectedCompte = compte;
+  // Vous pouvez effectuer d'autres actions ici si nécessaire, comme la fermeture de la liste après la sélection
+
+  // Mettez à jour l'opération avec le compte sélectionné
+  this.selectedOperation.compte = compte;
+  // Appelez la méthode d'update pour mettre à jour l'opération avec le nouveau compte
+  this.updateOperationProperty(this.selectedOperation, 'compte', compte);
+}
 
 
   }

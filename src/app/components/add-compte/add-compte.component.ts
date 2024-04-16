@@ -20,6 +20,7 @@ export class AddCompteComponent implements OnInit {
   };
   submitted = false;
   successMessage: string = '';
+  invalidInput: boolean = false;
 
   constructor(
     private CompteService: CompteService,
@@ -142,4 +143,19 @@ createCompte() {
       console.log('reponse', this.comptes);
     });
   }
+  allowOnlyOneDigit(event: any) {
+    // Empêche la saisie de caractères autres que des chiffres
+    const allowedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const inputChar = String.fromCharCode(event.charCode);
+  
+    if (!allowedChars.includes(inputChar)) {
+      event.preventDefault();
+    }
+  
+    // Si le champ contient déjà un chiffre, empêche la saisie d'un autre
+    if (this.Compte.code && this.Compte.code.length >= 1) {
+      event.preventDefault();
+    }
+  }
+  
 }

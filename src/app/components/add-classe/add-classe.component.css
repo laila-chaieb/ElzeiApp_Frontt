@@ -101,18 +101,11 @@ section {
   justify-content: center;
   width: 120px;
 }
-body{
-
-  background: url("../assets/image.jpg");
-    background-size:100% auto;
-    position: absolute;
-    top: 90px;
-    left: 0;
-    right: 0;
-    bottom: 100;
-    margin: auto;
-    min-width: 50%;
-    min-height: 100%;
-    overflow-x: hidden;
-    overflow-y: hidden;
-  }
+body {
+  background: linear-gradient(-45deg, #ACE1AF, #F0F8FF, #F2F3F4, #D0F0C0,#E9FFDB)no-repeat center center fixed;
+  background-size:100% auto;
+  animation: gradient 5s ease infinite;
+  height: 100vh;
+  width: auto;
+  overflow-x: hidden;
+}

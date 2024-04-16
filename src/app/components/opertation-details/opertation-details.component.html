@@ -1,6 +1,3 @@
-<br><br><br>
-<br><br><br>
-<br><br><br>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <body>
@@ -23,8 +20,11 @@
 
           <div class="form-group">
             <label class="form-label" for="Type">Type:</label>
-            <input class="form-input" id="Type" [value]="selectedOperation?.type" disabled />
+            <input class="form-input" id="Type" [value]="selectedOperation?.type === 'D' ? 'DEBIT' : 'CREDIT'"
+              disabled />
           </div>
+
+
 
           <div class="form-group">
             <label class="form-label" for="dateOperation">Date Operation :</label>
@@ -67,11 +67,15 @@
               </select>
             </td>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="statut">Statut :</label>
-            <input class="form-input" id="statut" [value]="selectedOperation?.status" disabled />
-          </div>
 
+
+
+          <div class="form-group">
+            <label class="form-label" for="Type">Montant TVA:</label>
+            <input class="form-input" id="Type"
+              [value]="selectedOperation.montant * (selectedOperation.tauxTVA ? selectedOperation.tauxTVA : 1) | currency:'EUR':'symbol':'1.2-2'"
+              disabled />
+          </div>
 
 
 
@@ -82,45 +86,40 @@
             <input type="file" name="file" class="form-input" id="justificatif" (change)="onFileSelected($event)" />
           </div>
 
-
           <div class="container">
-
             <div class="form-group">
               <label class="form-label" for="Classe">Classe:</label>
               <select id="Classe" class="form-input" (change)="onClasseChange($event)">
+                <!-- Option pour afficher la classe associée à l'opération -->
+                <option [value]="selectedOperation.compte?.classe?.numcl || 'Aucune classe associée'">
+                  {{ selectedOperation.compte?.classe?.numcl || 'Aucune classe associée' }}
+                </option>
+                <!-- Autres options pour les classes -->
                 <option value="all">Toutes les classes</option>
-                <option *ngFor="let classe of classes" [value]="classe.id">{{ classe.numcl }} :{{ classe.nom }}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="Compte">Compte:</label>
-              <input class="form-input" id="Compte"
-                [value]="selectedOperation['compte']?.libele || 'Aucun Compte associé'" />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="Compte">Compte:</label>
-              <select class="form-input" [(ngModel)]="selectedOperation['Compte']"
-                [ngModelOptions]="{ standalone: true }"
-                (change)="updateOperationProperty(selectedOperation, 'compte', { id:$any($event.target).value });">
-                <option *ngFor="let compte of comptes" [value]="compte.id"
-                  [selected]="selectedOperation['compte']?.libele || 'Aucun Compte associé'">
-                  {{ compte.code }} - {{ compte.libele }}
+                <option *ngFor="let classe of classes" [value]="classe.id">{{ classe.nom }}: {{ classe.numcl }}
                 </option>
               </select>
             </div>
 
+            <div class="form-group">
+              <label class="form-label" for="Compte">Compte:</label>
+              <!-- Champ de saisie pour filtrer -->
+              <input type="text" id="CompteFilter" class="form-input" placeholder="Rechercher des comptes"
+                (input)="onCompteFilter($event)"
+                [value]="selectedOperation['compte'] ? selectedOperation['compte'].code + ' - ' + selectedOperation['compte'].libele : 'Aucun compte associé'" />
+              <!-- Liste des comptes filtrés -->
+              <ul class="compte-list">
+                <ng-container *ngFor="let compte of filteredComptes; let i = index">
+                  <li *ngIf="i < 4" (click)="selectCompte(compte)">
+                    {{ compte.code }} - {{ compte.libele }}
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+
+
+
           </div>
-
-
-
-
-
-
-
-
-
-
-
 
         </form>
 
