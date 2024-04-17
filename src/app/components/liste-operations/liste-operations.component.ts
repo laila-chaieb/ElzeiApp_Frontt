@@ -18,7 +18,7 @@ export class ListeOperationsComponent implements OnInit {
   //Declaration
   operations: Operation[] = [];
   comptes: Compte[] = [];
-
+  filtreMois: number | null = null;
   filtreStatus: string | null = null;
   filtreType: string | null = null;
   selectedOperation: Operation | null = null;
@@ -31,60 +31,67 @@ export class ListeOperationsComponent implements OnInit {
     private compteService: CompteService,
   ) { }
 
-  ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
-      const successMessage = params['success'];
-
-
-      if (successMessage) {
-        console.log(successMessage);
-        // Affichez le message de succès dans votre template ou effectuez les actions nécessaires
-      }
-      this.listOperations();
-      this.listComptes();
-    });
-  }
   //Filtrage
-  appliquerFiltre(status: string | null, type: string | null): void {
-    this.filtreStatus = status;
+  appliquerFiltre(statut: string | null, type: string | null, mois: number | null) {
+    this.filtreStatus = statut;
     this.filtreType = type;
+    this.filtreMois = mois; // Ajoutez cette ligne pour stocker le filtre par mois
     this.listOperations();
     this.closeDropdown();
   }
 
+ 
 
   listOperations(): void {
     console.log('Filtrage en cours avec status:', this.filtreStatus);
     console.log('Filtrage en cours avec type:', this.filtreType);
+    console.log('Filtrage en cours avec mois:', this.filtreMois);
 
-    this.operationService.getOperations(this.filtreStatus, this.filtreType).subscribe(
-      (res: any) => {
-        console.log('Résultats après filtrage:', res);
-        this.operations = res;
+    // Appel au service pour récupérer les opérations SANS le filtre par mois
+    this.operationService.getOperations(this.filtreStatus, this.filtreType, null).subscribe(
+        (res: Operation[]) => {
+            // Appliquer le filtre par mois après avoir reçu les données
+            this.operations = res.filter((operation: Operation) => {
+                // Filtre par mois
+                if (this.filtreMois && (new Date(operation.dateOP)).getMonth() !== this.filtreMois - 1) {
+                    return false; // Ne correspond pas au filtre de mois
+                }
+                // Filtre par status
+                if (this.filtreStatus && operation.status !== this.filtreStatus) {
+                    return false; // Ne correspond pas au filtre de statut
+                }
+                // Filtre par type
+                if (this.filtreType && operation.type !== this.filtreType) {
+                    return false; // Ne correspond pas au filtre de type
+                }
+                // Si l'opération passe tous les filtres, la conserver
+                return true;
+            });
 
-        this.operations.forEach(operation => {
-          console.log('Opération:', operation);
-          if (operation['compte']) {
-            console.log('Compte associé:', operation['compte']);
-          } else {
-            console.log('Aucun compte associé à cette opération.');
-          }
-        });
-      },
-      (error) => {
-        console.error('Erreur lors de la mise à jour de tauxTVA:', error);
-        try {
-          const errorBody = JSON.parse(error.error);
-          console.log('Corps de la réponse en erreur:', errorBody);
-        } catch (e) {
-          console.log('La réponse d\'erreur n\'est pas un JSON valide:', error.error);
+            // Affichage des opérations filtrées dans la console
+            this.operations.forEach(operation => {
+                console.log('Opération:', operation);
+                if (operation['compte']) {
+                    console.log('Compte associé:', operation['compte']);
+                } else {
+                    console.log('Aucun compte associé à cette opération.');
+                }
+            });
+        },
+        (error) => {
+            // Gestion des erreurs de récupération des opérations
+            console.error('Erreur lors de la récupération des opérations:', error);
+            try {
+                const errorBody = JSON.parse(error.error);
+                console.log('Corps de la réponse en erreur:', errorBody);
+            } catch (e) {
+                console.log('La réponse d\'erreur n\'est pas un JSON valide:', error.error);
+            }
         }
-      }
     );
-  }
+}
 
-
-
+  
 
 
 
@@ -92,6 +99,27 @@ export class ListeOperationsComponent implements OnInit {
 
   toggleDropdown(index: number): void {
     this.isDropdownOpen[index] = !this.isDropdownOpen[index];
+    this.closeDropdownsExcept(index);
+  }
+  
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(params => {
+     
+
+
+    
+      this.listOperations();
+      this.listComptes();
+    })
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      const isDropdown = target.closest('.dropdown-menu');
+      if (!isDropdown) {
+        this.closeDropdownsExcept(-1);
+      }
+    });
+  
+    // Le reste de votre code ngOnInit() ici...
   }
 
   closeDropdown() {
@@ -100,7 +128,13 @@ export class ListeOperationsComponent implements OnInit {
 
   }
 
-
+  closeDropdownsExcept(index: number): void {
+    for (let i = 0; i < this.isDropdownOpen.length; i++) {
+      if (i !== index) {
+        this.isDropdownOpen[i] = false;
+      }
+    }
+  }
   viewOperationDetails(Operation: any): void {
     this.router.navigate(['detailsOperation', Operation.id]);
 

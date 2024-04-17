@@ -14,23 +14,23 @@ export class OperationService {
 
     filtreStatus: string | null = null;
     filtreType: string | null = null;
+    filtreMonth: string | null = null;
 
   constructor(private http: HttpClient) { }
 
-  getOperations(status: string | null, type: string | null): Observable<Operation[]> {
-    // Créer un objet HttpParams pour gérer les paramètres de la requête
+  getOperations(status: string | null, type: string | null, mois: number | null): Observable<Operation[]> {
     let params = new HttpParams();
-    
-    // Ajouter les paramètres à la requête s'ils sont fournis
+  
     if (status) {
       params = params.set('status', status);
     }
-
     if (type) {
       params = params.set('type', type);
     }
-
-    // Utiliser les paramètres dans la requête HTTP
+    if (mois !== null) {
+      params = params.set('mois', mois.toString());
+    }
+  
     return this.http.get<Operation[]>(this.baseUrl, { params });
   }
   getOperationById(id: number): Observable<Operation> {

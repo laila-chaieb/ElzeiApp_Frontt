@@ -1,4 +1,4 @@
-<br><br><br>
+
 <body>
 <div>
   <form  (ngSubmit)="saveCompte()">
@@ -6,18 +6,18 @@
     <div class="submit-form">
       <div *ngIf="!submitted">
         
+       
+        
         <div class="form-group">
           <label class="form-label" for="code">Code : </label>
-          <input
-            class="form-input"
-            id="code"
-            required
-            [ngModel]="Compte.code"
-            name="code"
-            maxlength="1"
-            (keypress)="allowOnlyOneDigit($event)"
-          />
+          
+            
+            <input class="form-input" matInput #input [attr.maxlength]="maxLength"
+            required [ngModel]="Compte.code" name="code"  />
+            
+         
         </div>
+        
         
         <div *ngIf="invalidInput" class="error-message">Vous ne pouvez ajouter qu'un seul chiffre au code.</div>
         <div class="form-group">
@@ -30,14 +30,7 @@
             name="libele"
           />
         </div>
-        <div>
-          <label class="form-label" for="classe_id">Numéro classe</label>
-          <input class="form-input" id="classe_id" name="classe_id" [(ngModel)]="Compte.classe_id" readonly>
-        </div>
-        <div>
-          <label class="form-label" for="parent_compte_id">Compte Parent</label>
-          <input class="form-input" id="parent_compte_id" name="parent_compte_id" [(ngModel)]="Compte.parent_compte_id" readonly>
-      </div>      
+         
         <div>
           <label class="form-label" for="description">Description:</label>
           <textarea
