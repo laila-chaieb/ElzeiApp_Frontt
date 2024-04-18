@@ -20,11 +20,6 @@
 
 
 
-
-
-
-
-
   <div class="mx-auto">
     <div class="card text-white mb-3" [style.background-color]="selectedClasseColor" style="max-width: 75%;">
       <div class="card-header text-style">{{ selectedClasse?.numcl }}</div>
@@ -34,7 +29,7 @@
         <table>
           <tbody>
             <ng-container *ngFor="let compte of comptes">
-              <tr>
+              <tr *ngIf="compte.code.toString().length === 2">
                 <td>
                   <span class="black-text">{{ compte.code }} . {{ compte.libele }}</span>
                 </td>
@@ -42,10 +37,14 @@
                   <button class="button-44" (click)="editCompte(compte.id)"></button>
                 </td>
                 <td>
-                  <button type="button" class="button-33" (click)="addCompte(compte.id)"></button>
+                  <button type="button" class="button-33" (click)="toggleSubComptes(compte.id)">Afficher les sous-comptes</button>
+                  <div *ngIf="selectedParentCompteId === compte.id">
+                    <ul>
+                      <li *ngFor="let subCompte of subComptes">{{ subCompte.code }} - {{ subCompte.libele }}</li>
+                    </ul>
+                  </div>
                 </td>
               </tr>
-             
             </ng-container>
           </tbody>
         </table>

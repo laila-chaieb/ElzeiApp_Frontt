@@ -10,4 +10,6 @@ export class Compte {
   classeNumcl?: string;
   classeNom?: string;
   Classe?: Classe;
+  subComptes?: Compte[]; // Assurez-vous d'ajouter le '?' pour indiquer que cette propriété est facultative
+
 }

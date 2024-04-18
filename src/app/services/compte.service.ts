@@ -93,5 +93,13 @@ export class CompteService {
       })
     );
   }
- 
+  getComptesByCompteParentId(ParentID: number): Observable<Compte[]> {
+    const url = `${this.baseUrl}/subcomptes/${ParentID}`;
+    return this.http.get<Compte[]>(url).pipe(
+      catchError((error) => {
+        console.error('Erreur lors de la récupération des comptes par ParentID', error);
+        throw error; 
+      })
+    );
+  }
 }

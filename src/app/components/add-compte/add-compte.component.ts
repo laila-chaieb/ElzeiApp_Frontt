@@ -108,21 +108,24 @@ export class AddCompteComponent implements OnInit {
     this.Compte.classe_id = classeId;
     this.Compte.parent_compte_id = parentId;
 
-    // Récupérer le code du compte parent s'il existe et l'ajouter aux données à envoyer
-    if (parentId) {
-        this.CompteService.getCompte(parentId).subscribe(
-            parentCompte => {
-                this.Compte.code = parentCompte.code;
-                this.createCompte();
-            },
-            error => {
-                console.error('Erreur lors de la récupération du code du compte parent :', error);
-            }
-        );
-    } else {
-        this.createCompte();
-    }
+    // Capturer la valeur entrée dans le champ de code et la stocker dans this.Compte.code
+    const codeInput = (document.getElementById('code') as HTMLInputElement).value;
+    this.Compte.code = codeInput.trim();
+
+    // Enregistrer le compte avec les champs correctement remplis
+    this.CompteService.create(this.Compte).subscribe(
+        (res) => {
+            console.log('Compte créé:', res);
+            this._router.navigate(['/Comptes']);
+        },
+        (error) => {
+            console.error('Erreur lors de la création du compte', error);
+        }
+    );
 }
+
+
+
 
 createCompte() {
     this.CompteService.create(this.Compte).subscribe(

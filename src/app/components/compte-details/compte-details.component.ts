@@ -30,7 +30,7 @@ export class CompteDetailsComponent {
     classes: Classe[] = [];
     subComptes: Compte[] = []; // Tableau des sous-comptes
     parentCompte: Compte | undefined; // Définir le type de parentCompte
-
+    selectedParentCompteId: number | null = null;
     listComptes(){
  
       this.compteService.getComptes().subscribe((res:any) =>{
@@ -132,5 +132,31 @@ updateCompte(updatedCompte: Compte) {
  );
 }
 
+onCompteClick(parentId: number) {
+  this.selectedParentCompteId = parentId;
+  this.loadSubComptes(parentId);
+}
 
+loadSubComptes(parentId: number) {
+  this.compteService.getComptesByCompteParentId(parentId).subscribe(
+    (subComptes) => {
+      console.log('Sub comptes:', subComptes);
+      this.subComptes = subComptes;
+    },
+    (error) => {
+      console.error('Error fetching sub comptes:', error);
+    }
+  );
+}
+
+toggleSubComptes(compteId: number): void {
+  // Logique pour afficher ou masquer les sous-comptes en fonction de l'ID du compte
+  // Mettez à jour la variable selectedParentCompteId
+  if (this.selectedParentCompteId === compteId) {
+    this.selectedParentCompteId = null; // Fermer la liste déroulante si elle est déjà ouverte
+  } else {
+    this.selectedParentCompteId = compteId; // Ouvrir la liste déroulante pour le compte sélectionné
+    this.loadSubComptes(compteId); // Charger les sous-comptes pour le compte sélectionné
+  }
+}
 }
