@@ -15,11 +15,6 @@
     </rect>
   </svg>
 
-
-
-
-
-
   <div class="mx-auto">
     <div class="card text-white mb-3" [style.background-color]="selectedClasseColor" style="max-width: 75%;">
       <div class="card-header text-style">{{ selectedClasse?.numcl }}</div>
@@ -31,18 +26,59 @@
             <ng-container *ngFor="let compte of comptes">
               <tr *ngIf="compte.code.toString().length === 2">
                 <td>
-                  <span class="black-text">{{ compte.code }} . {{ compte.libele }}</span>
-                </td>
-                <td>
-                  <button class="button-44" (click)="editCompte(compte.id)"></button>
-                </td>
-                <td>
-                  <button type="button" class="button-33" (click)="toggleSubComptes(compte.id)">Afficher les sous-comptes</button>
-                  <div *ngIf="selectedParentCompteId === compte.id">
+                  <span class="black-text clickable" (click)="toggleSubComptes(compte.id)">
+                    {{ compte.code }} . {{ compte.libele }}
+                  </span>
+                  <!-- Utilisez isCompteSelected pour afficher les sous-comptes -->
+                  <div *ngIf="isCompteSelected(compte.id)">
                     <ul>
-                      <li *ngFor="let subCompte of subComptes">{{ subCompte.code }} - {{ subCompte.libele }}</li>
+                      <!-- Niveau 1 -->
+                      <li class="black-text clickable" *ngFor="let subCompte1 of subComptesByCompteId[compte.id]" (click)="toggleSubComptes(subCompte1.id)">
+                        {{ subCompte1.code }} - {{ subCompte1.libele }}
+                        <!-- Utilisez isCompteSelected pour afficher les sous-sous-comptes -->
+                        <div *ngIf="isCompteSelected(subCompte1.id)">
+                          <ul>
+                            <!-- Niveau 2 -->
+                            <li class="black-text clickable" *ngFor="let subCompte2 of subComptesByCompteId[subCompte1.id]" (click)="toggleSubComptes(subCompte2.id)">
+                              {{ subCompte2.code }} - {{ subCompte2.libele }}
+                              <!-- Utilisez isCompteSelected pour afficher les sous-sous-comptes -->
+                              <div *ngIf="isCompteSelected(subCompte2.id)">
+                                <ul>
+                                  <!-- Niveau 3 -->
+                                  <li class="black-text clickable" *ngFor="let subCompte3 of subComptesByCompteId[subCompte2.id]" (click)="toggleSubComptes(subCompte3.id)">
+                                    {{ subCompte3.code }} - {{ subCompte3.libele }}
+                                    <!-- Utilisez isCompteSelected pour afficher les sous-sous-comptes -->
+                                    <div *ngIf="isCompteSelected(subCompte3.id)">
+                                      <ul>
+                                        <!-- Niveau 4 -->
+                                        <li class="black-text clickable" *ngFor="let subCompte4 of subComptesByCompteId[subCompte3.id]" (click)="toggleSubComptes(subCompte4.id)">
+                                          {{ subCompte4.code }} - {{ subCompte4.libele }}
+                                          <!-- Utilisez isCompteSelected pour afficher les sous-sous-comptes -->
+                                          <div *ngIf="isCompteSelected(subCompte4.id)">
+                                            <ul>
+                                              <!-- Niveau 5 -->
+                                              <li class="black-text clickable" *ngFor="let subCompte5 of subComptesByCompteId[subCompte4.id]" (click)="toggleSubComptes(subCompte5.id)">
+                                                {{ subCompte5.code }} - {{ subCompte5.libele }}
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
                     </ul>
                   </div>
+                </td>
+                <!-- Boutons pour le compte principal -->
+                <td>
+                  <button class="button-44" (click)="editCompte(compte.id)"></button>
+                  <button class="button-33" (click)="addCompte(compte.id)"></button>
                 </td>
               </tr>
             </ng-container>

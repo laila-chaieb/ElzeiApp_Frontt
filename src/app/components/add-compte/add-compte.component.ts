@@ -48,14 +48,9 @@ export class AddCompteComponent implements OnInit {
         this.CompteService.getCompte(parent_compte_id).subscribe(
           parentCompte => {
             parentCode = parentCompte.code; // Stocker le code du parent
-            // Convertir le code en chaîne de caractères et obtenir sa longueur
-            const parentCodeLength = parentCode.toString().length;
-            // Calculer la longueur maximale en ajoutant 1 à la longueur du code du parent
-            this.maxLength = parentCodeLength + 1;
-            console.log('MaxLength (Computed):', this.maxLength);
-  
-            // Maintenant que nous avons calculé la longueur maximale, nous pouvons définir le code du parent dans le Compte
-            this.Compte.code = parentCode;
+            // Concaténer un chiffre supplémentaire pour le nouveau compte
+            this.Compte.code = parentCode + '1'; // Par exemple, vous pouvez ajouter '1' pour le premier compte fils
+            // Vous pouvez également ajouter une logique pour générer le chiffre supplémentaire en fonction du nombre de sous-comptes déjà existants, si nécessaire
           },
           error => {
             console.error('Erreur lors de la récupération du code du compte parent :', error);
@@ -69,38 +64,9 @@ export class AddCompteComponent implements OnInit {
     });
   }
   
-  
-  
-  
  
 
- /* saveCompte() {
-    console.log('Contenu du compte avant soumission :', this.Compte);
-  
-    // Récupérer l'ID de la classe associée au compte depuis l'objet Compte
-    const classeId = this.Compte.classe_id;
-  
-    // Récupérer l'ID du compte parent associé au compte depuis l'objet Compte
-    const parentId = this.Compte.parent_compte_id;
-  
-    // Remplir automatiquement le champ "classe_id" dans l'objet "Compte"
-    this.Compte.classe_id = classeId;
-  
-    // Remplir automatiquement le champ "parent_compte_id" dans l'objet "Compte"
-    this.Compte.parent_compte_id = parentId;
-  
-    // Enregistrer le compte avec les champs correctement remplis
-    this.CompteService.create(this.Compte).subscribe(
-      (res) => {
-        console.log('Compte créé:', res);
-        // Rediriger vers la page liste comptes après l'enregistrement
-        this._router.navigate(['/Comptes']);
-      },
-      (error) => {
-        console.error('Erreur lors de la création du compte', error);
-      }
-    );
-  }*/
+ 
   saveCompte() {
     const classeId = this.Compte.classe_id;
     const parentId = this.Compte.parent_compte_id;
@@ -108,9 +74,7 @@ export class AddCompteComponent implements OnInit {
     this.Compte.classe_id = classeId;
     this.Compte.parent_compte_id = parentId;
 
-    // Capturer la valeur entrée dans le champ de code et la stocker dans this.Compte.code
-    const codeInput = (document.getElementById('code') as HTMLInputElement).value;
-    this.Compte.code = codeInput.trim();
+    
 
     // Enregistrer le compte avec les champs correctement remplis
     this.CompteService.create(this.Compte).subscribe(

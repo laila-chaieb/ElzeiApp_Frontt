@@ -137,26 +137,67 @@ onCompteClick(parentId: number) {
   this.loadSubComptes(parentId);
 }
 
-loadSubComptes(parentId: number) {
-  this.compteService.getComptesByCompteParentId(parentId).subscribe(
+
+
+// Objet pour stocker les sous-sous-comptes de chaque sous-compte ouvert
+subSubComptesByCompteId: { [key: number]: Compte[] } = {};
+
+// Fonction pour charger les sous-comptes récursivement
+loadSubComptes(compteId: number): void {
+  this.compteService.getComptesByCompteParentId(compteId).subscribe(
     (subComptes) => {
-      console.log('Sub comptes:', subComptes);
-      this.subComptes = subComptes;
+      console.log('Sub comptes for compteId:', compteId, subComptes);
+      this.subComptesByCompteId[compteId] = subComptes;
+      
+      // Chargez les sous-sous-comptes pour chaque sous-compte
+      subComptes.forEach((subCompte) => {
+        this.loadSubSubComptes(subCompte.id);
+      });
     },
     (error) => {
       console.error('Error fetching sub comptes:', error);
     }
   );
 }
+subComptesByCompteId: { [key: number]: Compte[] } = {};
+  openCompteIds: number[] = [];
 
+// Fonction pour charger les sous-sous-comptes
+loadSubSubComptes(subCompteId: number): void {
+  this.compteService.getComptesByCompteParentId(subCompteId).subscribe(
+    (subSubComptes) => {
+      console.log('Sub sub comptes for subCompteId:', subCompteId, subSubComptes);
+      this.subSubComptesByCompteId[subCompteId] = subSubComptes;
+    },
+    (error) => {
+      console.error('Error fetching sub sub comptes:', error);
+    }
+  );
+}
+
+
+
+
+// Initialisez un objet pour stocker les états d'ouverture des comptes
+openCompteStates: { [compteId: number]: boolean } = {};
+
+// Fonction pour ouvrir/fermer les sous-comptes
 toggleSubComptes(compteId: number): void {
-  // Logique pour afficher ou masquer les sous-comptes en fonction de l'ID du compte
-  // Mettez à jour la variable selectedParentCompteId
-  if (this.selectedParentCompteId === compteId) {
-    this.selectedParentCompteId = null; // Fermer la liste déroulante si elle est déjà ouverte
+  // Vérifier si le compte est déjà ouvert
+  const isOpen = this.openCompteStates[compteId];
+  if (isOpen) {
+    // Si oui, le fermer
+    this.openCompteStates[compteId] = true;
   } else {
-    this.selectedParentCompteId = compteId; // Ouvrir la liste déroulante pour le compte sélectionné
-    this.loadSubComptes(compteId); // Charger les sous-comptes pour le compte sélectionné
+    // Sinon, l'ouvrir
+    this.openCompteStates[compteId] = true;
+    this.loadSubComptes(compteId); // Charger les sous-comptes si nécessaire
   }
 }
+
+// Fonction pour vérifier si un compte est ouvert
+isCompteSelected(compteId: number): boolean {
+  return this.openCompteStates[compteId] || false; // Retourne false si le compte n'existe pas dans l'objet
+}
+
 }
