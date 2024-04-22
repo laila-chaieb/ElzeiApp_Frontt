@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Compte } from 'src/app/models/compte.model';
 import { CompteService } from 'src/app/services/compte.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
 @Component({
   selector: 'app-add-compte',
   templateUrl: './add-compte.component.html',
@@ -16,7 +15,6 @@ export class AddCompteComponent implements OnInit {
     code: '',
     description: '',
     classe_id: 0,
-
   };
   submitted = false;
   successMessage: string = '';
@@ -48,9 +46,14 @@ export class AddCompteComponent implements OnInit {
         this.CompteService.getCompte(parent_compte_id).subscribe(
           parentCompte => {
             parentCode = parentCompte.code; // Stocker le code du parent
-            // Concaténer un chiffre supplémentaire pour le nouveau compte
-            this.Compte.code = parentCode + '1'; // Par exemple, vous pouvez ajouter '1' pour le premier compte fils
-            // Vous pouvez également ajouter une logique pour générer le chiffre supplémentaire en fonction du nombre de sous-comptes déjà existants, si nécessaire
+            // Convertir le code en chaîne de caractères et obtenir sa longueur
+            const parentCodeLength = parentCode.toString().length;
+            // Calculer la longueur maximale en ajoutant 1 à la longueur du code du parent
+            this.maxLength = parentCodeLength + 1;
+            console.log('MaxLength (Computed):', this.maxLength);
+  
+            // Maintenant que nous avons calculé la longueur maximale, nous pouvons définir le code du parent dans le Compte
+            this.Compte.code = parentCode;
           },
           error => {
             console.error('Erreur lors de la récupération du code du compte parent :', error);
@@ -64,33 +67,34 @@ export class AddCompteComponent implements OnInit {
     });
   }
   
- 
-
- 
+  
   saveCompte() {
     const classeId = this.Compte.classe_id;
     const parentId = this.Compte.parent_compte_id;
-
+  
     this.Compte.classe_id = classeId;
     this.Compte.parent_compte_id = parentId;
+    console.log('Parent Compte code:', this.Compte.code);
 
-    
+    // Capturer la valeur entrée dans le champ de code et la stocker dans this.Compte.code
+    const codeInput = (document.getElementById('code') as HTMLInputElement).value.trim();
+  
+    // Utiliser la valeur modifiée du code si elle existe, sinon utiliser le code du compte parent
+    this.Compte.code = codeInput || this.Compte.code;
+    console.log('Parent Compte code:', this.Compte.code);
 
     // Enregistrer le compte avec les champs correctement remplis
     this.CompteService.create(this.Compte).subscribe(
-        (res) => {
-            console.log('Compte créé:', res);
-            this._router.navigate(['/Comptes']);
-        },
-        (error) => {
-            console.error('Erreur lors de la création du compte', error);
-        }
+      (res) => {
+        console.log('Compte créé:', res);
+        this._router.navigate(['/Comptes']);
+      },
+      (error) => {
+        console.error('Erreur lors de la création du compte', error);
+      }
     );
-}
-
-
-
-
+  }
+  
 createCompte() {
     this.CompteService.create(this.Compte).subscribe(
         (res) => {
@@ -102,43 +106,10 @@ createCompte() {
         }
     );
 }
-
   listComptes() {
     this.CompteService.getComptes().subscribe((res: any) => {
       this.comptes = res;
       console.log('reponse', this.comptes);
     });
   }
-  allowOnlyOneDigit(event: any) {
-    // Récupère le caractère saisi
-    const inputChar = event.key;
-    console.log('Input char:', inputChar);
-  
-    // Vérifie si le caractère est un chiffre
-    if (!isNaN(inputChar) && inputChar !== ' ') {
-      console.log('Digit entered:', inputChar);
-      // Si le champ ne contient pas déjà un chiffre, autorise la saisie
-      if (!this.Compte.code || this.Compte.code.length === 0) {
-        console.log('Code does not contain a digit, allowing input.');
-        // Ajoute le chiffre saisi à la valeur existante du champ
-        this.Compte.code = inputChar;
-      } else {
-        console.log('Code already contains a digit, preventing input.');
-        event.preventDefault();
-      }
-    } else {
-      console.log('Non-digit character entered, preventing input.');
-      // Bloque la saisie de caractères autres que des chiffres
-      event.preventDefault();
-    }
   }
-  
-  
-  
-  }
-  
-  
-  
-  
-  
-

@@ -100,7 +100,9 @@ export class ComptesListComponent {
         this.router.navigate(['/']);      },
      
       (error) => {
+        this.router.navigate(['/Comptes']);
         console.error('Error updating compte', error);
+   
         // Affichez un message d'erreur
       }
     );
