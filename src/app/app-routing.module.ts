@@ -11,6 +11,8 @@ import { TableauComptesComponent } from './components/tableau-comptes/tableau-co
 import { ListeOperationsComponent } from './components/liste-operations/liste-operations.component';
 import { OpertationDetailsComponent } from './components/opertation-details/opertation-details.component';
 import { MappingComponentComponent } from './components/mapping-component/mapping-component.component';
+import { CreateRuleComponent } from './components/create-rule/create-rule.component';
+import { ListeRulesComponent } from './components/liste-rules/liste-rules.component';
 
 
 const routes: Routes = [
@@ -25,6 +27,8 @@ const routes: Routes = [
   { path: 'operation', component: ListeOperationsComponent },
   { path: 'detailsOperation/:id', component: OpertationDetailsComponent },
   { path: 'Mapping', component: MappingComponentComponent },
+  { path: 'addRule', component: CreateRuleComponent },
+  { path: 'rules', component: ListeRulesComponent },
 
 
   { path: '**', redirectTo: 'home' } // Redirection vers 'home' pour les chemins inconnus

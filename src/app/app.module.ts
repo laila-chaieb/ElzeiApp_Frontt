@@ -40,6 +40,8 @@ import { TableauComptesComponent } from './components/tableau-comptes/tableau-co
 import { ListeOperationsComponent } from './components/liste-operations/liste-operations.component';
 import { OpertationDetailsComponent } from './components/opertation-details/opertation-details.component';
 import { MappingComponentComponent } from './components/mapping-component/mapping-component.component';
+import { CreateRuleComponent } from './components/create-rule/create-rule.component';
+import { ListeRulesComponent } from './components/liste-rules/liste-rules.component';
 
 
 
@@ -58,6 +60,8 @@ import { MappingComponentComponent } from './components/mapping-component/mappin
     ListeOperationsComponent,
     OpertationDetailsComponent,
     MappingComponentComponent,
+    CreateRuleComponent,
+    ListeRulesComponent,
    
   ],
 

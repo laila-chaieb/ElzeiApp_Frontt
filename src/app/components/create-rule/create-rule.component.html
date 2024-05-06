@@ -1,0 +1,57 @@
+
+<body>
+   
+ <br> 
+  <form [formGroup]="myForm" class='myfor'>
+  
+    
+
+<div class="login-wrap1">
+  <div class="login-html">
+    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Règle</label>
+    <div class="login-form">
+<br><br>
+<tr>
+    <td>
+            <div class="group">
+            <label  class="label" for="description">description:</label><br>
+            <input class="input" type="text" id="description" name="description" formControlName="description" required  ><br>
+        </div>
+    </td>
+     </tr>
+     <td>
+        <div class="group">
+        <label  class="label" for="condition">Condition:</label><br>
+        <input class="input" type="text" id="condition" name="condition" formControlName="condition" required  ><br>
+    </div>
+</td>
+       
+         <tr>
+            
+  
+        <td>
+        <div class="group">
+            <label  class="label" for="address">COMPTE :</label><br>
+            <td>
+       
+                <label  class="label" for="tauxTVA">Taux TVA:</label><br>
+                <input class="input" type="text" id="tauxTVA" name="tauxTVA" formControlName="tauxTVA" required><br>
+           </td>
+         <td>
+            <label  class="label" for="code">Code:</label><br>
+            <input class="input" type="text" id="code" name="code" formControlName="code" required><br>
+        </td>
+         <td>
+            <label  class="label" for="type">Type:</label><br>
+            <input class="input" type="text" id="type" name="type" formControlName="type" required><br>
+        </td>
+        </div>
+    </td>
+
+</tr>
+        <div class="group">
+            <input class="input" type="button" class="button"  value="Sauvegarder" routerLink="/rules" (click)="save()">
+        </div>  
+   
+        </div>
+    </div>

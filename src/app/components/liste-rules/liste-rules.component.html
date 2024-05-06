@@ -1,0 +1,44 @@
+
+<body>
+  
+  
+    <section>
+      <div class="container">
+        <input [(ngModel)]="searchTerm" type="text" placeholder="Search..." />
+        <button class="search"></button>
+      </div><br>
+  
+      <!--for demo wrap-->
+      <h1>List des Rules</h1>
+      <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>description</th>
+              <th>condition/th>
+              <th>taux TVA</th> <!-- Moved 'Adresse' header here -->
+              <th>type</th>
+              <th>code</th>
+            
+            </tr>
+          </thead>
+     
+          <tbody>
+            <tr *ngFor="let Rule of Rules">
+              <td>{{ Rule.id }}</td>
+              <td>{{ Rule.description }}</td>
+              <td>{{ Rule.condition }}</td>
+              <td>{{ Rule.tauxTVA }}</td>
+              <td>{{ Rule.type }}</td>
+              <td>{{ Rule.code }}</td>
+        
+            </tr>  
+          </tbody>
+        </table>
+      </div>
+      
+  
+    </section>
+  </body>
+  

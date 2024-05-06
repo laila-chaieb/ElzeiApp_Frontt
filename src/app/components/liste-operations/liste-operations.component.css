@@ -236,7 +236,7 @@
   background-size: cover; 
   height: 100vh; /* Set height to 100% of viewport height */
   overflow-y: auto; /* Enable vertical scrolling */
-  background-image: radial-gradient(at 300px 300px, rgba(60, 201, 95, 0.5) 0, #E9FFDB 70%), url("../assets/image.jpg");
+  background-image: radial-gradient(at 300px 300px, rgba(60, 201, 95, 0.5) 0, #E9FFDB 70%);
     background-repeat: no-repeat;
     background-attachment: fixed; /* Keep the background fixed while scrolling */
     background-size: cover; 
