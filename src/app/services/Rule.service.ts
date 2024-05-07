@@ -49,4 +49,17 @@ export class RuleService {
       map(response => response)
     )
   }
+   // Méthode pour générer et écrire les règles DRL
+  generateAndWriteRulesDRL(): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}/generateAndWriteRulesDRL`, {}).pipe(
+      map(response => response)
+    );
+  }
+
+  // Méthode pour exécuter les règles
+  executeRules(): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}/executeRules`, {}).pipe(
+      map(response => response)
+    );
+  }
 }

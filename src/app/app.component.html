@@ -53,13 +53,21 @@
     <div class="dropdown-content">
         <a  routerLink="operation" (click)="mapFromCfonb()">CFONB Mapper</a>
        <a href="operation" (click)="mapFromRawOperation()">Bank Statment Mapper</a>
-       <a href="addRule" >Ajouter une Règle</a>
-       <a href="rules" >Liste des règles</a>
     </div>
   </div>
 
 
 
+  <div class="nav-links">
+    <a>Validation</a>
+    <div class="dropdown-content">
+       <a href="addRule" >Ajouter une Règle</a>
+       <a href="rules" >Liste des règles</a>
+       <a  (click)="generateAndWriteRules()" >Mettre à jour les règles</a>
+       <a (click)="executeRules()" >Valider Opérations</a>
+
+    </div>
+  </div>
  
 
 
