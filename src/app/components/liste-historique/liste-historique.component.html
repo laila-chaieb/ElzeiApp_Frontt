@@ -1,0 +1,47 @@
+
+<link href='https://unpkg.com/css.gg@2.0.0/icons/css/check-o.css' rel='stylesheet'>
+<body>
+    <section>
+        <h1>Règles à valider</h1>
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                    <tr>
+                        <th>Libellé</th>
+                        <th>Occurrence</th>
+                        <th>Opérations</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Utilisation de *ngFor pour itérer sur les entrées du tableau operationLibellesCount -->
+                    <tr *ngFor="let keyValuePair of operationLibellesCount | keyvalue">
+                        <!-- Vérification si l'entrée a une clé (libellé) et une valeur (occurrence) -->
+                        <ng-container *ngIf="keyValuePair.key && keyValuePair.value">
+                            <td>{{ keyValuePair.key }}</td>
+                            <td>{{ keyValuePair.value[0] }}</td>
+                            <td>
+                                <!-- Vérification si keyValuePair.value[1] est présent -->
+                                <div *ngIf="keyValuePair.value[1]">
+                                    <ul>
+                                        <!-- Itération sur la liste des opérations -->
+                                        <li *ngFor="let operation of keyValuePair.value[1]">
+                                            <p>id: {{ operation?.id }}</p>
+                                            <p>Montant: {{ operation?.id }}</p>
+                                            <p>Type: {{ operation?.type }}</p>
+                                            <p>TVA deductible: {{ operation?.tvadeductible }}</p>
+                                            <p>Taux TVA: {{ operation?.tauxTVA }}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td><i (click)="ADDrule(operationLibellesCount)" class="gg-check-o"
+                                    style="color: rgb(27, 238, 97)"></i></td>
+                        </ng-container>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>

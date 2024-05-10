@@ -42,6 +42,8 @@ import { OpertationDetailsComponent } from './components/opertation-details/oper
 import { MappingComponentComponent } from './components/mapping-component/mapping-component.component';
 import { CreateRuleComponent } from './components/create-rule/create-rule.component';
 import { ListeRulesComponent } from './components/liste-rules/liste-rules.component';
+import { ListeHistoriqueComponent } from './components/liste-historique/liste-historique.component';
+import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
 
 
 
@@ -62,6 +64,9 @@ import { ListeRulesComponent } from './components/liste-rules/liste-rules.compon
     MappingComponentComponent,
     CreateRuleComponent,
     ListeRulesComponent,
+    ListeHistoriqueComponent,
+
+    DialogConfirmComponent,
    
   ],
 

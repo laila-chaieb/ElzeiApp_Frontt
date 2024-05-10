@@ -17,8 +17,7 @@ import { EditDialogComponentComponent } from '../edit-dialog/edit-dialog-compone
 export class IndexComponent implements OnInit {
   comptes:any;
   classes:any;
-  classe1: any;
-  classe2: any;
+
   classe :any;
   selectedCompte: Compte = new Compte();
   selectedClasse: Classe = new Classe();

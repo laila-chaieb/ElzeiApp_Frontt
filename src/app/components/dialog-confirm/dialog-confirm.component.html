@@ -1,0 +1,13 @@
+
+<h2 class="mat-dialog-title" mat-dialog-title>Confirmer Règle</h2>
+<br>
+<mat-dialog-content class="mat-dialog-content">
+    Êtes-vous sûr d'ajouter cette règle ?
+   {{data.code}} {{data.tauxTVA}}
+</mat-dialog-content>
+<mat-dialog-actions class="mat-dialog-actions">
+  <button class="mat-dialog-actions button:first-child" mat-button mat-dialog-close>Non</button>
+ 
+  <button  mat-button [mat-dialog-close]="true" cdkFocusInitial style="background-color: #7ed957;" center>OUI</button>
+</mat-dialog-actions>
+

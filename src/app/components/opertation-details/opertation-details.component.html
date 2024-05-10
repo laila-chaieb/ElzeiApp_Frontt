@@ -85,8 +85,9 @@
             <label class="form-label" for="justificatif">Justificatif :</label>
             <input type="file" name="file" class="form-input" id="justificatif" (change)="onFileSelected($event)" />
           </div>
-
-          <div class="container">
+<tr>
+  <td>
+         
             <div class="form-group">
               <label class="form-label" for="Classe">Classe:</label>
               <select id="Classe" class="form-input" (change)="onClasseChange($event)">
@@ -100,7 +101,8 @@
                 </option>
               </select>
             </div>
-
+           </td>
+           <td>
             <div class="form-group">
               <label class="form-label" for="Compte">Compte:</label>
               <!-- Champ de saisie pour filtrer -->
@@ -110,17 +112,18 @@
               <!-- Liste des comptes filtrés -->
               <ul class="compte-list">
                 <ng-container *ngFor="let compte of filteredComptes; let i = index">
-                  <li *ngIf="i < 4" (click)="selectCompte(compte)">
+                  <li *ngIf="i < 5" (click)="selectCompte(compte)">
                     {{ compte.code }} - {{ compte.libele }}
                   </li>
                 </ng-container>
               </ul>
             </div>
+          
+          
 
-
-
-          </div>
-
+        
+        </td>
+        </tr>
         </form>
 
         <br>

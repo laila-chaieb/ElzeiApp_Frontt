@@ -1,0 +1,322 @@
+
+h1{
+    font-size: 30px;
+    color: #2c2c2c;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: "HelveticaNeueLT Std Lt Cn", Sans-serif;
+  }
+  
+  table {
+    width: 100%;
+    table-layout: auto;
+    border-collapse: collapse; /* Ajouté pour supprimer la ligne de séparation */
+    
+  }
+  
+  .tbl-header {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .tbl-content { /*transparance*/
+    height: 300;
+    overflow-x: auto;
+    margin-top: 0px;
+  }
+  
+  th {
+    padding: 20px 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    color: #000000;
+    text-transform: uppercase;
+  }
+  
+  td {
+    padding: 15px;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 12px;
+    color: #000000;
+  }
+  
+  
+  
+  
+  
+  
+  tbody { /*selectioner une ligne de la table*/
+    tr {
+      &:hover {
+        background-color: rgba(255,255,255,0.3);
+      }
+    }
+    td {
+      position: relative;
+      &:hover {
+        &:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: -9999px;
+          bottom: -9999px;
+          background-color: rgba(255,255,255,0.2);
+          z-index: -1;
+        }
+      }
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* demo styles */
+  
+  @keyframes myAnimation {
+    100% { background-position: 0% 50%; } /* Start from the left side */
+    100% { background-position: 100% 50%; } /* Move to the right side */
+  }
+  body {
+    background-image: radial-gradient(at 300px 300px, rgba(60, 201, 95, 0.5) 0, #E9FFDB 70%);
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Keep the background fixed while scrolling */
+    background-size: cover; 
+    height: 100vh; /* Set height to 100% of viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    animation: myAnimation 30s linear infinite alternate;
+  }
+  section{
+    margin: 50px;
+  }
+  
+  
+  /* follow me template */
+  .made-with-love {
+    margin-top: 40px;
+    padding: 10px;
+    clear: left;
+    text-align: center;
+    font-size: 10px;
+    font-family: arial;
+    color: #000000;
+  }
+  .made-with-love i {
+    font-style: normal;
+    color: rgb(20, 220, 47);
+    font-size: 14px;
+    position: relative;
+    top: 2px;
+  }
+  .made-with-love a {
+    color: #000000;
+    text-decoration: none;
+  }
+  .made-with-love a:hover {
+    text-decoration: underline;
+  }
+  
+  
+  /* for custom scrollbar for webkit browser*/
+  
+  ::-webkit-scrollbar {
+      width: 6px;
+  } 
+  ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  } 
+  ::-webkit-scrollbar-thumb {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* CSS for the input field */
+  input[type="text"] {
+  padding: 10px; /* Adjust padding as needed */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  width: 300px; /* Set width as needed */
+  }
+  
+  /* CSS for the button */
+  button {
+  padding: 10px 20px; /* Adjust padding as needed */
+  background-color: #007bff; /* Button background color */
+  color: #fff; /* Button text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Cursor on hover */
+  font-size: 16px; /* Font size */
+  }
+  
+  /* Hover effect for the button */
+  button:hover {
+  background-color: #0056b3; /* Darker background color on hover */
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+  
+  .container {
+  position: absolute;
+  margin: static;
+  top: 50px;
+  left: auto; /* Changement ici */
+  right: 5%; /* Ancienne valeur : 0 */
+  bottom: 0;
+  width: 300px;
+  height: 100px;
+  .search {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    background: rgb(20, 220, 47);
+    border-radius: 50%;
+    transition: all 1s;
+    z-index: 4;
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 25px 0 rgb(20, 220, 47);
+    &:hover {
+      cursor: pointer;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      margin: auto;
+      top: 22px;
+      right: 0;
+      bottom: 0;
+      left: 22px;
+      width: 12px;
+      height: 2px;
+      background: white;
+      transform: rotate(45deg);
+      transition: all .2s;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      margin: auto;
+      top: -5px;
+      right: 0;
+      bottom: 0;
+      left: -5px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 2px solid white;
+      transition: all .2s;
+    }
+  }
+  input {
+    font-family: 'HelveticaNeueLT Std Lt Cn', monospace;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    outline: none;
+    border: none;
+     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgb(20, 220, 47);
+    color: white;
+    text-shadow: 0 0 10px rgb(86, 212, 103);
+    padding: 0 80px 0 20px;
+    border-radius: 30px;
+    box-shadow: 0 0 25px 0 rgb(77, 206, 94),
+                0 20px 25px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 25px 0 rgba(0, 0, 0, 0.5);
+    transition: all 1s;
+    opacity: 0;
+    z-index: 5;
+    font-weight: bolder;
+    letter-spacing: 0.1em;
+    &:hover {
+      cursor: pointer;
+    }
+    &:focus {
+      width: 300px;
+      opacity: 1;
+      cursor: text;
+    }
+    &:focus ~ .search {
+      right: -250px;
+      background: #222222;
+      z-index: 6;
+      &::before {
+        top: 0;
+        left: 0;
+        width: 25px;
+      }
+      &::after {
+        top: 0;
+        left: 0;
+        width: 25px;
+        height: 2px;
+        border: none;
+        background: white;
+        border-radius: 0%;
+        transform: rotate(-45deg);
+      }
+    }
+    &::placeholder {
+      color: white;
+      opacity: 0.2;
+      font-weight: bolder;
+    }
+  }
+  }

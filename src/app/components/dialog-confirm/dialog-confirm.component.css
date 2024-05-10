@@ -1,0 +1,40 @@
+/* Style pour le titre */
+.mat-dialog-title {
+    color: #000000; /* Couleur du texte */
+    font-size: 24px; /* Taille de la police */
+    font-weight: bold; /* Gras */
+    text-align: center; /* Centrer le texte */
+}
+
+
+/* Style pour le contenu */
+.mat-dialog-content {
+    color: #686666; /* Couleur du texte */
+    font-size: 18px; /* Taille de la police */
+}
+
+/* Style pour les boutons */
+.mat-dialog-actions {
+    justify-content: flex-end; /* Alignement des boutons à droite */
+}
+
+/* Style pour les boutons */
+.mat-dialog-actions button {
+    margin-left: 8px; /* Marge entre les boutons */
+    border: none; /* Supprime les bordures */
+    padding: 8px 16px; /* Espacement interne */
+    border-radius: 4px; /* Bordures arrondies */
+    cursor: pointer; /* Curseur de la souris */
+}
+
+/* Style pour le bouton "Non" */
+.mat-dialog-actions button:first-child {
+    background-color: #d42323; /* Rouge */
+    color: #fff; /* Blanc pour le texte */
+}
+
+/* Style pour le bouton "OUI" */
+.mat-dialog-actions button:last-child {
+    background-color: #7ed957; /* Bleu */
+    color: #fff; /* Blanc pour le texte */
+}

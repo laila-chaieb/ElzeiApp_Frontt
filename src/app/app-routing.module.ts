@@ -13,6 +13,7 @@ import { OpertationDetailsComponent } from './components/opertation-details/oper
 import { MappingComponentComponent } from './components/mapping-component/mapping-component.component';
 import { CreateRuleComponent } from './components/create-rule/create-rule.component';
 import { ListeRulesComponent } from './components/liste-rules/liste-rules.component';
+import { ListeHistoriqueComponent } from './components/liste-historique/liste-historique.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'Mapping', component: MappingComponentComponent },
   { path: 'addRule', component: CreateRuleComponent },
   { path: 'rules', component: ListeRulesComponent },
+  { path: 'historiques', component: ListeHistoriqueComponent },
 
 
   { path: '**', redirectTo: 'home' } // Redirection vers 'home' pour les chemins inconnus

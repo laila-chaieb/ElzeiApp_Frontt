@@ -53,7 +53,7 @@ export class AddCompteComponent implements OnInit {
             console.log('MaxLength (Computed):', this.maxLength);
   
             // Maintenant que nous avons calculé la longueur maximale, nous pouvons définir le code du parent dans le Compte
-            this.Compte.code = parentCode;
+            this.Compte.code = parentCode || null;
           },
           error => {
             console.error('Erreur lors de la récupération du code du compte parent :', error);
@@ -80,7 +80,7 @@ export class AddCompteComponent implements OnInit {
     const codeInput = (document.getElementById('code') as HTMLInputElement).value.trim();
   
     // Utiliser la valeur modifiée du code si elle existe, sinon utiliser le code du compte parent
-    this.Compte.code = codeInput || this.Compte.code;
+    this.Compte.code = codeInput || null;
     console.log('Parent Compte code:', this.Compte.code);
 
     // Enregistrer le compte avec les champs correctement remplis

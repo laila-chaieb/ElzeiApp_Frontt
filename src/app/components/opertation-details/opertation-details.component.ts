@@ -12,6 +12,8 @@ import { AsyncPipe } from '@angular/common';
 import { JustificatifService } from 'src/app/services/justificatif.service';
 import { switchMap, tap } from 'rxjs';
 import { ElementRef } from '@angular/core';
+import { HistoriqueService } from 'src/app/services/historique.service';
+import { Historique } from 'src/app/models/historique.model';
 @Component({
   selector: 'app-opertation-details',
   templateUrl: './opertation-details.component.html',
@@ -20,7 +22,7 @@ import { ElementRef } from '@angular/core';
 export class OpertationDetailsComponent {
 
   constructor(private  compteService:CompteService,private  OperationService:OperationService, private activatedRoute: ActivatedRoute ,
-    private router: Router,   private http: HttpClient,private classeService: ClasseService,private justificatifService:JustificatifService,private elementRef: ElementRef) {
+    private router: Router,   private http: HttpClient,private classeService: ClasseService,private justificatifService:JustificatifService,private elementRef: ElementRef,private historiqueService :HistoriqueService) {
       const state = this.router.getCurrentNavigation()?.extras?.state;
       
 
@@ -275,18 +277,45 @@ onSubmit(): void {
   }
 }
 
+ // Méthode pour enregistrer l'affectation du compte dans la table historique
+ saveAffectationInHistorique(selectedOperation: Operation, compte: Compte): void {
+  // Créez un objet historique pour enregistrer l'affectation du compte
+  const historique: Historique = {
+    id: 0,
+    operation: selectedOperation,
+    date: new Date(), // Utilisez la date actuelle
+    compteAffecte: compte.code // Enregistrez l'ID du compte affecté
+  };
+  console.log('Historique :',historique)
+  // Appelez le service pour enregistrer l'historique
+  this.historiqueService.saveHistorique(historique).subscribe(
+    (response) => {
+      console.log('Affectation du compte enregistrée dans l\'historique avec succès:', response);
+      // Ajoutez des actions supplémentaires si nécessaire
+    },
+    (error) => {
+      console.error('Erreur lors de l\'enregistrement de l\'affectation du compte dans l\'historique:', error);
+      // Gérez l'erreur et affichez un message approprié si nécessaire
+    }
+  );
+}
 
 
 selectCompte(compte: Compte): void {
   this.selectedCompteId = compte.id;
   this.selectedCompte = compte;
-  // Vous pouvez effectuer d'autres actions ici si nécessaire, comme la fermeture de la liste après la sélection
 
   // Mettez à jour l'opération avec le compte sélectionné
   this.selectedOperation.compte = compte;
+
   // Appelez la méthode d'update pour mettre à jour l'opération avec le nouveau compte
   this.updateOperationProperty(this.selectedOperation, 'compte', compte);
+
+  // Enregistrez l'affectation du compte dans la table historique
+  console.log(this.selectedOperation)
+  this.saveAffectationInHistorique(this.selectedOperation, compte);
 }
+
 
 
   }

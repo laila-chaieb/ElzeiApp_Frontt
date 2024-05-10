@@ -27,7 +27,7 @@ export class CompteService {
 
   create(data: any): Observable<Compte> {
     const classeId = data.classe_id;
-    const parentCompteId = data.parent_compte_id; // Récupérer l'ID du parentCompte
+    let parentCompteId = data.parent_compte_id; // Récupérer l'ID du parentCompte
 
     // Supprimer les propriétés classe_id et parent_compte_id du compte avant l'envoi
     delete data.classe_id;
@@ -41,15 +41,21 @@ export class CompteService {
         ]).pipe(
             mergeMap(([classe, parentCompte]: any) => {
                 data.classe = classe;
-                data.parentCompte = parentCompte; // Ajouter l'objet parentCompte à data
+                // Vérifier si parentCompteId est un nombre valide avant de l'ajouter à data
+                parentCompteId = isNaN(parentCompteId) ? null : Number(parentCompteId);
+                data.parentCompte = parentCompteId;
                 return this.http.post<Compte>(this.baseUrl, data);
             })
         );
     } else {
         // Si classe_id n'est pas spécifié, envoyer simplement la requête POST sans la classe associée
+        // Vérifier si parentCompteId est un nombre valide avant de l'ajouter à data
+        parentCompteId = isNaN(parentCompteId) ? null : Number(parentCompteId);
+        data.parentCompte = parentCompteId;
         return this.http.post<Compte>(this.baseUrl, data);
     }
-  }
+}
+
 
 
   update(id: any, data: any): Observable<Compte> {
