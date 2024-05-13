@@ -15,7 +15,7 @@ export class CreateRuleComponent implements OnInit{
     condition: "",
     tauxTVA:0,
     type: "",
-    code: "",
+    code:0,
     
   }
   

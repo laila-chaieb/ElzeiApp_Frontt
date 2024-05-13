@@ -71,6 +71,8 @@ editClasse(id: number) {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.updateClasse(result);
+          this.listClasses();
+          this.router.navigate(['/home']);
         }
       });
     },
@@ -84,7 +86,9 @@ updateClasse(updatedClasse: Classe) {
   this.classeService.update(updatedClasse.id, updatedClasse).subscribe(
     (updatedClasse) => {
       console.log('Classe updated:', updatedClasse);
+      this.listClasses();
       // Effectuez les actions nécessaires après la mise à jour de la classe
+      this.router.navigate(['/home']);
     },
     (error) => {
       console.error('Error updating classe', error);

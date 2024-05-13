@@ -8,8 +8,10 @@
                 <thead>
                     <tr>
                         <th>Libellé</th>
+                        <th>Montant</th>
+                        <th>Type</th>
+                        <th>Taux TVA</th>
                         <th>Occurrence</th>
-                        <th>Opérations</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -19,29 +21,25 @@
                         <!-- Vérification si l'entrée a une clé (libellé) et une valeur (occurrence) -->
                         <ng-container *ngIf="keyValuePair.key && keyValuePair.value">
                             <td>{{ keyValuePair.key }}</td>
+                            <td>{{ calculateAverage(keyValuePair.value[1]) }}</td>
+                            <td>{{ keyValuePair.value[1][0]?.type }}</td>
+                            <td>{{ keyValuePair.value[1][0]?.tauxTVA }}</td>
+
+
                             <td>{{ keyValuePair.value[0] }}</td>
-                            <td>
-                                <!-- Vérification si keyValuePair.value[1] est présent -->
-                                <div *ngIf="keyValuePair.value[1]">
-                                    <ul>
-                                        <!-- Itération sur la liste des opérations -->
-                                        <li *ngFor="let operation of keyValuePair.value[1]">
-                                            <p>id: {{ operation?.id }}</p>
-                                            <p>Montant: {{ operation?.id }}</p>
-                                            <p>Type: {{ operation?.type }}</p>
-                                            <p>TVA deductible: {{ operation?.tvadeductible }}</p>
-                                            <p>Taux TVA: {{ operation?.tauxTVA }}</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td><i (click)="ADDrule(operationLibellesCount)" class="gg-check-o"
-                                    style="color: rgb(27, 238, 97)"></i></td>
+                           
+                      
+                           
+                            <td ><i (click)="ADDrule(ligne)" class="gg-check-o" style="color: rgb(27, 238, 97)"></i></td>
+
                         </ng-container>
                     </tr>
-
+                
+                    
                 </tbody>
             </table>
         </div>
     </section>
+
+    
 </body>

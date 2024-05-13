@@ -4,8 +4,8 @@ export class Rule {
     condition?: string;
     tauxTVA?: number;
     type?: string;
-    code?: string;
+    code?: number;
     
 
   }
-  
+              

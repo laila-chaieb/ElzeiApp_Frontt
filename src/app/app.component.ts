@@ -15,7 +15,7 @@ export class AppComponent {
     // Envoyer une requête HTTP POST pour mapper à partir de CFONB
     this.http.post(this.baseUrl + '/mapFromCfonb', {}).subscribe(
       () => {
-        console.log('Mapping from CFONB successful');
+        window.alert('Mapping from CFONB successful');
       },
       (error) => {
         console.error('Error mapping from CFONB:', error);
@@ -27,7 +27,7 @@ export class AppComponent {
     // Envoyer une requête HTTP POST pour mapper à partir d'une opération brute
     this.http.post(this.baseUrl + '/rawOperation', {}).subscribe(
       () => {
-        console.log('Mapping from Raw Operation successful');
+        window.alert('Mapping from Raw Operation successful');
       },
       (error) => {
         console.error('Error mapping from Raw Operation:', error);
