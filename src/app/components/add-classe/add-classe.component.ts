@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AddClasseComponent implements OnInit {
   Classe: Classe = {
+    id:0,
     description: '',
     nom: '',
     numcl: '',
@@ -75,7 +76,7 @@ export class AddClasseComponent implements OnInit {
         console.log('Classe créée:', res);
         this.successMessage = 'Classe créée avec succès.';
         this.errorMessage = null;
-        this.resetForm();
+        
       },
       (error) => {
         console.error('Erreur lors de la création de la classe', error);
@@ -85,8 +86,6 @@ export class AddClasseComponent implements OnInit {
     );
   }
 
-  resetForm(): void {
-    this.Classe = { description: '', nom: '', numcl: '' };
-  }
+ 
 }
 

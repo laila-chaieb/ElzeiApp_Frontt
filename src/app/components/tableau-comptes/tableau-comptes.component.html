@@ -21,15 +21,15 @@
       
           <tr>
             <!-- Cinquième colonne avec les actions pour chaque classe -->
-            <!-- Cinquième colonne avec les actions pour chaque classe -->
+         
             
             <ng-container *ngFor="let classe of classes ; let i = index">
                 <td [style.background-color]="getCardColor(i)">
                     <!-- Utilisation *ngIf pour s'assurer que la classe a des comptes -->
                     <ng-container *ngIf="classe.id !== undefined && comptesByClasse[classe.id]">
                       <!-- Utilisation *ngFor pour itérer sur les comptes associés à chaque classe -->
-                      <ng-container *ngFor="let compte of comptesByClasse[classe.id]">
-                       <b>{{ compte.code }}</b>  . {{ compte.libele }}<br>
+                      <ng-container *ngFor="let compte of comptesByClasse[classe.id]" >
+                        <tr *ngIf="compte.code.toString().length === 2"><b>{{ compte.code }}</b>  . {{ compte.libele }}</tr>
                       </ng-container>
                     </ng-container>
                   </td>

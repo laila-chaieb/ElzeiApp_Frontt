@@ -1,5 +1,5 @@
-
 <link href='https://unpkg.com/css.gg@2.0.0/icons/css/check-o.css' rel='stylesheet'>
+
 <body>
     <section>
         <h1>Règles à valider</h1>
@@ -9,37 +9,34 @@
                     <tr>
                         <th>Libellé</th>
                         <th>Montant</th>
+                        <th>Date</th>
                         <th>Type</th>
                         <th>Taux TVA</th>
+                        <th>Code Compte</th>
                         <th>Occurrence</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Utilisation de *ngFor pour itérer sur les entrées du tableau operationLibellesCount -->
-                    <tr *ngFor="let keyValuePair of operationLibellesCount | keyvalue">
-                        <!-- Vérification si l'entrée a une clé (libellé) et une valeur (occurrence) -->
-                        <ng-container *ngIf="keyValuePair.key && keyValuePair.value">
-                            <td>{{ keyValuePair.key }}</td>
-                            <td>{{ calculateAverage(keyValuePair.value[1]) }}</td>
-                            <td>{{ keyValuePair.value[1][0]?.type }}</td>
-                            <td>{{ keyValuePair.value[1][0]?.tauxTVA }}</td>
-
-
-                            <td>{{ keyValuePair.value[0] }}</td>
-                           
-                      
-                           
-                            <td ><i (click)="ADDrule(ligne)" class="gg-check-o" style="color: rgb(27, 238, 97)"></i></td>
-
+                    <!-- Utilisation de *ngFor pour itérer sur les libellés -->
+                    <tr *ngFor="let libelleKeyValuePair of operationLibellesCount | keyvalue">
+                        <ng-container *ngFor="let montantKeyValuePair of libelleKeyValuePair.value | keyvalue">
+                            <ng-container *ngFor="let dateKeyValuePair of montantKeyValuePair.value | keyvalue">
+                               
+                                    <td>{{ libelleKeyValuePair.key }}</td>
+                                    <td>{{ montantKeyValuePair.key }}</td>
+                                    <td>{{ dateKeyValuePair.key }}</td>
+                                    <td>{{ dateKeyValuePair.value[1][0].type }}</td>
+                                    <td>{{ dateKeyValuePair.value[1][0].tauxTVA }}</td>
+                                    <td>{{ dateKeyValuePair.value[1][0].compte?.code }} - {{ dateKeyValuePair.value[1][0].compte?.libele }}</td>
+                                    <td>{{ dateKeyValuePair.value[0] }}</td>
+                                    <td><i (click)="ADDrule(libelleKeyValuePair.key, montantKeyValuePair.key, dateKeyValuePair.key)" class="gg-check-o" style="color: rgb(27, 238, 97)"></i></td>
+                              
+                            </ng-container>
                         </ng-container>
                     </tr>
-                
-                    
                 </tbody>
             </table>
         </div>
     </section>
-
-    
 </body>

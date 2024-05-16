@@ -9,7 +9,7 @@ import { Rule } from '../models/Rule.model';
   providedIn: 'root'
 })
 export class RuleService {
-  private baseUrl: string = "http://localhost:8080/api/rules";
+  private baseUrl: string = "http://192.168.1.38:8080/api/rules";
 
   constructor(private http: HttpClient) { }
 

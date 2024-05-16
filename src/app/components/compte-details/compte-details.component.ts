@@ -23,7 +23,22 @@ export class CompteDetailsComponent {
          private static readonly couleurs = [
       '#B1FA6B', '#90F88C', '#FFB86A', '#FDE919', '#78E6E1', '#5ECAFE', '#B591E6', '#EE81FE','#dddae6'
     ];
-    selectedCompte: Compte = new Compte();
+    selectedCompte: Compte = {
+      id: 0,
+      libele: '',
+      code: '',
+      description: '',
+      classe_id: 0,
+      parent_compte_id: null,
+      classeNumcl: '',
+      classeNom: '',
+      Classe: {
+        id: 0,
+        description: '',
+        nom: '',
+        numcl: ''
+      }
+    };;
     classeId: number=0;
     comptes: Compte[] = [];
     selectedClasseColor: string | undefined;
@@ -84,7 +99,7 @@ export class CompteDetailsComponent {
     
 
       fetchComptes(classeId: number): void {
-        const url = `http://localhost:8080/api/v1/test/byClasse/${classeId}`;
+        const url = `http://192.168.1.38:8080/api/v1/test/byClasse/${classeId}`;
         this.http.get<any[]>(url).subscribe(
           (comptes) => {
             console.log('Comptes for the classe:', comptes);

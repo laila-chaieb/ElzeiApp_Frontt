@@ -25,30 +25,40 @@
         <input class="input" type="text" id="condition" name="condition" formControlName="condition" required  ><br>
     </div>
 </td>
-       
-         <tr>
-            
-  
-        <td>
+<tr>
+
+ 
+<div class="group">
+    <td>
         <div class="group">
-            <label  class="label" for="address">COMPTE :</label><br>
+        <label  class="label" for="code">Code:</label><br>
+        <input class="input" type="text" id="code" name="code" formControlName="code" required><br>
+    </div>
+    </td>
             <td>
        
                 <label  class="label" for="tauxTVA">Taux TVA:</label><br>
-                <input class="input" type="text" id="tauxTVA" name="tauxTVA" formControlName="tauxTVA" required><br>
+            
+                    <select class="input" id="tauxTVA" class="form-input" formControlName="tauxTVA" required>
+                    <option value="0.2">20%</option>
+                            <option value="0.1">10%</option>
+                            <option value="0.055">5.5%</option>
+                            <option value="0.021">2.1%</option>
+                            <option value="0">0%</option>
+                    </select>
            </td>
-         <td>
-            <label  class="label" for="code">Code:</label><br>
-            <input class="input" type="text" id="code" name="code" formControlName="code" required><br>
-        </td>
+      
          <td>
             <label  class="label" for="type">Type:</label><br>
-            <input class="input" type="text" id="type" name="type" formControlName="type" required><br>
+            <select class="input" id="type" class="form-input" formControlName="type" required>
+                       <option value='C'>CREDIT</option>
+                       <option value='D'>DEBIT</option>   
+             </select>
         </td>
-        </div>
-    </td>
-
+       
+    </div>
 </tr>
+
         <div class="group">
             <input class="input" type="button" class="button"  value="Sauvegarder" routerLink="/rules" (click)="save()">
         </div>  

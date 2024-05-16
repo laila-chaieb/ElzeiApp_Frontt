@@ -37,7 +37,7 @@ export class OpertationDetailsComponent {
      classes:any;
      filteredComptes: Compte[] = [];
      selectedCompteId: any | null = null;
-     private baseUrl: string = "http://localhost:8080/api/v1/test/justificatif";
+     private baseUrl: string = "http://192.168.1.38:8080/api/v1/test/justificatif";
      operation: Operation | null = null; // Initialize operation with an empty object
      selectedClasse: Classe | undefined;
   
@@ -124,8 +124,8 @@ this.compteService.getComptes().subscribe((res:any) =>{
 
 fetchComptes(classeId: string): void {
   const url = classeId === 'all'
-    ? 'http://localhost:8080/api/v1/test/comptes'
-    : `http://localhost:8080/api/v1/test/byClasse/${classeId}`;
+    ? 'http://192.168.1.38:8080/api/v1/test/comptes'
+    : `http://192.168.1.38:8080/api/v1/test/byClasse/${classeId}`;
 
   this.http.get<any[]>(url).subscribe(
     (comptes) => {

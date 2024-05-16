@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Compte } from 'src/app/models/compte.model';
 import { CompteService } from 'src/app/services/compte.service';
 import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-add-compte',
   templateUrl: './add-compte.component.html',
@@ -15,101 +17,108 @@ export class AddCompteComponent implements OnInit {
     code: '',
     description: '',
     classe_id: 0,
+    parent_compte_id: null,
+    classeNumcl: '',
+    classeNom: '',
+    Classe: {
+      id: 0,
+      description: '',
+      nom: '',
+      numcl: ''
+    }
   };
+  myForm!: FormGroup;
+
   submitted = false;
   successMessage: string = '';
   invalidInput: boolean = false;
   maxLength: number = 0;
+
   constructor(
     private CompteService: CompteService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
   ) {}
- 
+
   ngOnInit(): void {
+    this.myForm = this.fb.group({
+      code: ['', [Validators.required, Validators.maxLength(this.maxLength)]],
+      parent_compte_id: [{ value: '', disabled: true }],
+      libele: ['', Validators.required],
+      classe_id: [{ value: '', disabled: true }],
+      description: ['', Validators.required]
+    });
+
+    this.myForm.controls['code'].valueChanges.subscribe((value: any) => {
+      if (typeof value === 'string') {
+        const trimmedValue = value.trim();
+        if (trimmedValue.length > this.maxLength) {
+          this.myForm.controls['code'].setValue(trimmedValue.slice(0, this.maxLength), { emitEvent: false });
+        }
+      }
+    });
+
+
     this._activatedRoute.queryParams.subscribe(params => {
-      const classe_id = +params['classe_id'];
-      const parent_compte_id = +params['parent_compte_id'];
-  
+      const classe_id = +params['classe_id'] || 0;
+      const parent_compte_id = +params['parent_compte_id'] || null;
+    
       console.log('Classe ID:', classe_id);
       console.log('Parent Compte ID:', parent_compte_id);
-  
-      this.Compte = new Compte();
-  
+    
       this.Compte.classe_id = classe_id;
       this.Compte.parent_compte_id = parent_compte_id;
-  
-      let parentCode: string = ''; // Variable pour stocker le code du parent
-  
-      // Récupérer le code du compte parent s'il existe
+    
       if (parent_compte_id) {
         this.CompteService.getCompte(parent_compte_id).subscribe(
           parentCompte => {
-            parentCode = parentCompte.code; // Stocker le code du parent
-            // Convertir le code en chaîne de caractères et obtenir sa longueur
-            const parentCodeLength = parentCode.toString().length;
-            // Calculer la longueur maximale en ajoutant 1 à la longueur du code du parent
+            const parentCode = parentCompte.code;
+            const parentCodeLength = parentCode ? parentCode.toString().length : 0;
             this.maxLength = parentCodeLength + 1;
             console.log('MaxLength (Computed):', this.maxLength);
-  
-            // Maintenant que nous avons calculé la longueur maximale, nous pouvons définir le code du parent dans le Compte
-            this.Compte.code = parentCode || null;
+    
+            this.myForm.controls['code'].setValidators([Validators.required, Validators.maxLength(this.maxLength)]);
+            this.myForm.controls['code'].updateValueAndValidity();
+            this.myForm.patchValue({ code: parentCode });
           },
           error => {
             console.error('Erreur lors de la récupération du code du compte parent :', error);
           }
         );
       } else {
-        // Si aucun parent n'est défini, la longueur maximale est juste 1
         this.maxLength = 2;
         console.log('MaxLength (Default):', this.maxLength);
+        this.myForm.controls['code'].setValidators([Validators.required, Validators.maxLength(this.maxLength)]);
+        this.myForm.controls['code'].updateValueAndValidity();
       }
+    
+      this.myForm.patchValue({
+        parent_compte_id: parent_compte_id,
+        classe_id: classe_id
+      });
     });
   }
-  
-  
+
   saveCompte() {
-    const classeId = this.Compte.classe_id;
-    const parentId = this.Compte.parent_compte_id;
-  
-    this.Compte.classe_id = classeId;
-    this.Compte.parent_compte_id = parentId;
-    console.log('Parent Compte code:', this.Compte.code);
+    if (this.myForm.invalid) {
+      this.invalidInput = true;
+      return;
+    }
 
-    // Capturer la valeur entrée dans le champ de code et la stocker dans this.Compte.code
-    const codeInput = (document.getElementById('code') as HTMLInputElement).value.trim();
-  
-    // Utiliser la valeur modifiée du code si elle existe, sinon utiliser le code du compte parent
-    this.Compte.code = codeInput || null;
-    console.log('Parent Compte code:', this.Compte.code);
+    const formValues = this.myForm.value;
+    this.Compte.code = formValues.code;
+    this.Compte.libele = formValues.libele;
+    this.Compte.description = formValues.description;
 
-    // Enregistrer le compte avec les champs correctement remplis
     this.CompteService.create(this.Compte).subscribe(
-      (res) => {
+      res => {
         console.log('Compte créé:', res);
         this._router.navigate(['/Comptes']);
       },
-      (error) => {
+      error => {
         console.error('Erreur lors de la création du compte', error);
       }
     );
   }
-  
-createCompte() {
-    this.CompteService.create(this.Compte).subscribe(
-        (res) => {
-            console.log('Compte créé:', res);
-            this._router.navigate(['/Comptes']);
-        },
-        (error) => {
-            console.error('Erreur lors de la création du compte', error);
-        }
-    );
 }
-  listComptes() {
-    this.CompteService.getComptes().subscribe((res: any) => {
-      this.comptes = res;
-      console.log('reponse', this.comptes);
-    });
-  }
-  }

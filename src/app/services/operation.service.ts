@@ -9,7 +9,7 @@ import { Operation } from '../models/operation.model';
   providedIn: 'root'
 })
 export class OperationService {
-    private baseUrl: string = "http://localhost:8080/api/v1/test/operation";
+    private baseUrl: string = "http://192.168.1.38:8080/api/v1/test/operation";
     operations: Operation[] = [];  // Ajoutez cette ligne pour stocker les opérations côté client
 
     filtreStatus: string | null = null;
@@ -61,6 +61,23 @@ export class OperationService {
       })
     );
   }
+
+  searchOperation(searchTerm: string): Observable<Operation[]> {
+    return this.http.get<Operation[]>(`${this.baseUrl}`).pipe(
+      map(Operation => {
+        if (!isNaN(+searchTerm)) { // Vérifie si searchTerm est un nombre
+          return Operation.filter(c => c.libelle === searchTerm);
+        } else if (searchTerm.includes('')) {
+          const searchTermParts = searchTerm.split(' ').filter(part => part.trim() !== ''); // Sépare les parties de searchTerm
+          const searchTermRegex = new RegExp(searchTermParts.join('.*'), 'i'); // Crée une expression régulière pour rechercher le nom ou le prénom composé
+          return Operation.filter(s => searchTermRegex.test(s.compte?.libele) || searchTermRegex.test(s.libelle));
+        } else {
+          return Operation.filter(s => s.compte?.libele === searchTerm || s.libelle === searchTerm);
+        }
+      })
+    );
+  }
+
 }  
   
 

@@ -19,8 +19,8 @@ export class IndexComponent implements OnInit {
   classes:any;
 
   classe :any;
-  selectedCompte: Compte = new Compte();
-  selectedClasse: Classe = new Classe();
+  selectedCompte?: Compte;
+  selectedClasse?: Classe;
   
   constructor(private  compteService:CompteService, private activatedRoute: ActivatedRoute ,
      private router: Router,public dialog: MatDialog,   private classeService: ClasseService,) { }

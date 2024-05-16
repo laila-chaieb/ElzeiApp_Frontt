@@ -1,49 +1,42 @@
+
 <br><br><br>
 <body>
-<div>
-  <form  (ngSubmit)="saveCompte()">
-    <br><br><br>
-    <div class="submit-form">
-      <div *ngIf="!submitted">
-        
-        <div class="form-group">
-          <label class="form-label" for="code">Code : </label>
-          <input class="form-input" matInput #input [attr.maxlength]="maxLength"
-            required [ngModel]="Compte.code" name="code" id="code" />
+  <form [formGroup]="myForm" class='myfor'>
+    <div class="login-wrap1">
+      <div class="login-html">
+        <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+        <label for="tab-1" class="tab">Compte</label>
+        <div class="login-form">
+          <div class="group">
+            <label class="label" for="code">Code :</label>
+            <input class="input" matInput id="code" formControlName="code" />
+          </div>
+          <br>
+          <div class="group">
+            <label class="label" for="parent_compte_id">Compte Parent :</label>
+            <input class="input" id="parent_compte_id" formControlName="parent_compte_id" readonly>
+          </div>
+          <br>
+          <div class="group">
+            <label class="label" for="libele">Libellé :</label>
+            <input class="input" id="libele" formControlName="libele" />
+          </div>
+          <br>
+          <div class="group">
+            <label class="label" for="classe_id">Numéro classe:</label>
+            <input class="input" id="classe_id" formControlName="classe_id" readonly>
+          </div>
+          <br>
+          <div class="group">
+            <label class="label" for="description">Description:</label>
+            <textarea class="input" id="description" formControlName="description"></textarea>
+          </div>
+          <br>
+          <div class="group">
+            <input type="button" class="button" value="Sauvegarder" (click)="saveCompte()">
+          </div>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="libele">Libellé:</label>
-          <input
-            class="form-input"
-            id="libele"
-            required
-            [(ngModel)]="Compte.libele"
-            name="libele"
-          />
-        </div>
-        <div>
-          <label class="form-label" for="classe_id">Numéro classe</label>
-          <input class="form-input" id="classe_id" name="classe_id" [(ngModel)]="Compte.classe_id" readonly>
-        </div>
-        <div>
-          <label class="form-label" for="parent_compte_id">Compte Parent</label>
-          <input class="form-input" id="parent_compte_id" name="parent_compte_id" [(ngModel)]="Compte.parent_compte_id" readonly>
-      </div>      
-        <div>
-          <label class="form-label" for="description">Description:</label>
-          <textarea
-            class="form-input"
-            id="description"
-            required
-            [(ngModel)]="Compte.description"
-            name="description"
-          ></textarea>
-        </div>
-          
-        <button type="submit" class="form-button">Enregistrer</button>
       </div>
     </div>
   </form>
-</div>
 </body>
-ᐧ

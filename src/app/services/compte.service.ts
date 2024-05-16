@@ -8,7 +8,7 @@ import { Compte } from '../models/compte.model';
   providedIn: 'root'
 })
 export class CompteService {
-  private baseUrl: string = "http://localhost:8080/api/v1/test/comptes";
+  private baseUrl: string = "http://192.168.1.38:8080/api/v1/test/comptes";
 
   constructor(private http: HttpClient) { }
   getComptes(): Observable<Compte[]> {
@@ -19,7 +19,7 @@ export class CompteService {
 
    // Nouvelle méthode pour obtenir une classe par son ID
    getClassById(id: number): Observable<any> {
-    const url = `http://localhost:8080/api/v1/test/classes/${id}`;
+    const url = `http://192.168.1.38:8080/api/v1/test/classes/${id}`;
     return this.http.get<any>(url).pipe(
       map(response => response)
     );
@@ -108,4 +108,19 @@ export class CompteService {
       })
     );
   }
+  searchCompte(searchTerm: string): Observable<Compte[]> {
+    return this.http.get<Compte[]>(`${this.baseUrl}`).pipe(
+      map(comptes => {
+        const searchTermNumber = parseFloat(searchTerm); // Convertit le terme de recherche en nombre
+        return comptes.filter(c => 
+          (typeof c.code === 'string' && c.code.toLowerCase().includes(searchTerm.toLowerCase())) || // Recherche sur le champ code
+          c.code === searchTermNumber || // Recherche sur le champ code
+          c.libele.toLowerCase().includes(searchTerm.toLowerCase()) // Recherche sur le champ libele
+        );
+      })
+    );
+  }
+  
+  
+  
 }

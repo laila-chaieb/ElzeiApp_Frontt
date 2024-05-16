@@ -7,7 +7,7 @@ import { Observable, catchError } from 'rxjs';
   providedIn: 'root'
 })
 export class MappingService {
-    private baseUrl: string = "http://localhost:8080/api/v1/test/mapping";
+    private baseUrl: string = "http://192.168.1.38:8080/api/v1/test/mapping";
 
     constructor(private http: HttpClient) { }
   

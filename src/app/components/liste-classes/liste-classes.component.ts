@@ -20,7 +20,9 @@ export class ListeClassesComponent implements OnInit {
     public dialog: MatDialog,private  compteService:CompteService
    
  ) { }
-  selectedClasse: Classe = new Classe();
+ searchTerm: string = '';
+
+  selectedClasse?: Classe ;
   classes:any;
   comptes: any;
   isEditing: boolean = false;
@@ -97,6 +99,16 @@ export class ListeClassesComponent implements OnInit {
         console.error('Error retrieving classe details', error);
       }
     );
+  }
+
+  search(): void {
+    if (this.searchTerm.trim()) {
+      this.classeService.searchClasse(this.searchTerm).subscribe(clients => { // Renamed client to clients
+        this.classes = clients; // Renamed client to clients
+      });
+    } else {
+      this.listClasses();// Renamed loadClient to loadClients for consistency
+    }
   }
 
   updateClasse(updatedClasse: Classe) {

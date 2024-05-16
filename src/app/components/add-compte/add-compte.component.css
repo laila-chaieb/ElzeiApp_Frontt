@@ -1,116 +1,246 @@
-.submit-form {
-    max-width: 400px;
-    margin: auto;
-    background-color: rgba(255, 255, 255, 0.9);
+body{
+  background-image: radial-gradient(at 300px 300px, rgba(60, 201, 95, 0.01) 0, #E9FFDB 80%);
+   animation: animate-bg 70s infinite linear;
+   background-repeat: no-repeat;
+   background-attachment: fixed; /* Keep the background fixed while scrolling */
+   background-size: cover;
+   height: 100vh; /* Set height to 100% of viewport height */
+   overflow-y: auto; /* Enable vertical scrolling */
   }
 
-  .form-label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 16px;
-    font-weight: bold;
+
+  @keyframes animate-bg {
+    from { background-size: 100%; background-position: 0% 0%; }
+    50% { background-size: 120%; background-position: 0% 20% }
+    to { background-size: 100%; background-position: 0% 0%; }
   }
-  .example-spacer {
-    flex: 1 1 auto;
+
+  *,:after,:before{box-sizing:border-box}
+  .clearfix:after,.clearfix:before{content:'';display:table}
+  .clearfix:after{clear:both;display:block}
+  a{color:inherit;text-decoration:none}
+
+
+  /*container*/
+  .login-html{
+      top: 70%;
+      right: 0%;
+      width: 270%;
+      height: 220%;
+      bottom: 20%;
+      position: relative;
+      padding: 60px 80px 90px 90px;
+      border-radius: 15px;
+      margin: auto;
+      max-width: 650px;
+      min-height: 250px;
+      background-size: 100%;
+      background-color: rgba(66, 63, 63, 0.3); /* Applique une couleur de fond transparente */
   }
-  .form-container {
-    background-color: #e6c0c0;
-    padding: 20px;
-    border: 1px solid #ccc;
+  .login-html .sign-in-htm,
+  .login-html .sign-up-htm{
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      position:absolute;
+      transform:rotateY(180deg);
+      backface-visibility:hidden;
+      transition:all .4s linear;
   }
-  .form-container22 {
-    background-color: #f19327;
-    padding: 20px;
-    border: 1px solid #ccc;
+  .login-html .sign-in,
+  .login-html .sign-up,
+  .login-form .group .check{
+      display:none;
   }
-  
-  .form-group {
-    margin-bottom: 20px;
+  .login-html .tab,
+  .login-form .group .label,
+  .login-form .group .button{
+      font-family: Roboto, "Helvetica Neue", sans-serif;
   }
-  
-  .form-label {
-    font-weight: bold;
-    color: #7ed957;
-    font-size: 16px;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    width: 100%; /* Rendre le libellé plus large */
-     /* Ajouter une bordure claire */
-    padding: 10px; /* Ajouter un espacement interne pour la lisibilité */
-    /* Autres propriétés de style que vous pouvez ajuster */
+  .login-html .tab{
+      font-size:22px;
+      margin-right:15px;
+      padding-bottom:5px;
+      margin:0 15px 10px 0;
+      display:inline-block;
+      border-bottom:2px solid transparent;
   }
-  
-  
-  
+  .login-html .sign-in:checked + .tab,
+  .login-html .sign-up:checked + .tab{
+      color:#fff;
+      border-color:#5da92f;
+  }
+  .login-form{
+      min-height:345px;
+      position:relative;
+      perspective:1000px;
+      transform-style:preserve-3d;
+  }
+
+  .login-form .group {
+      width: 100%; /* Adjust width as needed */
+      text-align: left; /* Align content to the left */
+      margin-bottom:0px;
+
+  }
+  /*Inputs*/
+  .login-form .group .label,
+  .login-form .group .input,
+  .login-form .group .button {
+      width: 80%;
+      color: #000000;
+      display: block;
+      margin-right: 50px;
+      margin-left: -20px; /* Adjust margin as needed */
+      margin: auto;
+      font-family: "HelveticaNeueLT Std Lt Cn", Sans-serif;
+  }
+
+
+  .login-form .group .input,
+  .login-form .group .button{
+      border:none;
+      padding:15px 20px;
+      border-radius:10px;
+      background:rgba(255,255,255,.5);
+
+  }
+  .login-form .group input[data-type="password"]{
+      -webkit-text-security:circle;
+  }
+  .login-form .group .label{
+      color:#000000;
+      font-size:15px;
+
+  }
+  /*button*/
+  .login-form .group .button{
+      background: rgb(40, 196, 79);
+      background-image: linear-gradient(to right, #5da92f, #9bd46a);
+      border: none;
+      width: 170px; /* Set the width of the button */
+      height: 50px; /* Set the height of the button */
+      font-size: 15px;
+      position: absolute; /* Set the position to absolute */
+      bottom: -70x; /* Set the distance from the bottom */
+      right: 250px; /* Set the distance from the right */
+      left: 29%;
+      font-family: "HelveticaNeueLT Std Lt Cn", Sans-serif;
+
+
+  }
+
+
+
+  .login-form .group .button:before {
+    height: 0%;
+    width: 2px;
+
+  }
+  .login-form .group .button:hover {
+    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+                -4px -4px 6px 0 rgba(116, 125, 136, .5),
+      inset -4px -4px 6px 0 rgba(255,255,255,.2),
+      inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+  }
+  .login-form .group label .icon{
+      width:15px;
+      height:15px;
+      border-radius:2px;
+      position:relative;
+      display:inline-block;
+      background:rgba(255,255,255,.1);
+
+  }
+
+  .login-form .group label .icon:before{
+      left:30px;
+      width:50px;
+      bottom:6px;
+      transform:scale(0) rotate(0);
+  }
+  .login-form .group label .icon:after{
+      top:600px;
+      right:0;
+      transform:scale(0) rotate(0);
+  }
+  .login-form .group .check:checked + label{
+      color:#fff;
+  }
+  .login-form .group .check:checked + label .icon{
+      background:#1161ee;
+  }
+  .login-form .group .check:checked + label .icon:before{
+      transform:scale(1) rotate(45deg);
+  }
+  .login-form .group .check:checked + label .icon:after{
+      transform:scale(1) rotate(-45deg);
+  }
+  .login-html .sign-in:checked + .tab + .sign-up + .tab + .login-form .sign-in-htm{
+      transform:rotate(0);
+  }
+  .login-html .sign-up:checked + .tab + .login-form .sign-up-htm{
+      transform:rotate(0);
+  }
+
+  .hr{
+      height:2px;
+      margin:60px 0 50px 0;
+      background:rgba(255,255,255,.2);
+  }
+
+
+  /*tjm client salaries*/
+
+  .gray-input {
+      padding: 10px 20px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.527);
+      width: 80%;
+      color: #000000;
+      display: block;
+      margin-right: 50px;
+      margin-left: -20px; /* Adjust margin as needed */
+      margin: auto;
+      font-family: "HelveticaNeueLT Std Lt Cn", Sans-serif;
+      position:relative;
+
+  }
+
+
+  /*section*/
+
   .form-input {
-    width: 100%;
-    padding: 10px;
-    border: none; /* Supprime la bordure par défaut */
-    border-radius: 5px; /* Ajoute un arrondi aux coins */
-    background-color: #f5f5f5; /* Couleur de fond claire */
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1); /* Ajoute une ombre légère */
-  }
-  
-  .form-input:focus {
-    outline: none; /* Supprime la bordure de focus */
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3); /* Ajoute une ombre plus prononcée lorsqu'il est en focus */
-  }
-  
-  .form-button {
-    background-color: #7ed957;
-    color: #fff;
+    width: 200px; /* Set the width of the select box */
+    height: 40px; /* Set the height of the select box */
+    padding: 5px; /* Add some padding */
+    font-size: 16px; /* Set the font size */
+    border: 1px solid rgba(255,255,255,.2); /* Add a border */
+    border-radius: 5px; /* Add some border radius */
     padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    justify-content: center;
-    margin: 50px 50px 50px 150px;
-    
+      background: rgba(255, 255, 255, 0.527);
+      width: 80%;
+      color: #000000;
+      display: block;
+      margin-right: 50px;
+      margin-left: -20px; /* Adjust margin as needed */
+      margin: auto;
+      font-family: "HelveticaNeueLT Std Lt Cn", Sans-serif;
+    background-color: rgba(255,255,255,.2); /* Set the background color */
+
+
   }
-  
-  .form-button:hover {
-    background-color: #7ed957;
+
+  /* Style for the options */
+  .form-input option {
+    font-size: 14px; /* Set the font size of options */
+    padding: 5px 10px; /* Add padding to options */
+
   }
-  section {
-    display: table;
+
+  /* Optional hover effect for options */
+  .form-input option:hover {
+    background-color: rgba(255,255,255,.2); /* Change background color on hover */
   }
-  
-  .example-label {
-    display: table-cell;
-    font-size: 14px;
-    margin-left: 8px;
-    min-width: 120px;
-  }
-  
-  .example-button-row {
-    display: table-cell;
-    max-width: 600px;
-  }
-  
-  .example-button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-  }
-  
-  .example-flex-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
-  .example-button-container {
-    display: flex;
-    justify-content: center;
-    width: 120px;
-  }
-  body {
-    background: linear-gradient(-45deg, #ACE1AF, #F0F8FF, #F2F3F4, #D0F0C0,#E9FFDB)no-repeat center center fixed;
-    background-size:100% auto;
-    animation: gradient 5s ease infinite;
-    height: 100vh;
-    width: auto;
-    overflow-x: hidden;
-  }
-  .button-container {
-    display: flex; /* Use flexbox layout */
-    justify-content: flex-start; /* Align items to the start (left) */
-    text-align: left;
-  }
+

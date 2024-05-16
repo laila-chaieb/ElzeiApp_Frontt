@@ -8,140 +8,117 @@ import { Operation } from 'src/app/models/operation.model';
 import { RuleService } from 'src/app/services/Rule.service';
 import { HistoriqueService } from 'src/app/services/historique.service';
 
-
 @Component({
   selector: 'app-liste-historique',
   templateUrl: './liste-historique.component.html',
   styleUrls: ['./liste-historique.component.css']
 })
 export class ListeHistoriqueComponent implements OnInit {
-  operationLibellesCount: { [key: string]: [number, any] } = {}; // Définissez le type de votre objet ici
+  operationLibellesCount: { [key: string]: { [montant: string]: { [date: string]: [number, Operation[]] } } } = {};
+  lignes: any[] = [];
+  Rules: Rule[] = [];
+  constructor(
+    private historiqueService: HistoriqueService,
+    public dialog: MatDialog,
+    private ruleService: RuleService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-    constructor(private historiqueService: HistoriqueService,public dialog: MatDialog, private RuleService: RuleService,private _router: Router,
-      private _activatedRoute: ActivatedRoute) { }
-    Rules: Rule[] = [];
-    lignes: any[] = [];
-    ligne: any; // Ajoutez cette ligne pour déclarer la propriété 'ligne'
-
-    ngOnInit(): void {
-        this.getOperationLibellesCount();
-    }
-
-    getOperationLibellesCount(): void {
-      // Appel de la méthode pour récupérer les détails des opérations
-      this.historiqueService.getOperationLibellesCountFromHistoriques().subscribe(
-          (data: any) => {
-              // Stockage des données récupérées dans la variable operationLibellesCount
-              this.operationLibellesCount = data;
-              // Affichage des occurrences des libellés dans la console
-              console.log('Occurrences des libellés:', this.operationLibellesCount);
-  
-              // Parcours des valeurs pour chaque libellé
-              for (const libelle in this.operationLibellesCount) {
-                  // Vérification si la propriété est propre à l'objet (évite les propriétés héritées)
-                  if (this.operationLibellesCount.hasOwnProperty(libelle)) {
-                      // Création d'un objet ligne pour stocker les valeurs de chaque ligne du tableau
-                      const ligne = {
-                        condition: libelle, // Stockage du libellé
-                        
-                          type: this.operationLibellesCount[libelle][1][0]?.type, // Récupération du type de la première opération
-                          tauxTVA: this.operationLibellesCount[libelle][1][0]?.tauxTVA, // Récupération du taux de TVA de la première opération
-                          code: this.operationLibellesCount[libelle][1][0]?.compte?.code,
-                          description: this.operationLibellesCount[libelle][1][0]?.description,
-                        
-                      };
-                      console.log('ligne :', ligne);
-                      // Ajout de l'objet ligne à la variable lignes
-                      this.lignes.push(ligne);
-                  }
-              }
-          },
-          // Gestion des erreurs en cas de problème lors de la récupération des données
-          (error: any) => {
-              console.error('Erreur lors de la récupération des occurrences des libellés:', error);
-          }
-      );
+  ngOnInit(): void {
+    this.getOperationLibellesCount();
   }
-  
-  calculateAverage(operations: Operation[]): number {
-    if (!operations || operations.length === 0) {
-        return 0;
-    }
-    
-    const totalMontant = operations.reduce((acc, operation) => acc + operation.montant, 0);
-    return totalMontant / operations.length;
-}
 
-  
-  
-  loadRules(): void {
-    this.RuleService.getRules().subscribe(Rules => {
-      this.Rules = Rules;
-    
-    });
-  }
-  
-
-  ADDrule(rule: Rule): void {
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
-      width: '300px',
-      data: rule,
-     
-     
-    });
+  getOperationLibellesCount(): void {
     this.historiqueService.getOperationLibellesCountFromHistoriques().subscribe(
       (data: any) => {
-          // Stockage des données récupérées dans la variable operationLibellesCount
-          this.operationLibellesCount = data;
-          // Affichage des occurrences des libellés dans la console
-          console.log('Occurrences des libellés:', this.operationLibellesCount);
+        this.operationLibellesCount = data;
+        console.log('Occurrences des libellés:', this.operationLibellesCount);
 
-          // Parcours des valeurs pour chaque libellé
-          for (const libelle in this.operationLibellesCount) {
-              // Vérification si la propriété est propre à l'objet (évite les propriétés héritées)
-              if (this.operationLibellesCount.hasOwnProperty(libelle)) {
-                  // Création d'un objet ligne pour stocker les valeurs de chaque ligne du tableau
-                  const ligne = {
-                    condition: libelle, // Stockage du libellé
-                    
-                      type: this.operationLibellesCount[libelle][1][0]?.type, // Récupération du type de la première opération
-                      tauxTVA: this.operationLibellesCount[libelle][1][0]?.tauxTVA, // Récupération du taux de TVA de la première opération
-                      code: this.operationLibellesCount[libelle][1][0]?.compte?.code,
-                      description: this.operationLibellesCount[libelle][1][0]?.description,
-                    
-                  };
-                  console.log('ligne :', ligne);
-                  // Ajout de l'objet ligne à la variable lignes
-                  this.lignes.push(ligne);
+        for (const libelle in this.operationLibellesCount) {
+          if (this.operationLibellesCount.hasOwnProperty(libelle)) {
+            const montantMap = this.operationLibellesCount[libelle];
+
+            for (const montant in montantMap) {
+              if (montantMap.hasOwnProperty(montant)) {
+                const dateMap = montantMap[montant];
+
+                for (const date in dateMap) {
+                  if (dateMap.hasOwnProperty(date)) {
+                    const details = dateMap[date];
+                    const count = details[0];
+                    const operations = details[1];
+
+                    for (const operation of operations) {
+                      const ligne = {
+                        condition: libelle,
+                        montant: montant,
+                        date: date,
+                        type: operation.type,
+                        tauxTVA: operation.tauxTVA,
+                        code: operation.compte?.code,
+                        description: operation.description
+                      };
+                      console.log('ligne :', ligne);
+                      this.lignes.push(ligne);
+                    }
+                  }
+                }
               }
+            }
           }
+        }
       },
-      // Gestion des erreurs en cas de problème lors de la récupération des données
       (error: any) => {
-          console.error('Erreur lors de la récupération des occurrences des libellés:', error);
+        console.error('Erreur lors de la récupération des occurrences des libellés:', error);
       }
-  );
-    rule=this.ligne
-    console.log("rule :",rule);
+    );
+  }
+
+  loadRules(): void {
+    this.ruleService.getRules().subscribe(rules => {
+      this.Rules = rules;
+    });
+  }
+
+  ADDrule(libelle: string, montant: string, date: string): void {
+    const operationDetails = this.operationLibellesCount[libelle][montant][date][1][0];
+    const rule: Rule = {
+      condition: libelle,
+      type: operationDetails.type,
+      tauxTVA: operationDetails.tauxTVA !== null ? operationDetails.tauxTVA : 0,
+      code: operationDetails.compte?.code,
+      description: operationDetails.description
+    };
+
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '300px',
+      data: rule
+    });
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.RuleService.create(rule).subscribe(
+        this.ruleService.create(rule).subscribe(
           () => {
-            window.location.reload();
+            this.historiqueService.deleteOperationsByLibelle(libelle).subscribe(
+              () => {
+                console.log("Operations with the same libelle deleted successfully.");
+                window.location.reload();
+              },
+              (error: HttpErrorResponse) => {
+                console.error("Error deleting operations by libelle:", error);
+              }
+            );
           },
           (error: HttpErrorResponse) => {
-            console.error("Error add Rule:", error);
+            console.error("Error adding Rule:", error);
           }
         );
       }
     });
-  
-    console.log("Rule added successfully.");
-   
-    this.loadRules();
-  
-    this._router.navigate(['/historiques']);
-  }
-  
 
+    console.log("Rule added successfully.");
+    this.loadRules();
+    this.router.navigate(['/historiques']);
+  }
 }

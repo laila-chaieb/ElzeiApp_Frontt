@@ -14,6 +14,8 @@ import { Compte } from 'src/app/models/compte.model';
 export class ListeOperationsComponent implements OnInit {
 
   //Declaration
+  searchTerm: string = '';
+
   operations: Operation[] = [];
   comptes: Compte[] = [];
   filtreMois: number | null = null;
@@ -28,7 +30,16 @@ export class ListeOperationsComponent implements OnInit {
     private justificatifService: JustificatifService,
     private compteService: CompteService,
   ) { }
-
+  search(): void {
+    if (this.searchTerm.trim()) {
+      this.operationService.searchOperation(this.searchTerm).subscribe(clients => { // Renamed client to clients
+        this.operations = clients; // Renamed client to clients
+      });
+    } else {
+      
+      this.listOperations();//Renamed loadClient to loadClients for consistency
+    }
+  }
   //Filtrage
   appliquerFiltre(statut: string | null, type: string | null, mois: number | null) {
     this.filtreStatus = statut;

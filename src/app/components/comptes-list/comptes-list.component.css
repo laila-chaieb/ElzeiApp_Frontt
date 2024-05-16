@@ -1,9 +1,368 @@
-/* comptes-list.component.css */
+
+/*****************************************************************************************************/
+h1{
+  font-size: 25px;
+  color: #2c2c2c;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+  font-family: "Montserrat", sans-serif;
+}
+
+table {
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse; /* Ajouté pour supprimer la ligne de séparation */
+  font-family: "Montserrat", sans-serif;
+}
+/*transparance de tableau*/
+.tbl-header {
+  background-color: rgba(58, 202, 44, 0.1);
+  grid-gap: 20px;
+  background:rgba(255, 255, 255, 0.1);
+
+  font-family: "Montserrat", sans-serif;
+
+}
+
+.tbl-content { /*transparance*/
+  height: 300;
+  overflow-x: auto;
+  margin-top: 0px;
+  font-family: "Montserrat", sans-serif;
+
+}
+
+th {
+  padding: 20px 15px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  color: rgb(29, 32, 29);
+  text-transform: uppercase;
+  background-color: #7ed957;
+
+}
+
+td {
+  padding: 15px;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 300;
+  font-size: 12px;
+  color: #000000;
+
+}
+
+
+
+
+
+
+tbody { /*selectioner une ligne de la table*/
+  tr {
+    &:hover {
+      background-color: rgba(222, 236, 222, 0.6);
+
+    }
+  }
+  td {
+    position: relative;
+    &:hover {
+      &:before {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -9999px;
+        bottom: -9999px;
+        background-color: rgba(255,255,255,0.2);
+        z-index: -1;
+
+      }
+    }
+  }
+}
+
+
+
+/*search*/
+.group {
+display: flex;
+line-height: 28px;
+align-items: center;
+position: relative;
+max-width: 280px;
+}
+
+.input {
+  height: 40px;
+  line-height: 28px;
+  padding: 0 1rem;
+  width: 100%;
+  padding-left: 2.5rem;
+  border: 0.1px solid #b4b4b4;
+  border-radius: 3px;
+  outline: none;
+  background-color: #ffffff;
+  color: #0d0c22;
+  transition: .3s ease;
+  display: flex;
+  border-radius: 10px;
+}
+
+.input::placeholder {
+color: #777;
+}
+
+.icon {
+position: absolute;
+left: 1rem;
+fill: #777;
+width: 1rem;
+height: 1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .button-container {
-    display: flex;
+display: flex;
+gap: 10px; /* Adjust the gap between buttons as needed */
+align-items: center; /* Center align vertically */
+}
+
+
+/* demo styles */
+
+@keyframes myAnimation {
+  100% { background-position: 0% 50%; } /* Start from the left side */
+  100% { background-position: 100% 50%; } /* Move to the right side */
+}
+body {
+/*  background-image: radial-gradient(at 300px 300px, rgba(60, 201, 95, 0.5) 0, #E9FFDB 70%), url('C:/Users/DELL/OneDrive/Desktop/ELZI/elzeifront/src/assets/final.jpg');*/
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+  background-size: cover;
+  height: 100vh; /* Set height to 100% of viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  animation: myAnimation 30s linear infinite alternate;
+}
+section{
+  margin: 50px;
+}
+
+
+/* follow me template */
+.made-with-love {
+  margin-top: 40px;
+  padding: 10px;
+  clear: left;
+  text-align: center;
+  font-size: 10px;
+  font-family: arial;
+  color: #000000;
+}
+.made-with-love i {
+  font-style: normal;
+  color: rgb(20, 220, 47);
+  font-size: 14px;
+  position: relative;
+  top: 2px;
+}
+.made-with-love a {
+  color: #000000;
+  text-decoration: none;
+}
+.made-with-love a:hover {
+  text-decoration: underline;
+}
+
+
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*button of delete end edit*/
+
+button {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0.2em;
+border: 0px solid transparent;
+background-color: transparent;
+border-radius: 1.25em;
+transition: all 0.2s linear;
+}
+
+button:hover {
+box-shadow: 3.4px 2.5px 4.9px rgba(0, 0, 0, 0.025),
+ 8.6px 6.3px 12.4px rgba(0, 0, 0, 0.035),
+ 17.5px 12.8px 25.3px rgba(0, 0, 0, 0.045),
+ 36.1px 26.3px 52.2px rgba(0, 0, 0, 0.055),
+ 99px 72px 143px rgba(0, 0, 0, 0.08);
+ background-color: #ffffff;
+}
+
+
+
+
+
+
+
+
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+.container {
+position: absolute;
+margin: static;
+top: 50px;
+left: auto; /* Changement ici */
+right: 5%; /* Ancienne valeur : 0 */
+bottom: 0;
+width: 300px;
+height: 100px;
+.search {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  background: rgb(20, 220, 47);
+  border-radius: 50%;
+  transition: all 1s;
+  z-index: 4;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 25px 0 rgb(20, 220, 47);
+  &:hover {
+    cursor: pointer;
   }
-  
-  .button-container button {
-    margin-right: 10px;
+  &::before {
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: 22px;
+    right: 0;
+    bottom: 0;
+    left: 22px;
+    width: 12px;
+    height: 2px;
+    background: white;
+    transform: rotate(45deg);
+    transition: all .2s;
   }
-  
+  &::after {
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: -5px;
+    right: 0;
+    bottom: 0;
+    left: -5px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid white;
+    transition: all .2s;
+  }
+}
+input {
+  font-family: "Montserrat", sans-serif;  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  outline: none;
+  border: none;
+   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgb(20, 220, 47);
+  color: white;
+  text-shadow: 0 0 10px rgb(86, 212, 103);
+  padding: 0 80px 0 20px;
+  border-radius: 30px;
+  box-shadow: 0 0 25px 0 rgb(77, 206, 94),
+              0 20px 25px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 25px 0 rgba(0, 0, 0, 0.5);
+  transition: all 1s;
+  opacity: 0;
+  z-index: 5;
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    width: 300px;
+    opacity: 1;
+    cursor: text;
+  }
+  &:focus ~ .search {
+    right: -250px;
+    background: #222222;
+    z-index: 6;
+    &::before {
+      top: 0;
+      left: 0;
+      width: 25px;
+    }
+    &::after {
+      top: 0;
+      left: 0;
+      width: 25px;
+      height: 2px;
+      border: none;
+      background: white;
+      border-radius: 0%;
+      transform: rotate(-45deg);
+    }
+  }
+  &::placeholder {
+    color: white;
+    opacity: 0.2;
+    font-weight: bolder;
+  }
+}
+}

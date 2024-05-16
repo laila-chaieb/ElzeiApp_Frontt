@@ -16,8 +16,24 @@ export class ComptesListComponent {
   constructor(private compteService: CompteService,private activatedRoute: ActivatedRoute ,
     public dialog: MatDialog
 ,    private router: Router) { }
+searchTerm: string = '';
 
-  selectedCompte: Compte = new Compte();
+  selectedCompte:  Compte = {
+    id: 0,
+    libele: '',
+    code: '',
+    description: '',
+    classe_id: 0,
+    parent_compte_id: null,
+    classeNumcl: '',
+    classeNom: '',
+    Classe: {
+      id: 0,
+      description: '',
+      nom: '',
+      numcl: ''
+    }
+  };
   comptes:any;
   isEditing: boolean = false;
   filters = {
@@ -27,12 +43,21 @@ export class ComptesListComponent {
   successMessage: string = '';
 
    updatedCompte: Compte = {
-    id: this.selectedCompte.id,
-    libele: this.selectedCompte.libele,
-    code: this.selectedCompte.code,
-    description: this.selectedCompte.description,
-    classe_id: this.selectedCompte.classe_id, // Assurez-vous d'inclure classe_id
-  };
+     id: this.selectedCompte.id,
+     libele: this.selectedCompte.libele,
+     code: this.selectedCompte.code,
+     description: this.selectedCompte.description,
+     classe_id: this.selectedCompte.classe_id,
+     parent_compte_id: null,
+     classeNumcl: '',
+     classeNom: '',
+     Classe: {
+      id: 0,
+      description: '',
+      nom: '',
+      numcl: ''
+    }
+   };
   
   listComptes(){
  
@@ -70,6 +95,15 @@ export class ComptesListComponent {
     );
   }
  
+  search(): void {
+    if (this.searchTerm.trim()) {
+      this.compteService.searchCompte(this.searchTerm).subscribe(clients => { // Renamed client to clients
+        this.comptes = clients; // Renamed client to clients
+      });
+    } else {
+      this.listComptes(); //Renamed loadClient to loadClients for consistency
+    }
+  }
   editCompte(id: number) {
     this.compteService.getCompte(id).subscribe(
       (compte) => {
