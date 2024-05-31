@@ -9,7 +9,7 @@ import { RuleService } from './services/Rule.service';
 })
 export class AppComponent {
 
-  private baseUrl: string = "http://localhost:8080/api/v1/test/mapping";
+  private baseUrl: string = "http://192.168.1.38:8080/api/v1/test/mapping";
   constructor(private http: HttpClient,private ruleService: RuleService) { }
   mapFromCfonb(): void {
     // Envoyer une requête HTTP POST pour mapper à partir de CFONB
@@ -30,7 +30,7 @@ export class AppComponent {
         window.alert('Mapping from Raw Operation successful');
       },
       (error) => {
-        console.error('Error mapping from Raw Operation:', error);
+        console.error('Error mapping from Raw Operation:');
       }
     );
   }
@@ -41,7 +41,7 @@ export class AppComponent {
         window.alert("Rules generated and written successfully");
       },
       error => {
-        window.alert("Error generating and writing rules: " + error.message);
+        window.alert("Error generating and writing rules: " );
       }
     );
   }
@@ -50,10 +50,10 @@ export class AppComponent {
   executeRules(): void {
     this.ruleService.executeRules().subscribe(
       (response: string) => {
-        window.alert("Rules executed successfully: " + response);
+        window.alert("Rules executed successfully: " );
       },
       error => {
-        window.alert("Error executing rules: " + error.message);
+        window.alert("Error executing rules: " );
       }
     );
   }

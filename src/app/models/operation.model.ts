@@ -1,5 +1,3 @@
-// operation.model.ts
-
 import { Compte } from "./compte.model";
 
 export class Operation {
@@ -11,15 +9,13 @@ export class Operation {
     dateVal: Date;
     description: string;
     status: string;
-    justificatif: any;  // Ajoutez cette ligne pour l'attribut justificatif
-    tauxTVA:  number | null;
-    tvadeductible: string| null;
-    classe_id:number;
+    justificatif: any;  
+    tauxTVA: number | null;
+    tvadeductible: string | null;
+    classe_id: number;
     compte: Compte;
     [key: string]: any;
-    
-       // Ajoutez d'autres attributs au besoin
-  
+
     constructor(
       id: number,
       libelle: string,
@@ -29,27 +25,22 @@ export class Operation {
       dateVal: Date,
       description: string,
       status: string,
-      tauxTVA: number,
-      tvadeductible: string,
+      tauxTVA: number | null,
+      tvadeductible: string | null,
       compte: Compte,
-      classe_id:any,
-      
-      // Ajoutez d'autres attributs au besoin
+      classe_id: any,
     ) {
-      
       this.id = id;
       this.libelle = libelle;
       this.montant = montant;
       this.type = type;
       this.dateOP = dateOP;
       this.dateVal = dateVal;
-      this.description= description;
+      this.description = description;
       this.status = status;
-      this.tauxTVA = tauxTVA !== null ? tauxTVA : 1.0;
-      this.tvadeductible= tvadeductible;
-      this.classe_id= classe_id;
-      this.compte= compte;
-      // Initialisez d'autres attributs au besoin
+      this.tauxTVA = tauxTVA;
+      this.tvadeductible = tvadeductible;
+      this.classe_id = classe_id;
+      this.compte = compte;
     }
-  }
-  
+}

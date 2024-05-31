@@ -26,7 +26,7 @@ export class IndexComponent implements OnInit {
      private router: Router,public dialog: MatDialog,   private classeService: ClasseService,) { }
 
      private static readonly couleurs = [
-      '#B1FA6B', '#90F88C', '#FFB86A', '#FDE919', '#78E6E1', '#5ECAFE', '#B591E6', '#EE81FE','#dddae6'
+      '#B1FA6B', '#90F88C', '#FFB86A', '#FDE919', '#78E6E1', '#5ECAFE', '#B591E6', '#EE81FE','#dddae6','#dddae6','#dddae6','#dddae6','#dddae6','#dddae6'
     ];
     
  

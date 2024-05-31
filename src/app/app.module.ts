@@ -44,6 +44,8 @@ import { CreateRuleComponent } from './components/create-rule/create-rule.compon
 import { ListeRulesComponent } from './components/liste-rules/liste-rules.component';
 import { ListeHistoriqueComponent } from './components/liste-historique/liste-historique.component';
 import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
+import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
+import { DialogValideComponent } from './components/dialog-valide/dialog-valide.component';
 
 
 
@@ -67,6 +69,8 @@ import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confi
     ListeHistoriqueComponent,
 
     DialogConfirmComponent,
+      DialogDeleteComponent,
+      DialogValideComponent,
    
   ],
 

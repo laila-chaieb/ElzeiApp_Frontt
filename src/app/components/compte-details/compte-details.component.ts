@@ -20,9 +20,9 @@ export class CompteDetailsComponent {
     
      }
      selectedClasse: Classe | undefined;
-         private static readonly couleurs = [
-      '#B1FA6B', '#90F88C', '#FFB86A', '#FDE919', '#78E6E1', '#5ECAFE', '#B591E6', '#EE81FE','#dddae6'
-    ];
+         private static readonly couleurs =   [
+          '#B1FA6B', '#90F88C', '#FFB86A', '#FDE919', '#78E6E1', '#5ECAFE', '#B591E6', '#EE81FE','#dddae6','#dddae6','#dddae6','#dddae6','#dddae6','#dddae6'
+        ];
     selectedCompte: Compte = {
       id: 0,
       libele: '',

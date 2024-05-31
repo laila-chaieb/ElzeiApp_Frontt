@@ -84,7 +84,7 @@ export class ListeHistoriqueComponent implements OnInit {
   ADDrule(libelle: string, montant: string, date: string): void {
     const operationDetails = this.operationLibellesCount[libelle][montant][date][1][0];
     const rule: Rule = {
-      condition: libelle,
+      condition: "libelle.contains(\""+libelle+"\")",
       type: operationDetails.type,
       tauxTVA: operationDetails.tauxTVA !== null ? operationDetails.tauxTVA : 0,
       code: operationDetails.compte?.code,

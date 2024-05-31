@@ -1,36 +1,45 @@
 h1{
-  font-size: 30px;
+  font-size: 25px;
   color: #2c2c2c;
   font-weight: 300;
   text-align: center;
   margin-bottom: 15px;
-  font-family: "HelveticaNeueLT Std Lt Cn", Sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 table {
   width: 100%;
   table-layout: auto;
   border-collapse: collapse; /* Ajouté pour supprimer la ligne de séparation */
-  
+  font-family: "Montserrat", sans-serif;
 }
-
+/*transparance de tableau*/
 .tbl-header {
-  background-color: rgba(255, 255, 255, 0.514);
+  background-color: rgba(58, 202, 44, 0.1);
+  grid-gap: 20px;
+  background:rgba(255, 255, 255, 0.1);
+
+  font-family: "Montserrat", sans-serif;
+
 }
 
 .tbl-content { /*transparance*/
   height: 300;
   overflow-x: auto;
   margin-top: 0px;
+  font-family: "Montserrat", sans-serif;
+
 }
 
 th {
   padding: 20px 15px;
   text-align: left;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 12px;
-  color: #000000;
+  color: rgb(29, 32, 29);
   text-transform: uppercase;
+  background-color: #7ed957;
+
 }
 
 td {
@@ -40,6 +49,7 @@ td {
   font-weight: 300;
   font-size: 12px;
   color: #000000;
+
 }
 
 
@@ -50,14 +60,14 @@ td {
 tbody { /*selectioner une ligne de la table*/
   tr {
     &:hover {
-      background-color: rgba(255,255,255,0.9);
+      background-color: rgba(222, 236, 222, 0.6);
+
     }
   }
   td {
     position: relative;
     &:hover {
       &:before {
-        content: "";
         position: absolute;
         left: 0;
         right: 0;
@@ -65,9 +75,49 @@ tbody { /*selectioner une ligne de la table*/
         bottom: -9999px;
         background-color: rgba(255,255,255,0.2);
         z-index: -1;
+
       }
     }
   }
+}
+
+
+
+/*search*/
+.group {
+display: flex;
+line-height: 28px;
+align-items: center;
+position: relative;
+max-width: 280px;
+}
+
+.input {
+  height: 40px;
+  line-height: 28px;
+  padding: 0 1rem;
+  width: 100%;
+  padding-left: 2.5rem;
+  border: 0.1px solid #b4b4b4;
+  border-radius: 3px;
+  outline: none;
+  background-color: #ffffff;
+  color: #0d0c22;
+  transition: .3s ease;
+  display: flex;
+  border-radius: 10px;
+}
+
+.input::placeholder {
+color: #777;
+}
+
+.icon {
+position: absolute;
+left: 1rem;
+fill: #777;
+width: 1rem;
+height: 1rem;
 }
 
 
@@ -84,10 +134,11 @@ tbody { /*selectioner une ligne de la table*/
 
 
 
-
-
-
-
+.button-container {
+display: flex;
+gap: 10px; /* Adjust the gap between buttons as needed */
+align-items: center; /* Center align vertically */
+}
 
 
 /* demo styles */
@@ -97,10 +148,10 @@ tbody { /*selectioner une ligne de la table*/
   100% { background-position: 100% 50%; } /* Move to the right side */
 }
 body {
-  background-image: radial-gradient(at 300px 300px, rgba(60, 201, 95, 0.5) 0, #E9FFDB 70%);
+/*  background-image: radial-gradient(at 300px 300px, rgba(60, 201, 95, 0.5) 0, #E9FFDB 70%), url('C:/Users/DELL/OneDrive/Desktop/ELZI/elzeifront/src/assets/final.jpg');*/
   background-repeat: no-repeat;
   background-attachment: fixed; /* Keep the background fixed while scrolling */
-  background-size: cover; 
+  background-size: cover;
   height: 100vh; /* Set height to 100% of viewport height */
   overflow-y: auto; /* Enable vertical scrolling */
   animation: myAnimation 30s linear infinite alternate;
@@ -140,12 +191,12 @@ section{
 
 ::-webkit-scrollbar {
     width: 6px;
-} 
+}
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-} 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
 ::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
 
 
@@ -160,33 +211,28 @@ section{
 
 
 
+/*button of delete end edit*/
 
-
-/* CSS for the input field */
-input[type="text"] {
-padding: 10px; /* Adjust padding as needed */
-border: 1px solid #ccc; /* Border color */
-border-radius: 4px; /* Rounded corners */
-font-size: 16px; /* Font size */
-width: 300px; /* Set width as needed */
-}
-
-/* CSS for the button */
 button {
-padding: 10px 20px; /* Adjust padding as needed */
-background-color: #007bff; /* Button background color */
-color: #fff; /* Button text color */
-border: none; /* Remove border */
-border-radius: 4px; /* Rounded corners */
-cursor: pointer; /* Cursor on hover */
-font-size: 16px; /* Font size */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0.2em;
+border: 0px solid transparent;
+background-color: transparent;
+border-radius: 1.25em;
+transition: all 0.2s linear;
 }
 
-/* Hover effect for the button */
 button:hover {
-background-color: #0056b3; /* Darker background color on hover */
+box-shadow: 3.4px 2.5px 4.9px rgba(0, 0, 0, 0.025),
+ 8.6px 6.3px 12.4px rgba(0, 0, 0, 0.035),
+ 17.5px 12.8px 25.3px rgba(0, 0, 0, 0.045),
+ 36.1px 26.3px 52.2px rgba(0, 0, 0, 0.055),
+ 99px 72px 143px rgba(0, 0, 0, 0.08);
+ background-color: #ffffff;
 }
-
 
 
 
@@ -259,8 +305,7 @@ height: 100px;
   }
 }
 input {
-  font-family: 'HelveticaNeueLT Std Lt Cn', monospace;
-  position: absolute;
+  font-family: "Montserrat", sans-serif;  position: absolute;
   margin: auto;
   top: 0;
   right: 0;

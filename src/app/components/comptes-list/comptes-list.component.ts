@@ -95,7 +95,7 @@ searchTerm: string = '';
     );
   }
  
-  search(): void {
+  /*search(): void {
     if (this.searchTerm.trim()) {
       this.compteService.searchCompte(this.searchTerm).subscribe(clients => { // Renamed client to clients
         this.comptes = clients; // Renamed client to clients
@@ -103,7 +103,7 @@ searchTerm: string = '';
     } else {
       this.listComptes(); //Renamed loadClient to loadClients for consistency
     }
-  }
+  }*/
   editCompte(id: number) {
     this.compteService.getCompte(id).subscribe(
       (compte) => {

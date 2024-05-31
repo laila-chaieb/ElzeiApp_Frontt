@@ -1,6 +1,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <body>
+
+  <br>  <br>
+ 
+  
+
   <h1>Détail opération</h1>
 
   <div class="login-wrap2">
@@ -67,9 +72,6 @@
               </select>
             </td>
           </div>
-
-
-
           <div class="form-group">
             <label class="form-label" for="Type">Montant TVA:</label>
             <input class="form-input" id="Type"
@@ -77,60 +79,61 @@
               disabled />
           </div>
 
-
-
-          <!-- Ajout du champ pour le justificatif -->
-
           <div class="form-group">
-            <label class="form-label" for="justificatif">Justificatif :</label>
-            <input type="file" name="file" class="form-input" id="justificatif" (change)="onFileSelected($event)" />
+            <label class="form-label" for="statut">statut:</label>
+            <input class="form-input" id="statut"
+              [value]="selectedOperation.status"
+              disabled />
           </div>
-<tr>
-  <td>
-         
-            <div class="form-group">
-              <label class="form-label" for="Classe">Classe:</label>
-              <select id="Classe" class="form-input" (change)="onClasseChange($event)">
-                <!-- Option pour afficher la classe associée à l'opération -->
-                <option [value]="selectedOperation.compte?.classe?.numcl || 'Aucune classe associée'">
-                  {{ selectedOperation.compte?.classe?.numcl || 'Aucune classe associée' }}
-                </option>
-                <!-- Autres options pour les classes -->
-                <option value="all">Toutes les classes</option>
-                <option *ngFor="let classe of classes" [value]="classe.id">{{ classe.nom }}: {{ classe.numcl }}
-                </option>
-              </select>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-              <label class="form-label" for="Compte">Compte:</label>
-              <!-- Champ de saisie pour filtrer -->
-              <input type="text" id="CompteFilter" class="form-input" placeholder="Rechercher des comptes"
-                (input)="onCompteFilter($event)"
-                [value]="selectedOperation['compte'] ? selectedOperation['compte'].code + ' - ' + selectedOperation['compte'].libele : 'Aucun compte associé'" />
-              <!-- Liste des comptes filtrés -->
-              <ul class="compte-list">
-                <ng-container *ngFor="let compte of filteredComptes; let i = index">
-                  <li *ngIf="i < 5" (click)="selectCompte(compte)">
-                    {{ compte.code }} - {{ compte.libele }}
-                  </li>
-                </ng-container>
-              </ul>
-            </div>
-          
-          
-
+          <tr>
+            <td style="padding-right: 20px;">
+          <div class="form-group">
+            <label class="form-label" for="Classe">Classe:</label>
+            <select id="Classe" class="form-input" (change)="onClasseChange($event)">
+              <!-- Option pour afficher la classe associée à l'opération -->
+              <option [value]="selectedOperation.compte?.classe?.numcl || 'Aucune classe associée'">
+                {{ selectedOperation.compte?.classe?.numcl || 'Aucune classe associée' }}
+              </option>
+              <!-- Autres options pour les classes -->
+              <option value="all">Toutes les classes</option>
+              <option *ngFor="let classe of classes" [value]="classe.id">{{ classe.nom }}: {{ classe.numcl }}</option>
+            </select>
+          </div>
+        </td>
         
+      <td style="padding-right: 20px;">
+          <div class="form-group" >
+            <label class="form-label" for="Compte">Compte:</label>
+            <!-- Champ de saisie pour filtrer -->
+            <input 
+              type="text" 
+              id="CompteFilter" 
+              class="form-input" 
+              autocomplete="off"
+              (input)="onCompteFilter($event)"
+              [placeholder]="selectedOperation['compte'] ? '' : 'Aucun compte associé'"
+              [value]="selectedOperation['compte'] ? selectedOperation['compte'].code + ' - ' + selectedOperation['compte'].libele : ''" 
+            />
+            <!-- Liste des comptes filtrés -->
+            <ul class="compte-list">
+              <ng-container *ngFor="let compte of filteredComptes; let i = index">
+                <li *ngIf="i < 5" (click)="selectCompte(compte)">
+                  {{ compte.code }} - {{ compte.libele }}
+                </li>
+              </ng-container>
+            </ul>
+          </div>
         </td>
         </tr>
+  
+       
         </form>
-
         <br>
-        <div class="center2">
-          <!-- Ajoutez l'événement (click) pour appeler la méthode onSubmit() lors du clic sur le bouton -->
-          <button type="submit" class="form-button" (click)="onSubmit()">Valider</button>
+        <div class="group">
+          <input type="button" class="button" value="Retour"  routerLink="/operation">
         </div>
+      
+      
       </div>
     </div>
 

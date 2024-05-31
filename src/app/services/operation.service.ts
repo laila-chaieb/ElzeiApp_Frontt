@@ -20,7 +20,7 @@ export class OperationService {
 
   getOperations(status: string | null, type: string | null, mois: number | null): Observable<Operation[]> {
     let params = new HttpParams();
-  
+    
     if (status) {
       params = params.set('status', status);
     }
@@ -28,11 +28,13 @@ export class OperationService {
       params = params.set('type', type);
     }
     if (mois !== null) {
-      params = params.set('mois', mois.toString());
+      params = params.set('month', mois.toString()); // Assurez-vous que le paramètre est 'month' comme attendu par le contrôleur
     }
   
     return this.http.get<Operation[]>(this.baseUrl, { params });
   }
+  
+ 
   getOperationById(id: number): Observable<Operation> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.get<Operation>(url);
@@ -70,7 +72,7 @@ export class OperationService {
         } else if (searchTerm.includes('')) {
           const searchTermParts = searchTerm.split(' ').filter(part => part.trim() !== ''); // Sépare les parties de searchTerm
           const searchTermRegex = new RegExp(searchTermParts.join('.*'), 'i'); // Crée une expression régulière pour rechercher le nom ou le prénom composé
-          return Operation.filter(s => searchTermRegex.test(s.compte?.libele) || searchTermRegex.test(s.libelle));
+          return Operation.filter(s => searchTermRegex.test(s.compte?.code) || searchTermRegex.test(s.libelle));
         } else {
           return Operation.filter(s => s.compte?.libele === searchTerm || s.libelle === searchTerm);
         }

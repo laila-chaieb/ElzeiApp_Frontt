@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable,forkJoin, throwError } from 'rxjs';
+import { Observable,forkJoin, of, throwError } from 'rxjs';
 import { catchError, map ,mergeMap} from 'rxjs/operators';
 import { Compte } from '../models/compte.model';
 
@@ -27,7 +27,7 @@ export class CompteService {
 
   create(data: any): Observable<Compte> {
     const classeId = data.classe_id;
-    let parentCompteId = data.parent_compte_id; // Récupérer l'ID du parentCompte
+    const parentCompteId = data.parent_compte_id;
 
     // Supprimer les propriétés classe_id et parent_compte_id du compte avant l'envoi
     delete data.classe_id;
@@ -37,25 +37,23 @@ export class CompteService {
         // Utiliser forkJoin pour combiner les deux appels
         return forkJoin([
             this.getClassById(classeId),
-            this.getCompte(parentCompteId) // Ajouter cet appel pour récupérer le parentCompte
+            // Vérifier si parentCompteId est défini avant d'appeler getCompte
+            parentCompteId !== undefined ? this.getCompte(parentCompteId) : of(null)
         ]).pipe(
             mergeMap(([classe, parentCompte]: any) => {
                 data.classe = classe;
-                // Vérifier si parentCompteId est un nombre valide avant de l'ajouter à data
-                parentCompteId = isNaN(parentCompteId) ? null : Number(parentCompteId);
-                data.parentCompte = parentCompteId;
+                // Vérifier si parentCompte est défini avant de l'ajouter à data
+                if (parentCompte !== null) {
+                    data.parentCompte = parentCompte;
+                }
                 return this.http.post<Compte>(this.baseUrl, data);
             })
         );
     } else {
         // Si classe_id n'est pas spécifié, envoyer simplement la requête POST sans la classe associée
-        // Vérifier si parentCompteId est un nombre valide avant de l'ajouter à data
-        parentCompteId = isNaN(parentCompteId) ? null : Number(parentCompteId);
-        data.parentCompte = parentCompteId;
         return this.http.post<Compte>(this.baseUrl, data);
     }
 }
-
 
 
   update(id: any, data: any): Observable<Compte> {
@@ -108,18 +106,7 @@ export class CompteService {
       })
     );
   }
-  searchCompte(searchTerm: string): Observable<Compte[]> {
-    return this.http.get<Compte[]>(`${this.baseUrl}`).pipe(
-      map(comptes => {
-        const searchTermNumber = parseFloat(searchTerm); // Convertit le terme de recherche en nombre
-        return comptes.filter(c => 
-          (typeof c.code === 'string' && c.code.toLowerCase().includes(searchTerm.toLowerCase())) || // Recherche sur le champ code
-          c.code === searchTermNumber || // Recherche sur le champ code
-          c.libele.toLowerCase().includes(searchTerm.toLowerCase()) // Recherche sur le champ libele
-        );
-      })
-    );
-  }
+  
   
   
   

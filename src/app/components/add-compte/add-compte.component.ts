@@ -59,17 +59,16 @@ export class AddCompteComponent implements OnInit {
       }
     });
 
-
     this._activatedRoute.queryParams.subscribe(params => {
       const classe_id = +params['classe_id'] || 0;
-      const parent_compte_id = +params['parent_compte_id'] || null;
-    
+      const parent_compte_id = params['parent_compte_id'] !== undefined ? +params['parent_compte_id'] : null;
+
       console.log('Classe ID:', classe_id);
       console.log('Parent Compte ID:', parent_compte_id);
-    
+
       this.Compte.classe_id = classe_id;
       this.Compte.parent_compte_id = parent_compte_id;
-    
+
       if (parent_compte_id) {
         this.CompteService.getCompte(parent_compte_id).subscribe(
           parentCompte => {
@@ -77,7 +76,7 @@ export class AddCompteComponent implements OnInit {
             const parentCodeLength = parentCode ? parentCode.toString().length : 0;
             this.maxLength = parentCodeLength + 1;
             console.log('MaxLength (Computed):', this.maxLength);
-    
+
             this.myForm.controls['code'].setValidators([Validators.required, Validators.maxLength(this.maxLength)]);
             this.myForm.controls['code'].updateValueAndValidity();
             this.myForm.patchValue({ code: parentCode });
@@ -92,7 +91,7 @@ export class AddCompteComponent implements OnInit {
         this.myForm.controls['code'].setValidators([Validators.required, Validators.maxLength(this.maxLength)]);
         this.myForm.controls['code'].updateValueAndValidity();
       }
-    
+
       this.myForm.patchValue({
         parent_compte_id: parent_compte_id,
         classe_id: classe_id
@@ -110,8 +109,16 @@ export class AddCompteComponent implements OnInit {
     this.Compte.code = formValues.code;
     this.Compte.libele = formValues.libele;
     this.Compte.description = formValues.description;
+    this.Compte.classe_id = this.Compte.classe_id; // Assurez-vous que classe_id est bien assigné
+    this.Compte.parent_compte_id = this.Compte.parent_compte_id; // Assurez-vous que parent_compte_id est bien assigné
 
-    this.CompteService.create(this.Compte).subscribe(
+    // Créez une copie de l'objet Compte sans la propriété parent_compte_id si elle est null
+    const compteData: any = { ...this.Compte };
+    if (this.Compte.parent_compte_id === null) {
+      delete compteData.parent_compte_id;
+    }
+
+    this.CompteService.create(compteData).subscribe(
       res => {
         console.log('Compte créé:', res);
         this._router.navigate(['/Comptes']);

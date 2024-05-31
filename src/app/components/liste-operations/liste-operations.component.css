@@ -37,191 +37,7 @@
     background-color: transparent; /* Set the background color to transparent */
   
   }
-  .nav-links {
-    background-color: transparent; /* Set the background color to transparent */
-    border: none; /* Remove any border */
   
-    /* Add any additional styles as needed */
-  }
-  
-  .navbar .nav-item .nav-link {
-    background-color: rgba(255, 255, 255, 0.425);
-  
-  }
-  .nav {
-    height: 50px;
-    width: 100%;
-    position:relative;
-    top: 0px;
-    position: relative;
-    left: 0px;
-    right: 200px;
-    background-color: rgba(255, 255, 255, 0.9);
-  
-    
-  
-  }
-  
-  .nav > .nav-header {
-    display: inline;
-    background-color: transparent; /* Set the background color to transparent */
-  
-  }
-  
-  .nav > .nav-header > .nav-title {
-    display: inline-block;
-    font-size: 22px;
-    color: #000000;
-    padding: 10px 10px 10px 10px;
-  }
-  
-  .nav > .nav-btn {
-    display: none;
-  }
-  
-  .nav > .nav-links {
-    display: inline;
-    float: right;
-    font-size: 18px;
-  }
-  
-  .nav > .nav-links > a {
-    display: inline-block;
-    padding: 13px 10px 13px 10px;
-    text-decoration: none;
-    color: #3f3d3d;
-    font-family: Arial, sans-serif;
-    font-size: 15px;
-    font-style: oblique;
-    font-weight: bold;
-  
-  }
-  
-  ul {
-    margin: 150px auto 0;
-    padding: 0;
-    list-style: none;
-    display: table;
-    width: 600px;
-    text-align: center;
-  }
-  li {
-    display: table-cell;
-    position: relative;
-    padding: 15px 0;
-  }
-  a {
-    color: #fff;
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    display: inline-block;
-    padding: 15px 20px;
-    position: relative;
-    color: #3f3d3d;
-    font-family: Arial, sans-serif;
-  }
-  a:after {
-    background: none repeat scroll 0 0 transparent;
-    bottom: 0;
-    content: "";
-    display: block;
-    height: 2px;
-    left: 50%;
-    position: absolute;
-    background-image: linear-gradient(to right,#5da92f,#9bd46a);
-    transition: width 0.3s ease 0s, left 0.3s ease 0s;
-    width: 0;
-  }
-  a:hover:after {
-    width: 100%;
-    left: 0;
-  }
-  @media screen and (max-height: 300px) {
-    ul {
-      margin-top: 40px;
-    }
-  }
-  
-  .nav > #nav-check {
-    display: none;
-  }
-  
-  @media (max-width:600px) {
-    .nav > .nav-btn {
-      display: inline-block;
-      position: absolute;
-      right: 0px;
-      top: 0px;
-    }
-    .nav > .nav-btn > label {
-      display: inline-block;
-      width: 50px;
-      height: 50px;
-      padding: 13px;
-    }
-    .nav > .nav-btn > label:hover,.nav  #nav-check:checked ~ .nav-btn > label {
-      background-color: rgba(0, 0, 0, 0.3);
-    }
-    .nav > .nav-btn > label > span {
-      display: block;
-      width: 25px;
-      height: 10px;
-      border-top: 2px solid #eee;
-    }
-    .nav > .nav-links {
-      position: absolute;
-      display: block;
-      width: 100%;
-      background-color: #333;
-      height: 0px;
-      transition: all 0.3s ease-in;
-      overflow-y: hidden;
-      top: 50px;
-      left: 0px;
-    }
-    .nav > .nav-links > a {
-      display: block;
-      width: 100%;
-    }
-    .nav > #nav-check:not(:checked) ~ .nav-links {
-      height: 0px;
-    }
-    .nav > #nav-check:checked ~ .nav-links {
-      height: calc(100vh - 50px);
-      overflow-y: auto;
-  
-    }
-  }
-  
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.3);
-    min-width: 160px;
-    z-index: 1;
-  }
-  
-  .nav > .nav-links > a:hover + .dropdown-content,
-  .dropdown-content:hover {
-    display: block;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 12px;
-    text-decoration: none;
-    display: block;
-    caption-side: bottom;
-  }
-  
-  .dropdown-content a:hover {
-    background-color:  rgba(255, 255, 255, 0.1);
-  }
-  .active {
-    background-color: #9bd46a; /* Couleur de fond pour la page active */
-    color: #ffffff; /* Couleur du texte pour la page active */
-  }
   
 .back {
   position: absolute;
@@ -509,7 +325,7 @@ select,
 optgroup,
 textarea {
     margin: 0;
-    font-family: inherit;
+    font-family: "Heebo", sans-serif !important;
     font-size: inherit;
     line-height: inherit
 }
@@ -29765,4 +29581,87 @@ body.mm-hotel.header-style-1 .main-circle i {
     }
     
     
-    
+    nav {
+        &.primary-navigation {
+          margin: -3%;
+          display: block;
+        
+          padding: 120px 0 0 0;  
+          text-align: center;
+          font-size: 16px;
+      
+          ul li {
+            list-style: none;
+            margin: 0 auto;
+            border-left: 2px solid #3ca0e7;
+            display: inline-block;
+            padding: 0 30px;
+            position: relative;
+            text-decoration: none;
+            text-align: center;
+            font-family: "Heebo", sans-serif !important;
+          }
+      
+          li a {
+            color: black;
+          }
+      
+          li a:hover {
+            color: #3ca0e7;
+          }
+      
+          li:hover {
+            cursor: pointer;
+          }
+      
+          ul li ul {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+      padding-left: 0;
+            left: 0;
+            display: none;
+            background: white;
+          }
+      
+          ul li:hover > ul,
+          ul li ul:hover {
+            visibility: visible;
+            opacity: 1;
+            display: block;
+            min-width: 250px;
+            text-align: left;
+            padding-top: 20px;
+            box-shadow: 0px 3px 5px -1px #ccc;
+          }
+      
+          ul li ul li {
+            clear: both;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 20px;
+            border-style: none;
+          }
+      
+          ul li ul li a:hover {
+            padding-left: 10px;
+            border-left: 2px solid #3ca0e7;
+            transition: all 0.3s ease;
+          }
+        }
+      }
+      
+      a {
+      
+          text-decoration: none;
+      
+          &:hover {
+              color: #3CA0E7;
+              font-family: "Heebo", sans-serif !important;
+          }
+       
+      }
+      
+       ul li ul li a { transition: all 0.5s ease; }
+      
+      

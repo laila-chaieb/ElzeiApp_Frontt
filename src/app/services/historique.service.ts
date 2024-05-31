@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Historique } from '../models/historique.model';
 
 
@@ -12,9 +12,11 @@ export class HistoriqueService {
 
   constructor(private http: HttpClient) {}
 
-  // Méthode pour enregistrer l'historique dans le backend
-  saveHistorique(historique: Historique): Observable<any> {
-    return this.http.post(`${this.baseUrl}/enregistrer`, historique);
+ 
+  saveHistorique(data: any): Observable<Historique> {
+    return this.http.post<Historique>(`${this.baseUrl}/enregistrer`, data).pipe(
+      map(response => response)
+    );
   }
 
   deleteOperationsByLibelle(libelle: string): Observable<void> {

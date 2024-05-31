@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component,  ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Classe } from 'src/app/models/classe.model';
@@ -8,12 +8,14 @@ import { ClasseService } from 'src/app/services/classe.service';
 import { CompteService } from 'src/app/services/compte.service';
 import { OperationService } from 'src/app/services/operation.service';
 import { MatSelect } from '@angular/material/select';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { JustificatifService } from 'src/app/services/justificatif.service';
-import { switchMap, tap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { ElementRef } from '@angular/core';
 import { HistoriqueService } from 'src/app/services/historique.service';
 import { Historique } from 'src/app/models/historique.model';
+import { DialogValideComponent } from '../dialog-valide/dialog-valide.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-opertation-details',
   templateUrl: './opertation-details.component.html',
@@ -22,12 +24,14 @@ import { Historique } from 'src/app/models/historique.model';
 export class OpertationDetailsComponent {
 
   constructor(private  compteService:CompteService,private  OperationService:OperationService, private activatedRoute: ActivatedRoute ,
-    private router: Router,   private http: HttpClient,private classeService: ClasseService,private justificatifService:JustificatifService,private elementRef: ElementRef,private historiqueService :HistoriqueService) {
+    private router: Router,   private http: HttpClient,private classeService: ClasseService,private justificatifService:JustificatifService,private elementRef: ElementRef,private historiqueService :HistoriqueService,public dialog: MatDialog,) {
       const state = this.router.getCurrentNavigation()?.extras?.state;
       
 
      }
      @ViewChild('compteSelect') compteSelect!: MatSelect;
+
+     
      selectedCompte: Compte | undefined = undefined;
      
      selectedOperation: any = {};
@@ -114,8 +118,6 @@ listComptes(){
 
 this.compteService.getComptes().subscribe((res:any) =>{
  this.comptes=res
- 
-
 }
 )
 }
@@ -168,26 +170,7 @@ onCompteFilter(event: Event): void {
 
 
 
-
-
-
-
-
-
-onFileSelected(event: any): void {
-  const fileInput = event.target as HTMLInputElement;
-  const file = fileInput.files?.[0];
-
-  if (file && this.selectedOperation) {
-    // Mettez à jour le justificatif de l'opération sélectionnée
-    this.selectedOperation.justificatif = file;
-
-    // Vous pouvez également afficher le nom du fichier ou autre chose si nécessaire
-    console.log('Selected file:', file.name);
-  }
-}
-
-updateOperationProperty(operation: Operation, propertyName: string, propertyValue: any): void {
+updateOperationProperty(operation: Operation, propertyName: string, propertyValue: any): Observable<any> {
   console.log('updateOperationProperty called');
   console.log('propertyName:', propertyName);
   console.log('propertyValue:', propertyValue);
@@ -200,23 +183,9 @@ updateOperationProperty(operation: Operation, propertyName: string, propertyValu
 
   // Vérifiez si la propriété est 'compte' et ajustez le service en conséquence
   if (propertyName === 'compte') {
-    const updateData = { [propertyName]: propertyValue ,status: 'Validee'};
-    this.OperationService.update(operation.id, updateData).subscribe(
-      (response: any) => {
-        if (response && typeof response === 'object' && response.hasOwnProperty('error')) {
-          console.error(`Erreur lors de la mise à jour de ${propertyName}:`, response.error);
-          // Gérez l'erreur et affichez un message approprié si nécessaire
-        } else {
-          console.log(`${propertyName} mis à jour avec succès:`, response);
-          // Ajoutez des actions supplémentaires si nécessaire
-        }
-      },
-      (error) => {
-        console.error(`Erreur lors de la mise à jour de ${propertyName}:`, error);
-        // Gérez l'erreur et affichez un message approprié si nécessaire
-      }
-    );
-  } else {
+    updateData['status'] = 'Validee';
+  }
+  else {
     // Utilisez le service 'operationService' pour les autres propriétés
     this.OperationService.update(operation.id, updateData).subscribe(
       (response) => {
@@ -234,75 +203,52 @@ updateOperationProperty(operation: Operation, propertyName: string, propertyValu
       }
     );
   }
+  // Utilisez le service 'OperationService' pour les autres propriétés
+  return this.OperationService.update(operation.id, updateData);
 }
 
 
 
 
-onSubmit(): void {
-  if (this.selectedOperation && this.selectedOperation.justificatif) {
-      const file = this.selectedOperation.justificatif;
-      const description = this.selectedOperation.description || ''; // Ajoutez la logique appropriée
-      const operationId = this.selectedOperation.id || 0; // Assurez-vous que vous avez l'ID de l'opération
-      console.log('Operation ID:', operationId); // Ajoutez cette ligne
 
-      this.router.navigate(['/operation']);
-      // Appeler le service pour effectuer l'upload
-      this.justificatifService.uploadJustificatifFile(file, description, this.selectedOperation.id).subscribe(
-          (response) => {
-              // Vérifier le type de contenu
-              const contentType = response.headers.get('Content-Type');
-
-              if (contentType && contentType.indexOf('application/json') !== -1) {
-                  // La réponse est de type JSON
-                  const jsonResponse = response.body;
-                  console.log('File uploaded successfully:', jsonResponse);
-                  // Effectuez les actions nécessaires après l'upload du fichier
-              } else {
-                  // La réponse n'est pas du JSON, traiter en conséquence
-                  console.log('File uploaded successfully. Server response:', response.body);
-                  // Effectuez les actions nécessaires après l'upload du fichier
-              }
-          },
-          (error) => {
-              if (error.status === 200) {
-                  // Traitement d'erreur spécifique si le serveur retourne un statut 200 (OK) malgré une erreur
-                  console.error('Error uploading file. Server response:', error.error);
-              } else {
-                  console.error('Error uploading file. Status:', error.status, 'Error:', error.error);
-              }
-              // Affichez un message d'erreur ou effectuez d'autres actions nécessaires
-          }
-      );
-  }
-}
 
  // Méthode pour enregistrer l'affectation du compte dans la table historique
  saveAffectationInHistorique(selectedOperation: Operation, compte: Compte): void {
-  // Créez un objet historique pour enregistrer l'affectation du compte
-  const historique: Historique = {
+  const historique = {
     id: 0,
-    operation: selectedOperation,
-    date: new Date(), // Utilisez la date actuelle
-    compteAffecte: compte.code // Enregistrez l'ID du compte affecté
+    operation: {
+      id: selectedOperation.id
+    },
+    compteAffecte: compte.code
   };
-  console.log('Historique :',historique)
-  // Appelez le service pour enregistrer l'historique
+
+  console.log('Historique avant envoi :', historique);
+
   this.historiqueService.saveHistorique(historique).subscribe(
     (response) => {
-      console.log('Affectation du compte enregistrée dans l\'historique avec succès:', response);
-      // Ajoutez des actions supplémentaires si nécessaire
+      console.log('Réponse de l\'API pour l\'historique ajouté :', response);
+      if (response) {
+        console.log('Historique ajouté avec succès :', response);
+      } else {
+        console.error('Réponse de l\'API est null, l\'historique n\'a peut-être pas été enregistré correctement.');
+      }
     },
     (error) => {
       console.error('Erreur lors de l\'enregistrement de l\'affectation du compte dans l\'historique:', error);
-      // Gérez l'erreur et affichez un message approprié si nécessaire
     }
   );
 }
 
 
 selectCompte(compte: Compte): void {
-  this.selectedCompteId = compte.id;
+  const dialogRef = this.dialog.open(DialogValideComponent, {
+    width: '300px',
+    data: compte
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.selectedCompteId = compte.id;
   this.selectedCompte = compte;
 
   // Mettez à jour l'opération avec le compte sélectionné
@@ -314,9 +260,21 @@ selectCompte(compte: Compte): void {
   // Enregistrez l'affectation du compte dans la table historique
   console.log(this.selectedOperation)
   this.saveAffectationInHistorique(this.selectedOperation, compte);
+      this.updateOperationProperty(this.selectedOperation, 'compte', compte)
+        .subscribe(
+          () => {
+            this.router.navigate(['detailsOperation', this.selectedOperation.id]);
+            console.log("Operation updated successfully.");
+            // Optionally reload the window or refresh the view
+            // window.location.reload(); // Use this line if you want to reload the page
+          },
+          (error: HttpErrorResponse) => {
+            console.error("Error updating operation:", error);
+          }
+        );
+    }
+  });
 }
-
-
 
   }
 

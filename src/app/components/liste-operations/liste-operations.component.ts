@@ -30,6 +30,8 @@ export class ListeOperationsComponent implements OnInit {
     private justificatifService: JustificatifService,
     private compteService: CompteService,
   ) { }
+
+
   search(): void {
     if (this.searchTerm.trim()) {
       this.operationService.searchOperation(this.searchTerm).subscribe(clients => { // Renamed client to clients
@@ -40,67 +42,51 @@ export class ListeOperationsComponent implements OnInit {
       this.listOperations();//Renamed loadClient to loadClients for consistency
     }
   }
-  //Filtrage
-  appliquerFiltre(statut: string | null, type: string | null, mois: number | null) {
-    this.filtreStatus = statut;
-    this.filtreType = type;
-    this.filtreMois = mois; // Ajoutez cette ligne pour stocker le filtre par mois
-    this.listOperations();
-    this.closeDropdown();
+
+  sortOperationsById(): void {
+    this.operations.sort((a, b) => a.id - b.id);
   }
-
+// Filtrage
+appliquerFiltre(statut: string | null, type: string | null, mois: number | null) {
+  this.filtreStatus = statut;
+  this.filtreType = type;
+  this.filtreMois = mois;
+  this.listOperations();
+  this.closeDropdown();
+}
  
+// listOperations method
+listOperations(): void {
+  console.log('Filtrage en cours avec status:', this.filtreStatus);
+  console.log('Filtrage en cours avec type:', this.filtreType);
+  console.log('Filtrage en cours avec mois:', this.filtreMois);
 
-  listOperations(): void {
-    console.log('Filtrage en cours avec status:', this.filtreStatus);
-    console.log('Filtrage en cours avec type:', this.filtreType);
-    console.log('Filtrage en cours avec mois:', this.filtreMois);
-
-    // Appel au service pour récupérer les opérations SANS le filtre par mois
-    this.operationService.getOperations(this.filtreStatus, this.filtreType, null).subscribe(
-        (res: Operation[]) => {
-            // Appliquer le filtre par mois après avoir reçu les données
-            this.operations = res.filter((operation: Operation) => {
-                // Filtre par mois
-                if (this.filtreMois && (new Date(operation.dateOP)).getMonth() !== this.filtreMois - 1) {
-                    return false; // Ne correspond pas au filtre de mois
-                }
-                // Filtre par status
-                if (this.filtreStatus && operation.status !== this.filtreStatus) {
-                    return false; // Ne correspond pas au filtre de statut
-                }
-                // Filtre par type
-                if (this.filtreType && operation.type !== this.filtreType) {
-                    return false; // Ne correspond pas au filtre de type
-                }
-                // Si l'opération passe tous les filtres, la conserver
-                return true;
-            });
-
-            // Affichage des opérations filtrées dans la console
-            this.operations.forEach(operation => {
-                console.log('Opération:', operation);
-                if (operation['compte']) {
-                    console.log('Compte associé:', operation['compte']);
-                } else {
-                    console.log('Aucun compte associé à cette opération.');
-                }
-            });
-        },
-        (error) => {
-            // Gestion des erreurs de récupération des opérations
-            console.error('Erreur lors de la récupération des opérations:', error);
-            try {
-                const errorBody = JSON.parse(error.error);
-                console.log('Corps de la réponse en erreur:', errorBody);
-            } catch (e) {
-                console.log('La réponse d\'erreur n\'est pas un JSON valide:', error.error);
-            }
-        }
-    );
+  // Appel au service pour récupérer les opérations avec tous les filtres
+  this.operationService.getOperations(this.filtreStatus, this.filtreType, this.filtreMois).subscribe(
+      (res: Operation[]) => {
+          this.operations = res; // On suppose que le backend gère maintenant tous les filtres
+          console.log('Opérations filtrées:', this.operations);
+          this.operations.forEach(operation => {
+              console.log('Opération:', operation);
+              if (operation['compte']) {
+                  console.log('Compte associé:', operation['compte']);
+              } else {
+                  console.log('Aucun compte associé à cette opération.');
+              }
+          });
+      },
+      (error) => {
+          console.error('Erreur lors de la récupération des opérations:', error);
+          try {
+              const errorBody = JSON.parse(error.error);
+              console.log('Corps de la réponse en erreur:', errorBody);
+          } catch (e) {
+              console.log('La réponse d\'erreur n\'est pas un JSON valide:', error.error);
+          }
+      }
+  );
 }
 
-  
 
 
 
@@ -127,7 +113,7 @@ export class ListeOperationsComponent implements OnInit {
         this.closeDropdownsExcept(-1);
       }
     });
-  
+    this.sortOperationsById();
     // Le reste de votre code ngOnInit() ici...
   }
 
